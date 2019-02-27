@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using Leagueen.WebAPI.Configuration;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Leagueen.WebAPI
@@ -12,6 +13,7 @@ namespace Leagueen.WebAPI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .ConfigureStartup();
     }
 }
