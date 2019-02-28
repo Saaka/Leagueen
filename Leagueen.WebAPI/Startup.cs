@@ -37,7 +37,8 @@ namespace Leagueen.WebAPI
                     .AllowAnyHeader()
                     .AllowCredentials())
                 .UseAppServices()
-                .UseMvc();
+                .UseMvc()
+                .ConfigureHangfireJobs();
         }
     }
 }
