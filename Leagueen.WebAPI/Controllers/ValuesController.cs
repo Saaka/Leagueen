@@ -20,9 +20,9 @@ namespace Leagueen.WebAPI.Controllers
 
         // GET: api/Values/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public int Get(int id)
         {
-            return $"value {id}";
+            return id;
         }
 
         // POST: api/Values

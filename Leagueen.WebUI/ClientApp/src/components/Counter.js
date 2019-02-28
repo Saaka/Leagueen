@@ -1,31 +1,53 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
+
 
 export class Counter extends Component {
-  static displayName = Counter.name;
+    state = {
+        currentCount: 0,
+        incrementValue: 1
+    };
+    _axios = null;
+    get axios() {
+        if (!this._axios)
+            this._axios = this.createAxios();
 
-  constructor (props) {
-    super(props);
-    this.state = { currentCount: 0 };
-    this.incrementCounter = this.incrementCounter.bind(this);
-  }
+        return this._axios;
+    }
 
-  incrementCounter () {
-    this.setState({
-      currentCount: this.state.currentCount + 1
-    });
-  }
+    createAxios = () => {
+        return Axios.create({
+            baseURL: process.env.REACT_APP_API_URL
+        });
+    };
 
-  render () {
-    return (
-      <div>
-        <h1>Counter</h1>
+    componentDidMount = () => {
+        this.axios
+            .get('/values/2')
+            .then(resp => this.setState({
+                incrementValue: resp.data
+            }))
+            .catch(err => console.log(err));
+    };
 
-        <p>This is a simple example of a React component.</p>
+    incrementCounter = () => {
+        this.setState({
+            currentCount: this.state.currentCount + this.state.incrementValue
+        });
+    }
 
-        <p>Current count: <strong>{this.state.currentCount}</strong></p>
+    render() {
+        return (
+            <div>
+                <h1>Counter</h1>
 
-        <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
-      </div>
-    );
-  }
+                <p>This is a simple example of a React component.</p>
+
+                <p>Increment value: <strong>{this.state.incrementValue}</strong></p>
+                <p>Current count: <strong>{this.state.currentCount}</strong></p>
+
+                <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
+            </div>
+        );
+    }
 }
