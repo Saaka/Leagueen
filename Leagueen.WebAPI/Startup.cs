@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Leagueen.WebAPI.Configuration;
+﻿using Leagueen.WebAPI.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +20,7 @@ namespace Leagueen.WebAPI
             services
                 .AddCors()
                 .AddMvcWithFilters()
-                .RegisterLibraries();
+                .RegisterLibraries(Configuration);
         }
 
         public void Configure(IApplicationBuilder application, IHostingEnvironment env)

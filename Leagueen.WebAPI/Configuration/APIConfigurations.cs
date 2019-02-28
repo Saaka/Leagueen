@@ -1,6 +1,8 @@
-﻿using Leagueen.WebAPI.Filters;
+﻿using Hangfire;
+using Leagueen.WebAPI.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Leagueen.WebAPI.Configuration
@@ -12,7 +14,7 @@ namespace Leagueen.WebAPI.Configuration
             services
                 .AddMvc(o => o.Filters.Add<CustomExceptionFilterAttribute>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -21,7 +23,7 @@ namespace Leagueen.WebAPI.Configuration
             return services;
         }
 
-        public static IServiceCollection RegisterLibraries(this IServiceCollection services)
+        public static IServiceCollection RegisterLibraries(this IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddSwaggerGen(c =>
@@ -33,7 +35,15 @@ namespace Leagueen.WebAPI.Configuration
                         Description = "Create and manage leagues and user bets",
                     });
                 })
-                .AddLogging();
+                .AddLogging()
+                .AddHangfire(c =>
+                {
+                    c.UseSqlServerStorage(configuration["DbSettings:ConnectionString"],
+                        new Hangfire.SqlServer.SqlServerStorageOptions
+                        {
+                            SchemaName = "LeagueenHangFire"
+                        });
+                });
 
             return services;
         }
@@ -42,7 +52,9 @@ namespace Leagueen.WebAPI.Configuration
         {
             application
                 .UseSwagger()
-                .UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/{SwaggerVersion}/swagger.json", "Leaguen WebAPI"));
+                .UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/{SwaggerVersion}/swagger.json", "Leaguen WebAPI"))
+                .UseHangfireServer()
+                .UseHangfireDashboard();
 
             return application;
         }
