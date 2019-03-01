@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RestSharp;
 using System;
 
 namespace Leagueen.WebAPI.Configuration
@@ -46,7 +47,8 @@ namespace Leagueen.WebAPI.Configuration
                             SchemaName = "LeagueenHangFire"
                         });
                     c.UseColouredConsoleLogProvider();
-                });
+                })
+                .AddTransient<IRestClient, RestClient>();
 
             return services;
         }
