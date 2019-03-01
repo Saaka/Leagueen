@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Leagueen.Domain.Entities;
+using Leagueen.Persistence.Domain.Configurations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Leagueen.Persistence.Domain
 {
@@ -12,11 +14,15 @@ namespace Leagueen.Persistence.Domain
         {
         }
 
+        public DbSet<Competition> Competitions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.HasDefaultSchema(PersistenceConfig.DefaultSchema);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly,
+                x => x.Namespace == typeof(CompetitionConfiguration).Namespace);
         }
     }
 }
