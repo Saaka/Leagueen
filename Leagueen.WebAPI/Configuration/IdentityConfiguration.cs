@@ -57,8 +57,8 @@ namespace Leagueen.WebAPI.Configuration
                     opt.Password.RequireNonAlphanumeric = false;
                 })
                 .AddUserStore<UserStore<ApplicationUser, IdentityRole<int>, AppIdentityDbContext, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityUserToken<int>, IdentityRoleClaim<int>>>()
-                .AddEntityFrameworkStores<AppIdentityDbContext>();
-
+                ;
+            
             return services;
         }
     }
