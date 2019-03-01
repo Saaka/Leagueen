@@ -1,4 +1,5 @@
-﻿using Leagueen.WebAPI.Configuration;
+﻿using Leagueen.Persistence;
+using Leagueen.WebAPI.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,11 @@ namespace Leagueen.WebAPI
             services
                 .AddCors()
                 .AddMvcWithFilters()
-                .RegisterLibraries(Configuration);
+                .AddJwtTokenBearerAuthentication(Configuration)
+                .AddDbContext(Configuration)
+                .AddIdentityStore(Configuration)
+                .AddLogging()
+                .AddExternalAppServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder application, IHostingEnvironment env)
@@ -36,7 +41,8 @@ namespace Leagueen.WebAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials())
-                .UseAppServices()
+                .UseExternalAppServices()
+                .UseAuthentication()
                 .UseMvc()
                 .ConfigureHangfireJobs(Configuration);
         }

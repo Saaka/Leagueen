@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using RestSharp;
-using System;
 
 namespace Leagueen.WebAPI.Configuration
 {
@@ -26,7 +24,7 @@ namespace Leagueen.WebAPI.Configuration
             return services;
         }
 
-        public static IServiceCollection RegisterLibraries(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddExternalAppServices(this IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddSwaggerGen(c =>
@@ -38,7 +36,6 @@ namespace Leagueen.WebAPI.Configuration
                         Description = "Create and manage leagues and user bets",
                     });
                 })
-                .AddLogging()
                 .AddHangfire(c =>
                 {
                     c.UseSqlServerStorage(configuration["DbSettings:ConnectionString"],
@@ -53,7 +50,7 @@ namespace Leagueen.WebAPI.Configuration
             return services;
         }
 
-        public static IApplicationBuilder UseAppServices(this IApplicationBuilder application)
+        public static IApplicationBuilder UseExternalAppServices(this IApplicationBuilder application)
         {
             application
                 .UseSwagger()
