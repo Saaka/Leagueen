@@ -25,7 +25,7 @@ namespace Leagueen.WebAPI.Jobs
         {
             logger.LogInformation($"Leagueen - {nameof(KeepAliveJob)} - {DateTime.UtcNow.ToString()}");
 
-            var serviceAddress = configuration["APIInfrastructure:UseKeepAlive"];
+            var serviceAddress = configuration["APIInfrastructure:KeepAliveAddress"];
 
             var restRequest = new RestRequest(serviceAddress, Method.POST)
                 .AddJsonBody(new { ReturnUrl = configuration["APIInfrastructure:PingAddress"] });
