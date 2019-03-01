@@ -17,6 +17,7 @@ namespace Leagueen.Persistence
         }
 
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
+        protected abstract string MigrationsTable { get; }
 
         private TContext Create(string connectionString)
         {
@@ -27,7 +28,7 @@ namespace Leagueen.Persistence
 
             var optionsBuilder = new DbContextOptionsBuilder<TContext>();
             optionsBuilder.UseSqlServer(connectionString,
-                opt => opt.MigrationsHistoryTable(PersistenceConfig.DefaultMigrationsTable)
+                opt => opt.MigrationsHistoryTable(MigrationsTable)
                 );
 
             return CreateNewInstance(optionsBuilder.Options);
