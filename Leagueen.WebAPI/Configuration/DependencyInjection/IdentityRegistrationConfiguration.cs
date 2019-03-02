@@ -8,17 +8,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Leagueen.WebAPI.Configuration
+namespace Leagueen.WebAPI.Configuration.DependencyInjection
 {
-    public static class IdentityConfiguration
+    public static class IdentityRegistrationConfiguration
     {
-        public const string AuthSecretProperty = "Auth:Secret";
-        public const string AuthIssuerProperty = "Auth:Issuer";
         public const string AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
 
         public static IServiceCollection AddJwtTokenBearerAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var secret = configuration[AuthSecretProperty];
+            var secret = configuration[ApplicationConfiguration.AuthSecretProperty];
             var key = Encoding.ASCII.GetBytes(secret);
 
             services.AddAuthentication(x =>
@@ -36,7 +34,7 @@ namespace Leagueen.WebAPI.Configuration
                     IssuerSigningKey = new SymmetricSecurityKey(key),
 
                     ValidateIssuer = true,
-                    ValidIssuer = configuration[AuthIssuerProperty],
+                    ValidIssuer = configuration[ApplicationConfiguration.AuthIssuerProperty],
 
                     ValidateAudience = false
                 };

@@ -6,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RestSharp;
 
-namespace Leagueen.WebAPI.Configuration
+namespace Leagueen.WebAPI.Configuration.DependencyInjection
 {
-    public static class APIConfigurations
+    public static class WebApiRegistrationConfiguration
     {
         public static IServiceCollection AddMvcWithFilters(this IServiceCollection services)
         {
@@ -43,7 +43,6 @@ namespace Leagueen.WebAPI.Configuration
                         {
                             SchemaName = "LeagueenHangFire"
                         });
-                    c.UseColouredConsoleLogProvider();
                 })
                 .AddTransient<IRestClient, RestClient>();
 

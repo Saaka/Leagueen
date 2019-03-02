@@ -1,5 +1,6 @@
 ﻿using Leagueen.Persistence;
 using Leagueen.WebAPI.Configuration;
+using Leagueen.WebAPI.Configuration.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
