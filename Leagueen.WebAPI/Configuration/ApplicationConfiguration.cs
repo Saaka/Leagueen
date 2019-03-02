@@ -10,6 +10,8 @@ namespace Leagueen.WebAPI.Configuration
         public const string AuthIssuerProperty = "Auth:Issuer";
         public const string TokenExpirationProperty = "Auth:ExpirationInMinutes";
 
+        public const string AppConnectionString = "ConnectionStrings:AppConnectionString";
+
         private readonly IConfiguration configuration;
 
         public ApplicationConfiguration(IConfiguration configuration)
