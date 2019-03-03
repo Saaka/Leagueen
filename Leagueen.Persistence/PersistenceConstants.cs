@@ -1,6 +1,6 @@
 ﻿namespace Leagueen.Persistence
 {
-    public class PersistenceConfig
+    public class PersistenceConstants
     {
         public const string AppConnectionString = nameof(AppConnectionString);
 

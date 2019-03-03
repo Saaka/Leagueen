@@ -9,13 +9,13 @@ namespace Leagueen.Persistence
     {
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString(PersistenceConfig.AppConnectionString);
+            var connectionString = configuration.GetConnectionString(PersistenceConstants.AppConnectionString);
             services.AddDbContext<AppDbContext>((opt) =>
             opt.UseSqlServer(
                 connectionString,
                 cb =>
                 {
-                    cb.MigrationsHistoryTable(PersistenceConfig.DefaultMigrationsTable);
+                    cb.MigrationsHistoryTable(PersistenceConstants.DefaultMigrationsTable);
                 }),
             ServiceLifetime.Scoped);
 

@@ -23,7 +23,7 @@ namespace Leagueen.Persistence
         {
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentException($"Connection string '{PersistenceConfig.AppConnectionString}' is null or empty.", nameof(connectionString));
+                throw new ArgumentException($"Connection string '{PersistenceConstants.AppConnectionString}' is null or empty.", nameof(connectionString));
             }
 
             var optionsBuilder = new DbContextOptionsBuilder<TContext>();
@@ -43,7 +43,7 @@ namespace Leagueen.Persistence
                 .AddEnvironmentVariables()
                 .Build();
 
-            return configuration.GetConnectionString(PersistenceConfig.AppConnectionString);
+            return configuration.GetConnectionString(PersistenceConstants.AppConnectionString);
         }
     }
 }

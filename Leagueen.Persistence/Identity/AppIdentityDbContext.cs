@@ -19,7 +19,7 @@ namespace Leagueen.Persistence.Identity
         {
             base.OnModelCreating(builder);
 
-            builder.HasDefaultSchema(PersistenceConfig.DefaultIdentitySchema);
+            builder.HasDefaultSchema(PersistenceConstants.DefaultIdentitySchema);
             builder.ApplyConfigurationsFromAssembly(typeof(AppIdentityDbContext).Assembly);
         }
     }

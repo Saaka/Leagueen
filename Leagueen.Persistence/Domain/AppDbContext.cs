@@ -20,7 +20,7 @@ namespace Leagueen.Persistence.Domain
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.HasDefaultSchema(PersistenceConfig.DefaultSchema);
+            modelBuilder.HasDefaultSchema(PersistenceConstants.DefaultSchema);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly,
                 x => x.Namespace == typeof(CompetitionConfiguration).Namespace);
         }
