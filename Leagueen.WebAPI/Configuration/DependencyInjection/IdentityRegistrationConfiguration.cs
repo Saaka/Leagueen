@@ -1,4 +1,5 @@
-﻿using Leagueen.Persistence.Identity;
+﻿using Leagueen.Domain.Constants;
+using Leagueen.Persistence.Identity;
 using Leagueen.Persistence.Identity.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -12,8 +13,6 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
 {
     public static class IdentityRegistrationConfiguration
     {
-        public const string AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-
         public static IServiceCollection AddJwtTokenBearerAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             var secret = configuration[ApplicationSettings.AuthSecretProperty];
@@ -48,11 +47,17 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
             services
                 .AddIdentity<ApplicationUser, IdentityUserRole<int>>(opt =>
                 {
-                    opt.User.RequireUniqueEmail = true;
-                    opt.User.AllowedUserNameCharacters = AllowedUserNameCharacters;
-                    opt.Password.RequireDigit = false;
-                    opt.Password.RequireUppercase = false;
-                    opt.Password.RequireNonAlphanumeric = false;
+                    opt.User = new UserOptions
+                    {
+                        AllowedUserNameCharacters = UserConstants.AllowedUserNameCharacters,
+                        RequireUniqueEmail = true
+                    };
+                    opt.Password = new PasswordOptions
+                    {
+                        RequireDigit = false,
+                        RequireUppercase = false,
+                        RequireNonAlphanumeric = false,
+                    };
                 })
                 .AddUserStore<UserStore<ApplicationUser, IdentityRole<int>, AppIdentityDbContext, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityUserToken<int>, IdentityRoleClaim<int>>>()
                 ;

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Leagueen.Application.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Leagueen.WebAPI.Filters
 {
@@ -14,6 +12,21 @@ namespace Leagueen.WebAPI.Filters
         public override void OnException(ExceptionContext context)
         {
             var exception = context.Exception;
+
+            if (exception is ValidationException)
+            {
+                var validationException = (ValidationException)context.Exception;
+                context.HttpContext.Response.ContentType = "application/json";
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                context.Result = new JsonResult(new
+                {
+                    validationException.Message,
+                    validationException.Errors,
+                    ErrorDetails = validationException.Failures,
+                });
+
+                return;
+            }
 
             var code = HttpStatusCode.InternalServerError;
 

@@ -26,7 +26,8 @@ namespace Leagueen.WebAPI
                 .AddDbContext(Configuration)
                 .AddIdentityStore(Configuration)
                 .AddLogging()
-                .AddExternalAppServices(Configuration);
+                .AddExternalAppServices(Configuration)
+                .AddApplicationDependencies();
         }
 
         public void Configure(IApplicationBuilder application, IHostingEnvironment env)

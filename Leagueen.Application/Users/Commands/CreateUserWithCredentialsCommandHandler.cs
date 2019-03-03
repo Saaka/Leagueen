@@ -1,7 +1,6 @@
 ﻿using Leagueen.Application.Users.Models;
 using Leagueen.Common;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,9 +16,10 @@ namespace Leagueen.Application.Users.Commands
             this.guid = guid;
         }
 
-        public Task<CreateUserCommandResult> Handle(CreateUserWithCredentialsCommand request, CancellationToken cancellationToken)
+        public async Task<CreateUserCommandResult> Handle(CreateUserWithCredentialsCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+
+            return new CreateUserCommandResult("Not implemented");
         }
     }
 }
