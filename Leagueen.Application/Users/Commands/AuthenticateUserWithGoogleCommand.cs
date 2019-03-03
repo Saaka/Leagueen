@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Leagueen.Application.Users.Commands
 {
-    public class AuthenticateUserWithGoogleCommand : IRequest<SigninUserCommandResult>
+    public class AuthenticateUserWithGoogleCommand : IRequest<AuthUserCommandResult>
     {
         public string DisplayName { get; set; }
         public string Email { get; set; }

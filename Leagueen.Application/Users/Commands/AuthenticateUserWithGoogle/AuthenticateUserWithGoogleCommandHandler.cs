@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
 {
-    public class AuthenticateUserWithGoogleCommandHandler : IRequestHandler<AuthenticateUserWithGoogleCommand, SigninUserCommandResult>
+    public class AuthenticateUserWithGoogleCommandHandler : IRequestHandler<AuthenticateUserWithGoogleCommand, AuthUserCommandResult>
     {
-        public Task<SigninUserCommandResult> Handle(AuthenticateUserWithGoogleCommand request, CancellationToken cancellationToken)
+        public Task<AuthUserCommandResult> Handle(AuthenticateUserWithGoogleCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

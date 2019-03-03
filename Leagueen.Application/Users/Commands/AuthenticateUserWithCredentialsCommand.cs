@@ -3,10 +3,9 @@ using MediatR;
 
 namespace Leagueen.Application.Users.Commands
 {
-    public class CreateUserWithCredentialsCommand : IRequest<SigninUserCommandResult>
+    public class AuthenticateUserWithCredentialsCommand : IRequest<AuthUserCommandResult>
     {
         public string Email { get; set; }
-        public string DisplayName { get; set; }
         public string Password { get; set; }
     }
 }

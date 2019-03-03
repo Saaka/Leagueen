@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using Leagueen.Domain.Constants;
 
-namespace Leagueen.Application.Users.Commands.CreateUserWithCredentials
+namespace Leagueen.Application.Users.Commands.RegisterUserWithCredentials
 {
-    public class CreateUserWithCredentialsCommandValidator : AbstractValidator<CreateUserWithCredentialsCommand>
+    public class RegisterUserWithCredentialsCommandValidator : AbstractValidator<RegisterUserWithCredentialsCommand>
     {
-        public CreateUserWithCredentialsCommandValidator()
+        public RegisterUserWithCredentialsCommandValidator()
         {
             RuleFor(x => x.DisplayName)
                 .Length(UserConstants.MinDisplayNameLength, UserConstants.MaxDisplayNameLength)

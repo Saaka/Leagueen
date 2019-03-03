@@ -2,13 +2,13 @@
 
 namespace Leagueen.Application.Users.Models
 {
-    public class SigninUserCommandResult : RequestResultBase
+    public class AuthUserCommandResult : RequestResultBase
     {
-        public SigninUserCommandResult()
+        public AuthUserCommandResult()
         {
         }
 
-        public SigninUserCommandResult(string error) : base(error)
+        public AuthUserCommandResult(string error) : base(error)
         {
         }
 
