@@ -6,6 +6,8 @@ namespace Leagueen.Application.Users.Queries.GetUserById
     {
         public GetUserByIdQueryValidator()
         {
+            RuleFor(x => x.UserId)
+                .NotEmpty();
         }
     }
 }

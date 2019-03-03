@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.Linq;
 using System.Net;
 
 namespace Leagueen.WebAPI.Filters
@@ -21,7 +22,7 @@ namespace Leagueen.WebAPI.Filters
                 context.Result = new JsonResult(new
                 {
                     Error = validationException.Message,
-                    Errors = validationException.Errors,
+                    Errors = validationException.Errors.Select(ToCamelCase).ToList(),
                     ErrorDetails = validationException.Failures,
                 });
 
@@ -46,6 +47,14 @@ namespace Leagueen.WebAPI.Filters
             {
                 Error = context.Exception.Message
             });
+        }
+
+        private string ToCamelCase(string input)
+        {
+            if (input.Length <= 1)
+                return input;
+
+            return $"{input.ToLowerInvariant()[0]}{input.Substring(1)}";
         }
     }
 }
