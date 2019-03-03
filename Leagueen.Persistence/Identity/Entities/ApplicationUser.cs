@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Leagueen.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Leagueen.Persistence.Identity.Entities
 {

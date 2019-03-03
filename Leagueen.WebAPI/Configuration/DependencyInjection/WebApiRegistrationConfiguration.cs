@@ -1,5 +1,7 @@
 ﻿using Hangfire;
+using Leagueen.Application.Users.Commands;
 using Leagueen.WebAPI.Filters;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -44,7 +46,8 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                             SchemaName = "LeagueenHangFire"
                         });
                 })
-                .AddTransient<IRestClient, RestClient>();
+                .AddTransient<IRestClient, RestClient>()
+                .AddMediatR(typeof(CreateUserWithCredentialsCommand));
 
             return services;
         }
