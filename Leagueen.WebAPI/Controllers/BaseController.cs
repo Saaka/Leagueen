@@ -28,7 +28,7 @@ namespace Leagueen.WebAPI.Controllers
             }
         }
 
-        protected ActionResult GetResult<TRes>(TRes @base)
+        protected ActionResult GetRequestResult<TRes>(TRes @base)
             where TRes : RequestResultBase
         {
             if (@base.IsSuccessful)

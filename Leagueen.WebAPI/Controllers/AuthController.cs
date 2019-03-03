@@ -12,7 +12,15 @@ namespace Leagueen.WebAPI.Controllers
         {
             var result = await Mediator.Send(request);
 
-            return GetResult(result);
+            return GetRequestResult(result);
+        }
+
+        [HttpPost("google")]
+        public async Task<IActionResult> Google([FromBody] AuthenticateUserWithGoogleCommand request)
+        {
+            var result = await Mediator.Send(request);
+
+            return GetRequestResult(result);
         }
     }
 }

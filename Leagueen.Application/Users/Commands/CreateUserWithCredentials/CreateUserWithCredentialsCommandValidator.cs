@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Leagueen.Domain.Constants;
 
-namespace Leagueen.Application.Users.Commands
+namespace Leagueen.Application.Users.Commands.CreateUserWithCredentials
 {
     public class CreateUserWithCredentialsCommandValidator : AbstractValidator<CreateUserWithCredentialsCommand>
     {

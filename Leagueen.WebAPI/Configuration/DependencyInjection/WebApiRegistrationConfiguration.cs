@@ -1,7 +1,7 @@
 ﻿using FluentValidation.AspNetCore;
 using Hangfire;
+using Leagueen.Application;
 using Leagueen.Application.Infrastructure;
-using Leagueen.Application.Users.Commands;
 using Leagueen.WebAPI.Filters;
 using MediatR;
 using MediatR.Pipeline;
@@ -22,7 +22,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                     options.Filters.Add<CustomExceptionFilterAttribute>();
                 })
                 .AddJsonOptions(s=> s.UseCamelCasing(true))
-                .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<CreateUserWithCredentialsCommandValidator>())
+                .AddFluentValidation(v => v.RegisterValidatorsFromAssembly(typeof(ApplicationModule).Assembly))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<ApiBehaviorOptions>(options =>
@@ -56,7 +56,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                 .AddTransient<IRestClient, RestClient>()
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>))
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
-                .AddMediatR(typeof(CreateUserWithCredentialsCommand).Assembly);
+                .AddMediatR(typeof(ApplicationModule).Assembly);
 
             return services;
         }
