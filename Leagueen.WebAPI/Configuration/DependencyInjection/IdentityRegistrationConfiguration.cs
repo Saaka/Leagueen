@@ -26,7 +26,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
             .AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
-                x.SaveToken = false;
+                x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,

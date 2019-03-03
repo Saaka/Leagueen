@@ -20,14 +20,14 @@ namespace Leagueen.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddApplicationDependencies()
+                .AddDbContext(Configuration)
+                .AddIdentityStore(Configuration)
+                .AddExternalAppServices(Configuration)
                 .AddCors()
                 .AddMvcWithFilters()
                 .AddJwtTokenBearerAuthentication(Configuration)
-                .AddDbContext(Configuration)
-                .AddIdentityStore(Configuration)
-                .AddLogging()
-                .AddExternalAppServices(Configuration)
-                .AddApplicationDependencies();
+                .AddLogging();
         }
 
         public void Configure(IApplicationBuilder application, IHostingEnvironment env)
