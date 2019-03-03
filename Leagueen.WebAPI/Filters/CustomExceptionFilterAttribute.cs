@@ -20,8 +20,8 @@ namespace Leagueen.WebAPI.Filters
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 context.Result = new JsonResult(new
                 {
-                    validationException.Message,
-                    validationException.Errors,
+                    Error = validationException.Message,
+                    Errors = validationException.Errors,
                     ErrorDetails = validationException.Failures,
                 });
 
@@ -44,7 +44,7 @@ namespace Leagueen.WebAPI.Filters
             context.HttpContext.Response.StatusCode = (int)code;
             context.Result = new JsonResult(new
             {
-                error = new[] { context.Exception.Message }
+                Error = context.Exception.Message
             });
         }
     }

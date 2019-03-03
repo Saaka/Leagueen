@@ -18,9 +18,12 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         public static IServiceCollection AddMvcWithFilters(this IServiceCollection services)
         {
             services
-                .AddMvc(o => o.Filters.Add<CustomExceptionFilterAttribute>())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<CreateUserWithCredentialsCommandValidator>());
+                .AddMvc(options => {
+                    options.Filters.Add<CustomExceptionFilterAttribute>();
+                })
+                .AddJsonOptions(s=> s.UseCamelCasing(true))
+                .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<CreateUserWithCredentialsCommandValidator>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<ApiBehaviorOptions>(options =>
             {

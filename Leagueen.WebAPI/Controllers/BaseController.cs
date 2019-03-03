@@ -24,7 +24,7 @@ namespace Leagueen.WebAPI.Controllers
             }
             else
             {
-                return BadRequest(@base.Error);
+                return BadRequest(new { @base.Error });
             }
         }
 
@@ -37,7 +37,7 @@ namespace Leagueen.WebAPI.Controllers
             }
             else
             {
-                return BadRequest(@base.Error);
+                return BadRequest(new { @base.Error });
             }
         }
     }
