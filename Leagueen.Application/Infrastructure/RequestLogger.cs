@@ -18,7 +18,7 @@ namespace Leagueen.Application.Infrastructure
         {
             var name = typeof(TRequest).Name;
             
-            _logger.LogInformation("Leagueen Request: {Name} {@Request}", name, request);
+            _logger.LogInformation("Leagueen Request: {Name} started", name);
 
             return Task.CompletedTask;
         }
