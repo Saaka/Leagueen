@@ -38,7 +38,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                 })
                 .AddHangfire(c =>
                 {
-                    c.UseSqlServerStorage(configuration[ApplicationConfiguration.AppConnectionString],
+                    c.UseSqlServerStorage(configuration[ApplicationSettings.AppConnectionString],
                         new Hangfire.SqlServer.SqlServerStorageOptions
                         {
                             SchemaName = "LeagueenHangFire"

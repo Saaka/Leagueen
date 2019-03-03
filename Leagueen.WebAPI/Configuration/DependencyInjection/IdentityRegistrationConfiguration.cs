@@ -16,7 +16,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
 
         public static IServiceCollection AddJwtTokenBearerAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var secret = configuration[ApplicationConfiguration.AuthSecretProperty];
+            var secret = configuration[ApplicationSettings.AuthSecretProperty];
             var key = Encoding.ASCII.GetBytes(secret);
 
             services.AddAuthentication(x =>
@@ -34,7 +34,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                     IssuerSigningKey = new SymmetricSecurityKey(key),
 
                     ValidateIssuer = true,
-                    ValidIssuer = configuration[ApplicationConfiguration.AuthIssuerProperty],
+                    ValidIssuer = configuration[ApplicationSettings.AuthIssuerProperty],
 
                     ValidateAudience = false
                 };

@@ -4,7 +4,7 @@ using System;
 
 namespace Leagueen.WebAPI.Configuration
 {
-    public class ApplicationConfiguration : IAuthConfiguration
+    public class ApplicationSettings : IAuthConfiguration
     {
         public const string AuthSecretProperty = "Auth:Secret";
         public const string AuthIssuerProperty = "Auth:Issuer";
@@ -14,7 +14,7 @@ namespace Leagueen.WebAPI.Configuration
 
         private readonly IConfiguration configuration;
 
-        public ApplicationConfiguration(IConfiguration configuration)
+        public ApplicationSettings(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
