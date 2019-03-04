@@ -1,4 +1,6 @@
-﻿using Leagueen.Persistence.Domain;
+﻿using Leagueen.Application.Users.Repositories;
+using Leagueen.Persistence.Domain;
+using Leagueen.Persistence.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,14 @@ namespace Leagueen.Persistence
                     cb.MigrationsHistoryTable(PersistenceConstants.DefaultMigrationsTable);
                 }),
             ServiceLifetime.Scoped);
+
+            return services;
+        }
+
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services
+                .AddTransient<IUsersRepository, UsersRepository>();
 
             return services;
         }
