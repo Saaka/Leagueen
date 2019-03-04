@@ -1,5 +1,6 @@
 ﻿using Leagueen.Application.Users.Repositories;
 using Leagueen.Persistence.Domain;
+using Leagueen.Persistence.Identity;
 using Leagueen.Persistence.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,19 +13,26 @@ namespace Leagueen.Persistence
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString(PersistenceConstants.AppConnectionString);
-            services.AddDbContext<AppDbContext>((opt) =>
-            opt.UseSqlServer(
-                connectionString,
-                cb =>
-                {
-                    cb.MigrationsHistoryTable(PersistenceConstants.DefaultMigrationsTable);
-                }),
-            ServiceLifetime.Scoped);
+            RegisterContext<AppDbContext>(services, connectionString, PersistenceConstants.DefaultMigrationsTable);
+            RegisterContext<AppIdentityDbContext>(services, connectionString, PersistenceConstants.DefaultIdentityMigrationsTable);
 
             return services;
         }
 
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        private static void RegisterContext<T>(IServiceCollection services, string connectionString, string migrationsTable)
+            where T : DbContext
+        {
+            services.AddDbContext<T>((opt) =>
+            opt.UseSqlServer(
+                connectionString,
+                cb =>
+                {
+                    cb.MigrationsHistoryTable(migrationsTable);
+                }),
+            ServiceLifetime.Scoped);
+        }
+
+        public static IServiceCollection AddPersistence(this IServiceCollection services)
         {
             services
                 .AddTransient<IUsersRepository, UsersRepository>();

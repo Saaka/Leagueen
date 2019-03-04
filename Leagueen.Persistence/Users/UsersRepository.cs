@@ -17,7 +17,7 @@ namespace Leagueen.Persistence.Users
             this.userManager = userManager;
         }
 
-        public async Task<int> CreateAsync(CreateUserDto userData)
+        public async Task CreateAsync(CreateUserDto userData)
         {
             var applicationUser = new ApplicationUser
             {
@@ -31,8 +31,23 @@ namespace Leagueen.Persistence.Users
             var result = await userManager.CreateAsync(applicationUser, userData.Password);
             if (!result.Succeeded)
                 throw new RepositoryException("CreateUser", result.Errors.Select(x => x.Code));
+        }
 
-            return applicationUser.Id;
+        public async Task CreateAsync(CreateGoogleUserDto userData)
+        {
+            var applicationUser = new ApplicationUser
+            {
+                Email = userData.Email,
+                UserName = userData.Email,
+                DisplayName = userData.DisplayName,
+                Moniker = userData.Moniker,
+                ImageUrl = userData.ImageUrl,
+                GoogleId = userData.GoogleId
+            };
+
+            var result = await userManager.CreateAsync(applicationUser);
+            if (!result.Succeeded)
+                throw new RepositoryException("CreateGoogleUser", result.Errors.Select(x => x.Code));
         }
     }
 }

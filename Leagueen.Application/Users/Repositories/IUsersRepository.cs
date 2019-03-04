@@ -5,6 +5,7 @@ namespace Leagueen.Application.Users.Repositories
 {
     public interface IUsersRepository
     {
-        Task<int> CreateAsync(CreateUserDto userData);
+        Task CreateAsync(CreateUserDto userData);
+        Task CreateAsync(CreateGoogleUserDto userData);
     }
 }

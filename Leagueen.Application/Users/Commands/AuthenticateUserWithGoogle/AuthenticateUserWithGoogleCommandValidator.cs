@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Leagueen.Domain.Constants;
 
 namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
 {
@@ -7,18 +6,8 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
     {
         public AuthenticateUserWithGoogleCommandValidator()
         {
-            RuleFor(x => x.DisplayName)
-                .Length(UserConstants.MinDisplayNameLength, UserConstants.MaxDisplayNameLength)
+            RuleFor(x => x.GoogleToken)
                 .NotEmpty();
-            RuleFor(x => x.Email)
-                .NotEmpty()
-                .EmailAddress()
-                .Length(UserConstants.MinEmailLength, UserConstants.MaxPasswordLength);
-            RuleFor(x => x.ImageUrl)
-                .MaximumLength(UserConstants.MaxImageUrlLength);
-            RuleFor(x => x.GoogleId)
-                .NotEmpty()
-                .MaximumLength(UserConstants.MaxGoogleIdLength);
         }
     }
 }

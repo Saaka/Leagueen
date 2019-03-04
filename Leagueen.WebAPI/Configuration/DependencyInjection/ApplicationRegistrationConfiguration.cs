@@ -1,5 +1,6 @@
 ﻿using Leagueen.Common;
 using Leagueen.Infrastructure;
+using Leagueen.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Leagueen.WebAPI.Configuration.DependencyInjection
@@ -12,7 +13,8 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                 .AddTransient<IAuthConfiguration, ApplicationSettings>();
             
             services
-                .AddInfrastructure();
+                .AddInfrastructure()
+                .AddPersistence();
 
             return services;
         }
