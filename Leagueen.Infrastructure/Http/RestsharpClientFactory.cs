@@ -13,7 +13,10 @@ namespace Leagueen.Infrastructure.Http
     {
         public IRestClient CreateClient(string url)
         {
-            return new RestClient(url);
+            var client = new RestClient(url);
+            client.UseSerializer<JsonNetSerializer>();
+
+            return client;
         }
 
         public IRestRequest CreateRequest(string resource, Method method)

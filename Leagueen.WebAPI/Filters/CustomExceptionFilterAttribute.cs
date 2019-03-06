@@ -16,13 +16,11 @@ namespace Leagueen.WebAPI.Filters
             var exception = context.Exception;
 
             if (exception is ValidationException)
-            {
                 HandleValidationException(exception as ValidationException, context);
-            }
             else if (exception is RepositoryException)
-            {
                 HandleValidationException(exception as RepositoryException, context);
-            }
+            else if (exception is DomainException)
+                HandleDomainException(exception as DomainException, context);
             else
             {
 
@@ -62,11 +60,22 @@ namespace Leagueen.WebAPI.Filters
         private void HandleValidationException(RepositoryException repositoryException, ExceptionContext context)
         {
             context.HttpContext.Response.ContentType = "application/json";
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Result = new JsonResult(new
             {
                 Error = repositoryException.Message,
                 Errors = repositoryException.Errors
+            });
+        }
+
+        private void HandleDomainException(DomainException exception, ExceptionContext context)
+        {
+            context.HttpContext.Response.ContentType = "application/json";
+            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.Result = new JsonResult(new
+            {
+                Error = exception.ExceptionCode.ToString(),
+                ErrorDetails = exception.Message,
             });
         }
 
