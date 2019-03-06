@@ -1,7 +1,10 @@
-﻿using FluentValidation.AspNetCore;
+﻿using AutoMapper;
+using FluentValidation.AspNetCore;
 using Hangfire;
 using Leagueen.Application;
 using Leagueen.Application.Infrastructure;
+using Leagueen.Application.Infrastructure.AutoMapper;
+using Leagueen.Infrastructure;
 using Leagueen.WebAPI.Filters;
 using MediatR;
 using MediatR.Pipeline;
@@ -10,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RestSharp;
+using System.Reflection;
 
 namespace Leagueen.WebAPI.Configuration.DependencyInjection
 {
@@ -36,6 +40,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         public static IServiceCollection AddExternalAppServices(this IServiceCollection services, IConfiguration configuration)
         {
             services
+                .AddAutoMapper(new Assembly[] { typeof(AppAutoMapperProfile).Assembly })
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc(SwaggerVersion, new Swashbuckle.AspNetCore.Swagger.Info

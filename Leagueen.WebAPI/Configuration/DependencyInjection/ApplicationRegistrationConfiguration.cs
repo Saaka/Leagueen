@@ -10,7 +10,8 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection services)
         {
             services
-                .AddTransient<IAuthConfiguration, ApplicationSettings>();
+                .AddTransient<IAuthConfiguration, ApplicationSettings>()
+                .AddTransient<IGoogleConfiguration, ApplicationSettings>();
             
             services
                 .AddInfrastructure()
