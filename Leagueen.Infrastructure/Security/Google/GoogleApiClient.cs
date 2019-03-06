@@ -33,7 +33,7 @@ namespace Leagueen.Infrastructure.Security.Google
 
             var response = await client.ExecuteTaskAsync<GoogleTokenInfo>(request);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                throw new ProviderCommunicationException(response.ErrorMessage);
+                throw new ProviderCommunicationException(response.ErrorMessage ?? response.StatusCode.ToString());
 
             return mapper.Map<TokenInfo>(response.Data);
         }

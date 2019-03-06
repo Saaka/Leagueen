@@ -40,7 +40,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         public static IServiceCollection AddExternalAppServices(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddAutoMapper(new Assembly[] { typeof(AppAutoMapperProfile).Assembly })
+                .AddAutoMapper(new Assembly[] { typeof(AppAutoMapperProfile).Assembly, typeof(InfrastructureAutoMapperProfile).Assembly })
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc(SwaggerVersion, new Swashbuckle.AspNetCore.Swagger.Info
