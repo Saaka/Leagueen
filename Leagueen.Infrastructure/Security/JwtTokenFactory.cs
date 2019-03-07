@@ -18,7 +18,7 @@ namespace Leagueen.Infrastructure.Security
             this.configuration = configuration;
         }
 
-        public string Create(string moniker, bool isAdmin)
+        public string Create(string moniker, bool isAdmin = false)
         {
             var key = Encoding.ASCII.GetBytes(configuration.Secret);
             var tokenHandler = new JwtSecurityTokenHandler();

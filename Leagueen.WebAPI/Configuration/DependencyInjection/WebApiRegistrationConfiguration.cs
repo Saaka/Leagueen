@@ -5,6 +5,7 @@ using Leagueen.Application;
 using Leagueen.Application.Infrastructure;
 using Leagueen.Application.Infrastructure.AutoMapper;
 using Leagueen.Infrastructure;
+using Leagueen.Persistence;
 using Leagueen.WebAPI.Filters;
 using MediatR;
 using MediatR.Pipeline;
@@ -22,10 +23,11 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         public static IServiceCollection AddMvcWithFilters(this IServiceCollection services)
         {
             services
-                .AddMvc(options => {
+                .AddMvc(options =>
+                {
                     options.Filters.Add<CustomExceptionFilterAttribute>();
                 })
-                .AddJsonOptions(s=> s.UseCamelCasing(true))
+                .AddJsonOptions(s => s.UseCamelCasing(true))
                 .AddFluentValidation(v => v.RegisterValidatorsFromAssembly(typeof(ApplicationModule).Assembly))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -40,7 +42,12 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         public static IServiceCollection AddExternalAppServices(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddAutoMapper(new Assembly[] { typeof(AppAutoMapperProfile).Assembly, typeof(InfrastructureAutoMapperProfile).Assembly })
+                .AddAutoMapper(new Assembly[]
+                {
+                    typeof(AppAutoMapperProfile).Assembly,
+                    typeof(InfrastructureAutoMapperProfile).Assembly,
+                    typeof(PersistenceAutoMapperProfile).Assembly
+                })
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc(SwaggerVersion, new Swashbuckle.AspNetCore.Swagger.Info

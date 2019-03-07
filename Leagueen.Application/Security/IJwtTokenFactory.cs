@@ -2,6 +2,6 @@
 {
     public interface IJwtTokenFactory
     {
-        string Create(string moniker, bool isAdmin);
+        string Create(string moniker, bool isAdmin = false);
     }
 }

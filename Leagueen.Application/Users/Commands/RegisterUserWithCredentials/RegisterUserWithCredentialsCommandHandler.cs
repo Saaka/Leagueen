@@ -1,4 +1,6 @@
-﻿using Leagueen.Application.Users.Models;
+﻿using Leagueen.Application.Infrastructure;
+using Leagueen.Application.Security;
+using Leagueen.Application.Users.Models;
 using Leagueen.Application.Users.Repositories;
 using Leagueen.Common;
 using MediatR;
@@ -11,13 +13,19 @@ namespace Leagueen.Application.Users.Commands.RegisterUserWithCredentials
     {
         private readonly IGuid guid;
         private readonly IUsersRepository usersRepository;
+        private readonly IJwtTokenFactory jwtTokenFactory;
+        private readonly IProfileImageUrlProvider profileImageUrlProvider;
 
         public RegisterUserWithCredentialsCommandHandler(
             IGuid guid,
-            IUsersRepository usersRepository)
+            IUsersRepository usersRepository,
+            IJwtTokenFactory jwtTokenFactory,
+            IProfileImageUrlProvider profileImageUrlProvider)
         {
             this.guid = guid;
             this.usersRepository = usersRepository;
+            this.jwtTokenFactory = jwtTokenFactory;
+            this.profileImageUrlProvider = profileImageUrlProvider;
         }
 
         public async Task<AuthUserCommandResult> Handle(RegisterUserWithCredentialsCommand request, CancellationToken cancellationToken)
@@ -31,9 +39,19 @@ namespace Leagueen.Application.Users.Commands.RegisterUserWithCredentials
                 Password = request.Password
             });
 
+            var token = jwtTokenFactory.Create(moniker);
+            var imageUrl = profileImageUrlProvider.GetImageUrl(request.Email);
+
             return new AuthUserCommandResult
             {
-                User = new UserDto { Moniker = moniker }
+                User = new UserDto
+                {
+                    DisplayName = request.DisplayName,
+                    Email = request.Email,
+                    Moniker = moniker,
+                    Token = token,
+                    ImageUrl = imageUrl
+                }
             };
         }
     }
