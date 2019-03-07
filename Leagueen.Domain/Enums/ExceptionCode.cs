@@ -3,6 +3,7 @@
     public enum ExceptionCode
     {
         InvalidGoogleToken,
-        UserNotFound
+        UserNotFound,
+        UserEmailNotUnique,
     }
 }
