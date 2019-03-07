@@ -2,8 +2,10 @@
 using Leagueen.Application.Users.Models;
 using Leagueen.Application.Users.Repositories;
 using Leagueen.Domain.Exceptions;
+using Leagueen.Persistence.Identity;
 using Leagueen.Persistence.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,13 +14,16 @@ namespace Leagueen.Persistence.Users
     public class UsersRepository : IUsersRepository
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly AppIdentityDbContext context;
         private readonly IMapper mapper;
 
         public UsersRepository(
             UserManager<ApplicationUser> userManager,
+            AppIdentityDbContext context,
             IMapper mapper)
         {
             this.userManager = userManager;
+            this.context = context;
             this.mapper = mapper;
         }
 
@@ -64,6 +69,34 @@ namespace Leagueen.Persistence.Users
                 return mapper.Map<UserDto>(user);
 
             return null;
+        }
+
+        public async Task<UserDto> GetUserById(int userId)
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            if (user == null) return null;
+
+            return mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> GetUserByMoniker(string moniker)
+        {
+            var user = await context.Users
+                .Where(x => x.Moniker == moniker)
+                .FirstOrDefaultAsync();
+            if (user == null) return null;
+
+            return mapper.Map<UserDto>(user);
+        }
+
+        public async Task<int?> GetUserIdByMoniker(string moniker)
+        {
+            var user = await context.Users
+                .Where(x => x.Moniker == moniker)
+                .FirstOrDefaultAsync();
+            if (user == null) return null;
+
+            return user.Id;
         }
 
         public async Task<bool> GoogleUserExists(string email, string googleId)

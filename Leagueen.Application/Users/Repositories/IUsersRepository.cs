@@ -12,5 +12,8 @@ namespace Leagueen.Application.Users.Repositories
         Task<UserDto> MergeUserWithGoogle(string email, string externalUserId, string imageUrl);
         Task<UserDto> UpdateExistingGoogleUser(string email, string imageUrl);
         Task<UserDto> GetUserByCredentials(string email, string password);
+        Task<UserDto> GetUserById(int userId);
+        Task<UserDto> GetUserByMoniker(string moniker);
+        Task<int?> GetUserIdByMoniker(string moniker);
     }
 }

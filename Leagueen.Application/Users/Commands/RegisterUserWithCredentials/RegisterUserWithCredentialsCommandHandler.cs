@@ -31,16 +31,17 @@ namespace Leagueen.Application.Users.Commands.RegisterUserWithCredentials
         public async Task<AuthUserCommandResult> Handle(RegisterUserWithCredentialsCommand request, CancellationToken cancellationToken)
         {
             var moniker = guid.GetNormalizedGuid();
+            var imageUrl = profileImageUrlProvider.GetImageUrl(request.Email);
             await usersRepository.CreateAsync(new CreateUserDto
             {
                 DisplayName = request.DisplayName,
                 Email = request.Email,
                 Moniker = moniker,
-                Password = request.Password
+                Password = request.Password,
+                ImageUrl = imageUrl
             });
 
             var token = jwtTokenFactory.Create(moniker);
-            var imageUrl = profileImageUrlProvider.GetImageUrl(request.Email);
 
             return new AuthUserCommandResult
             {

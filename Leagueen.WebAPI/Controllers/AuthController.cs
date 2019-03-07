@@ -10,7 +10,7 @@ namespace Leagueen.WebAPI.Controllers
     public class AuthController : BaseController
     {
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserWithCredentialsCommand request)
+        public async Task<IActionResult> Register(RegisterUserWithCredentialsCommand request)
         {
             var result = await Mediator.Send(request);
 
@@ -18,7 +18,7 @@ namespace Leagueen.WebAPI.Controllers
         }
 
         [HttpPost("google")]
-        public async Task<IActionResult> Google([FromBody] AuthenticateUserWithGoogleCommand request)
+        public async Task<IActionResult> Google(AuthenticateUserWithGoogleCommand request)
         {
             var result = await Mediator.Send(request);
 
@@ -26,7 +26,7 @@ namespace Leagueen.WebAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] AuthenticateUserWithCredentialsCommand request)
+        public async Task<IActionResult> Login(AuthenticateUserWithCredentialsCommand request)
         {
             var result = await Mediator.Send(request);
 
@@ -35,10 +35,11 @@ namespace Leagueen.WebAPI.Controllers
 
         [Authorize]
         [HttpGet("user")]
-        public async Task<IActionResult> GetUser()
+        public async Task<IActionResult> Get()
         {
             var result = await Mediator.Send(new GetUserByIdQuery
             {
+                UserId = await GetUserId()
             });
 
             return GetRequestResult(result);

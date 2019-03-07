@@ -1,6 +1,7 @@
 ﻿using Leagueen.Common;
 using Leagueen.Infrastructure;
 using Leagueen.Persistence;
+using Leagueen.WebAPI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Leagueen.WebAPI.Configuration.DependencyInjection
@@ -11,8 +12,10 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         {
             services
                 .AddTransient<IAuthConfiguration, ApplicationSettings>()
-                .AddTransient<IGoogleConfiguration, ApplicationSettings>();
-            
+                .AddTransient<IGoogleConfiguration, ApplicationSettings>()
+
+                .AddTransient<IUserContextDataProvider, UserContextDataProvider>();
+
             services
                 .AddInfrastructure()
                 .AddPersistence();
