@@ -70,9 +70,9 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
                     DisplayName = tokenInfo.DisplayName,
                     Email = tokenInfo.Email,
                     ImageUrl = tokenInfo.ImageUrl,
-                    Moniker = moniker,
-                    Token = token
-                }
+                    Moniker = moniker
+                },
+                Token = token
             };
         }
 
@@ -81,10 +81,11 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
             var result = await usersRepository
                 .MergeUserWithGoogle(tokenInfo.Email, tokenInfo.ExternalUserId, tokenInfo.ImageUrl);
 
-            result.Token = jwtTokenFactory.Create(result.Moniker);
+            var token = jwtTokenFactory.Create(result.Moniker);
             return new AuthUserCommandResult
             {
-                User = result
+                User = result,
+                Token = token
             };
         }
 
@@ -93,10 +94,11 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
             var result = await usersRepository
                 .UpdateExistingGoogleUser(tokenInfo.Email, tokenInfo.ImageUrl);
 
-            result.Token = jwtTokenFactory.Create(result.Moniker);
+            var token = jwtTokenFactory.Create(result.Moniker);
             return new AuthUserCommandResult
             {
-                User = result
+                User = result,
+                Token = token
             };
         }
     }

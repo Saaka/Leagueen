@@ -50,9 +50,9 @@ namespace Leagueen.Application.Users.Commands.RegisterUserWithCredentials
                     DisplayName = request.DisplayName,
                     Email = request.Email,
                     Moniker = moniker,
-                    Token = token,
                     ImageUrl = imageUrl
-                }
+                },
+                Token = token
             };
         }
     }

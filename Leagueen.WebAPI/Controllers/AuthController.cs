@@ -42,7 +42,7 @@ namespace Leagueen.WebAPI.Controllers
                 UserId = await GetUserId()
             });
 
-            return GetRequestResult(result);
+            return Ok(result);
         }
     }
 }

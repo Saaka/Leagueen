@@ -13,5 +13,6 @@ namespace Leagueen.Application.Users.Models
         }
 
         public UserDto User { get; set; }
+        public string Token { get; set; }
     }
 }

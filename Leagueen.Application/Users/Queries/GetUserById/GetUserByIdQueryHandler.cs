@@ -9,30 +9,23 @@ using System.Threading.Tasks;
 
 namespace Leagueen.Application.Users.Queries.GetUserById
 {
-    public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, AuthUserCommandResult>
+    public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserDto>
     {
         private readonly IUsersRepository usersRepository;
-        private readonly IJwtTokenFactory jwtTokenFactory;
 
         public GetUserByIdQueryHandler(
-            IUsersRepository usersRepository,
-            IJwtTokenFactory jwtTokenFactory)
+            IUsersRepository usersRepository)
         {
             this.usersRepository = usersRepository;
-            this.jwtTokenFactory = jwtTokenFactory;
         }
 
-        public async Task<AuthUserCommandResult> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var user = await usersRepository.GetUserById(request.UserId);
             if (user == null)
                 throw new DomainException(Domain.Enums.ExceptionCode.UserNotFound);
 
-            user.Token = jwtTokenFactory.Create(user.Moniker);
-            return new AuthUserCommandResult
-            {
-                User = user
-            };
+            return user;
         }
     }
 }

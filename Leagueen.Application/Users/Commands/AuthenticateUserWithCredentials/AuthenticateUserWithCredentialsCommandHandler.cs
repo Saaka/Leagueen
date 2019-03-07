@@ -27,10 +27,11 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithCredentials
             if (user == null)
                 throw new DomainException(Domain.Enums.ExceptionCode.UserNotFound);
 
-            user.Token = jwtTokenFactory.Create(user.Moniker);
+            var token = jwtTokenFactory.Create(user.Moniker);
             return new AuthUserCommandResult
             {
-                User = user
+                User = user,
+                Token = token
             };
         }
     }
