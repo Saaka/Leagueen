@@ -10,7 +10,7 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithCredentials
             RuleFor(x => x.Email)
                 .EmailAddress()
                 .NotEmpty()
-                .Length(UserConstants.MinEmailLength, UserConstants.MaxPasswordLength);
+                .Length(UserConstants.MinEmailLength, UserConstants.MaxEmailLength);
             RuleFor(x => x.Password)
                 .NotEmpty()
                 .Length(UserConstants.MinPasswordLength, UserConstants.MaxPasswordLength);

@@ -55,6 +55,17 @@ namespace Leagueen.Persistence.Users
                 throw new RepositoryException("CreateGoogleUser", result.Errors.Select(x => x.Code));
         }
 
+        public async Task<UserDto> GetUserByCredentials(string email, string password)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new RepositoryException(nameof(GetUserByCredentials));
+            if(await userManager.CheckPasswordAsync(user, password))
+                return mapper.Map<UserDto>(user);
+
+            return null;
+        }
+
         public async Task<bool> GoogleUserExists(string email, string googleId)
         {
             var user = await userManager.FindByEmailAsync(email);

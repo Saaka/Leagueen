@@ -11,5 +11,6 @@ namespace Leagueen.Application.Users.Repositories
         Task<bool> IsEmailRegistered(string email);
         Task<UserDto> MergeUserWithGoogle(string email, string externalUserId, string imageUrl);
         Task<UserDto> UpdateExistingGoogleUser(string email, string imageUrl);
+        Task<UserDto> GetUserByCredentials(string email, string password);
     }
 }

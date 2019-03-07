@@ -61,7 +61,7 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
                 ImageUrl = tokenInfo.ImageUrl,
                 Moniker = moniker
             });
-            var token = jwtTokenFactory.Create(tokenInfo.Email);
+            var token = jwtTokenFactory.Create(moniker);
 
             return new AuthUserCommandResult
             {
@@ -81,7 +81,7 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
             var result = await usersRepository
                 .MergeUserWithGoogle(tokenInfo.Email, tokenInfo.ExternalUserId, tokenInfo.ImageUrl);
 
-            result.Token = jwtTokenFactory.Create(tokenInfo.Email);
+            result.Token = jwtTokenFactory.Create(result.Moniker);
             return new AuthUserCommandResult
             {
                 User = result
@@ -93,7 +93,7 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
             var result = await usersRepository
                 .UpdateExistingGoogleUser(tokenInfo.Email, tokenInfo.ImageUrl);
 
-            result.Token = jwtTokenFactory.Create(tokenInfo.Email);
+            result.Token = jwtTokenFactory.Create(result.Moniker);
             return new AuthUserCommandResult
             {
                 User = result
