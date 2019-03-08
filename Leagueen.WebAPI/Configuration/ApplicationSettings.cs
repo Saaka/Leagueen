@@ -1,4 +1,5 @@
 ﻿using Leagueen.Common;
+using Leagueen.Infrastructure.Providers.FootballData;
 using Microsoft.Extensions.Configuration;
 using System;
 
@@ -15,6 +16,10 @@ namespace Leagueen.WebAPI.Configuration
         public const string GoogleClientIdProperty = "Google:ClientId";
         public const string GoogleClientKeyProperty = "Google:ClientKey";
         public const string GoogleValidationEndpointProperty = "Google:ValidationEndpoint";
+
+        public const string FootballDataApiToken = "FootballData:ApiToken";
+        public const string FootballDataApiUrl = "FootballData:ApiUrl";
+        public const string FootballDataApiPlan = "FootballData:ApiPlan";
 
         private readonly IConfiguration configuration;
 
@@ -34,5 +39,25 @@ namespace Leagueen.WebAPI.Configuration
         public string ClientKey => configuration[GoogleClientKeyProperty];
 
         public string ValidationEndpoint => configuration[GoogleValidationEndpointProperty];
+    }
+
+    public class FootballDataSettings : IFootballDataConfiguration
+    {
+        public const string FootballDataApiToken = "FootballData:ApiToken";
+        public const string FootballDataApiUrl = "FootballData:ApiUrl";
+        public const string FootballDataApiPlan = "FootballData:ApiPlan";
+
+        private readonly IConfiguration configuration;
+
+        public FootballDataSettings(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
+        public string ApiToken => configuration[FootballDataApiToken];
+
+        public string ApiUrl => configuration[FootballDataApiUrl];
+
+        public string ApiPlan => configuration[FootballDataApiPlan];
     }
 }

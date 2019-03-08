@@ -1,5 +1,6 @@
 ﻿using Leagueen.Common;
 using Leagueen.Infrastructure;
+using Leagueen.Infrastructure.Providers.FootballData;
 using Leagueen.Persistence;
 using Leagueen.WebAPI.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
             services
                 .AddTransient<IAuthConfiguration, ApplicationSettings>()
                 .AddTransient<IGoogleConfiguration, ApplicationSettings>()
+                .AddTransient<IFootballDataConfiguration, FootballDataSettings>()
 
                 .AddTransient<IUserContextDataProvider, UserContextDataProvider>();
 

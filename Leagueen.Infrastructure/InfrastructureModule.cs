@@ -1,10 +1,12 @@
 ﻿using Leagueen.Application.Infrastructure;
+using Leagueen.Application.Matches;
 using Leagueen.Application.Security;
 using Leagueen.Application.Security.Google;
 using Leagueen.Common;
 using Leagueen.Infrastructure.Helpers;
 using Leagueen.Infrastructure.Http;
 using Leagueen.Infrastructure.Images;
+using Leagueen.Infrastructure.Providers.FootballData;
 using Leagueen.Infrastructure.Security;
 using Leagueen.Infrastructure.Security.Google;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +23,8 @@ namespace Leagueen.Infrastructure
                 .AddTransient<IGuid, GuidProvider>()
                 .AddTransient<IRestsharpClientFactory, RestsharpClientFactory>()
                 .AddTransient<IGoogleApiClient, GoogleApiClient>()
+
+                .AddTransient<IMatchesProvider, FootballDataClient>()
 
                 .AddTransient<HashGenerator>()
                 .AddTransient<IProfileImageUrlProvider, GravatarProfileImageUrlProvider>();
