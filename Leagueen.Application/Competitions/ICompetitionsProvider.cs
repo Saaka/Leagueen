@@ -5,6 +5,7 @@ namespace Leagueen.Application.Competitions
 {
     public interface ICompetitionsProvider
     {
-        Task<CompetitionListDto> GetCompetitionsList();
+        Task<CompetitionsListDto> GetCompetitionsList();
+        Task<CompetitionTeamsListDto> GetCompetitionTeamsList(string code);
     }
 }

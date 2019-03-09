@@ -22,16 +22,27 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             this.configuration = configuration;
         }
 
-        public async Task<CompetitionListDto> GetCompetitionsList()
+        public async Task<CompetitionTeamsListDto> GetCompetitionTeamsList(string code)
+        {
+            var client = CreateClient();
+            var request = clientFactory
+                .CreateRequest($"competitions/{code}/teams", Method.GET);
+
+            var response = await client.ExecuteTaskAsync<CompetitionTeamsListDto>(request);
+            EnsureSuccessfulStatusCode(response);
+
+            return response.Data;
+        }
+
+        public async Task<CompetitionsListDto> GetCompetitionsList()
         {
             var client = CreateClient();
             var request = clientFactory
                 .CreateRequest("competitions", Method.GET)
                 .AddQueryParameter("plan", configuration.ApiPlan);
 
-            var response = await client.ExecuteTaskAsync<CompetitionListDto>(request);
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                throw CreateProviderException(response);
+            var response = await client.ExecuteTaskAsync<CompetitionsListDto>(request);
+            EnsureSuccessfulStatusCode(response);
 
             return response.Data;
         }
@@ -42,16 +53,16 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             var request = clientFactory.CreateRequest("matches", Method.GET);
 
             var response = await client.ExecuteTaskAsync<MatchListDto>(request);
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                throw CreateProviderException(response);
+            EnsureSuccessfulStatusCode(response);
 
             return response.Data;
         }
 
-        private ProviderCommunicationException CreateProviderException<T>(IRestResponse<T> response)
+        private void EnsureSuccessfulStatusCode<T>(IRestResponse<T> response)
             where T : class
         {
-            return new ProviderCommunicationException(response.ErrorMessage ?? response.StatusCode.ToString());
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                throw new ProviderCommunicationException(response.ErrorMessage ?? response.StatusCode.ToString());
         }
 
         private IRestClient CreateClient()

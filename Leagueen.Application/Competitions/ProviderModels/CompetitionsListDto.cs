@@ -2,9 +2,9 @@
 
 namespace Leagueen.Application.Competitions.ProviderModels
 {
-    public class CompetitionListDto
+    public class CompetitionsListDto
     {
-        public CompetitionListDto()
+        public CompetitionsListDto()
         {
             Competitions = new List<CompetitionDto>();
         }

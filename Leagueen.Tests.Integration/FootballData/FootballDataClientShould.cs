@@ -30,6 +30,17 @@ namespace Leagueen.Tests.Integration.FootballData
             Assert.NotEqual(0, result.Count);
         }
 
+        [Fact]
+        public async Task ReturnCompetitionTeams()
+        {
+            var client = CreateClient();
+
+            var result = await client.GetCompetitionTeamsList("PL");
+
+            Assert.NotNull(result);
+            Assert.NotEqual(0, result.Count);
+        }
+
         private FootballDataClient CreateClient()
         {
             return new FootballDataClient(
