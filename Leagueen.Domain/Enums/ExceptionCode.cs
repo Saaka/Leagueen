@@ -2,8 +2,12 @@
 {
     public enum ExceptionCode
     {
-        InvalidGoogleToken,
+        InvalidGoogleToken = 1,
         UserNotFound,
         UserEmailNotUnique,
+        InvalidCompetitionName,
+        InvalidCompetitionCode,
+        InvalidCompetitionExternalId,
+        InvalidCompetitionType,
     }
 }

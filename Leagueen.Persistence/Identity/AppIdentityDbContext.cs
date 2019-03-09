@@ -11,7 +11,7 @@ namespace Leagueen.Persistence.Identity
         public AppIdentityDbContext()
         {
         }
-        public AppIdentityDbContext(DbContextOptions options) : base(options)
+        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options)
         {
         }
 

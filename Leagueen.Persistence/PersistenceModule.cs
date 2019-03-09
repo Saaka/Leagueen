@@ -1,5 +1,7 @@
-﻿using Leagueen.Application.Users.Repositories;
+﻿using Leagueen.Application.Infrastructure.DbInitializer;
+using Leagueen.Application.Users.Repositories;
 using Leagueen.Persistence.Domain;
+using Leagueen.Persistence.Domain.Initializer;
 using Leagueen.Persistence.Identity;
 using Leagueen.Persistence.Users;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +37,10 @@ namespace Leagueen.Persistence
         public static IServiceCollection AddPersistence(this IServiceCollection services)
         {
             services
-                .AddTransient<IUsersRepository, UsersRepository>();
+                .AddTransient<IUsersRepository, UsersRepository>()
+
+                .AddTransient<IAppDbInitializer, AppDbInitializer>()
+                .AddTransient<ICompetitionsSeeder, CompetitionsSeeder>();
 
             return services;
         }
