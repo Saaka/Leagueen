@@ -1,4 +1,4 @@
-﻿using Leagueen.Application.Matches.Models;
+﻿using Leagueen.Application.Matches.ProviderModels;
 using System.Threading.Tasks;
 
 namespace Leagueen.Application.Matches

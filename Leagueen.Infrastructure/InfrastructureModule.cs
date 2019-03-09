@@ -1,4 +1,5 @@
-﻿using Leagueen.Application.Infrastructure;
+﻿using Leagueen.Application.Competitions;
+using Leagueen.Application.Infrastructure;
 using Leagueen.Application.Matches;
 using Leagueen.Application.Security;
 using Leagueen.Application.Security.Google;
@@ -25,6 +26,7 @@ namespace Leagueen.Infrastructure
                 .AddTransient<IGoogleApiClient, GoogleApiClient>()
 
                 .AddTransient<IMatchesProvider, FootballDataClient>()
+                .AddTransient<ICompetitionsProvider, FootballDataClient>()
 
                 .AddTransient<HashGenerator>()
                 .AddTransient<IProfileImageUrlProvider, GravatarProfileImageUrlProvider>();

@@ -1,4 +1,4 @@
-﻿namespace Leagueen.Application.Matches.Models
+﻿namespace Leagueen.Application.Matches.ProviderModels
 {
     public class MatchScoreDto
     {
