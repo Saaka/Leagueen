@@ -58,6 +58,18 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             return response.Data;
         }
 
+        public async Task<MatchListDto> GetAllCompetitionMatches(int competitionId)
+        {
+            var client = CreateClient();
+            var request = clientFactory
+                .CreateRequest($"competitions/{competitionId.ToString()}/matches", Method.GET);
+
+            var response = await client.ExecuteTaskAsync<MatchListDto>(request);
+            EnsureSuccessfulStatusCode(response);
+
+            return response.Data;
+        }
+
         private void EnsureSuccessfulStatusCode<T>(IRestResponse<T> response)
             where T : class
         {

@@ -6,6 +6,7 @@ namespace Leagueen.Application.Matches.ProviderModels
     {
         public int Id { get; set; }
         public MatchCompetitionDto Competition { get; set; }
+        public MatchSeasonDto Season { get; set; }
         public DateTime UtcDate { get; set; }
         public DateTime LastUpdated { get; set; }
         public string Status { get; set; }

@@ -9,22 +9,33 @@ namespace Leagueen.Tests.Integration.FootballData
     public class FootballDataClientShould
     {
         [Fact]
-        public async Task ReturnAvailableCopetitions()
+        public async Task ReturnTodaysMatches()
         {
             var client = CreateClient();
 
-            var result = await client.GetCompetitionsList();
+            var result = await client.GetTodaysMatches();
 
             Assert.NotNull(result);
             Assert.NotEqual(0, result.Count);
         }
 
         [Fact]
-        public async Task ReturnTodaysMatches()
+        public async Task ReturnAllCompetitionMatches()
         {
             var client = CreateClient();
 
-            var result = await client.GetTodaysMatches();
+            var result = await client.GetAllCompetitionMatches(2021);
+
+            Assert.NotNull(result);
+            Assert.NotEqual(0, result.Count);
+        }
+
+        [Fact]
+        public async Task ReturnAvailableCopetitions()
+        {
+            var client = CreateClient();
+
+            var result = await client.GetCompetitionsList();
 
             Assert.NotNull(result);
             Assert.NotEqual(0, result.Count);
