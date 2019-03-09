@@ -27,6 +27,13 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .HasConversion(
                     v => (byte)v,
                     v => (CompetitionType)v);
+
+            builder
+                .Property(x => x.Model)
+                .IsRequired()
+                .HasConversion(
+                    v => (byte)v,
+                    v => (CompetitionModel)v);
         }
     }
 }

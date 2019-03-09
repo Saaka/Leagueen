@@ -8,9 +8,10 @@ namespace Leagueen.Domain.Entities
     {
         private Competition() { }
 
-        public Competition(CompetitionType type, string name, string code, int externalId)
+        public Competition(CompetitionType type, CompetitionModel model, string name, string code, int externalId)
         {
             Type = type;
+            Model = model;
             Name = name;
             Code = code;
             ExternalId = externalId;
@@ -20,6 +21,7 @@ namespace Leagueen.Domain.Entities
 
         public int CompetitionId { get; private set; }
         public CompetitionType Type { get; private set; }
+        public CompetitionModel Model { get; set; }
         public string Name { get; private set; }
         public string Code { get; private set; }
         public int ExternalId { get; private set; }
@@ -34,6 +36,8 @@ namespace Leagueen.Domain.Entities
                 throw new DomainException(ExceptionCode.InvalidCompetitionExternalId);
             if (!Enum.IsDefined(typeof(CompetitionType), Type))
                 throw new DomainException(ExceptionCode.InvalidCompetitionType);
+            if (!Enum.IsDefined(typeof(CompetitionModel), Model))
+                throw new DomainException(ExceptionCode.InvalidCompetitionModel);
         }
     }
 }

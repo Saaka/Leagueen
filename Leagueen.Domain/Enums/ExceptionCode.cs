@@ -9,5 +9,6 @@
         InvalidCompetitionCode,
         InvalidCompetitionExternalId,
         InvalidCompetitionType,
+        InvalidCompetitionModel,
     }
 }
