@@ -3,6 +3,8 @@ using Leagueen.Application.Users.Repositories;
 using Leagueen.Persistence.Domain;
 using Leagueen.Persistence.Domain.Initializer;
 using Leagueen.Persistence.Identity;
+using Leagueen.Persistence.Identity.Initializer;
+using Leagueen.Persistence.Initializer;
 using Leagueen.Persistence.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,9 +40,14 @@ namespace Leagueen.Persistence
         {
             services
                 .AddTransient<IUsersRepository, UsersRepository>()
+                .AddTransient<IDbInitializer, DbInitializer>()
 
-                .AddTransient<IAppDbInitializer, AppDbInitializer>()
-                .AddTransient<ICompetitionsSeeder, CompetitionsSeeder>();
+                .AddTransient<IdentityDbInitializer>()
+                .AddTransient<UserSeedConfiguration>()
+                .AddTransient<UserSeeder>()
+
+                .AddTransient<AppDbInitializer>()
+                .AddTransient<CompetitionsSeeder>();
 
             return services;
         }

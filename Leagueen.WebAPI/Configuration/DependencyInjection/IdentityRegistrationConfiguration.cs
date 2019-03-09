@@ -45,7 +45,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         public static IServiceCollection AddIdentityStore(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddIdentity<ApplicationUser, IdentityUserRole<int>>(opt =>
+                .AddIdentity<ApplicationUser, IdentityRole<int>>(opt =>
                 {
                     opt.User = new UserOptions
                     {
@@ -60,8 +60,8 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                     };
                 })
                 .AddUserStore<UserStore<ApplicationUser, IdentityRole<int>, AppIdentityDbContext, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityUserToken<int>, IdentityRoleClaim<int>>>()
-                ;
-            
+                .AddRoleStore<RoleStore<IdentityRole<int>, AppIdentityDbContext, int, IdentityUserRole<int>, IdentityRoleClaim<int>>>();
+
             return services;
         }
     }

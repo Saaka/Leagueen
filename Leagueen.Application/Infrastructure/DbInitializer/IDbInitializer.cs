@@ -2,7 +2,7 @@
 
 namespace Leagueen.Application.Infrastructure.DbInitializer
 {
-    public interface IAppDbInitializer
+    public interface IDbInitializer
     {
         Task ExecuteAsync();
     }

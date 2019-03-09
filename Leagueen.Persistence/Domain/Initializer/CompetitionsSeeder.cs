@@ -5,12 +5,7 @@ using System.Threading.Tasks;
 
 namespace Leagueen.Persistence.Domain.Initializer
 {
-    public interface ICompetitionsSeeder
-    {
-        Task ExecuteAsync();
-    }
-
-    public class CompetitionsSeeder : ICompetitionsSeeder
+    public class CompetitionsSeeder
     {
         private readonly AppDbContext context;
 

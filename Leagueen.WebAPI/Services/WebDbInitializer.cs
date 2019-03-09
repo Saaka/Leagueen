@@ -17,7 +17,7 @@ namespace Leagueen.WebAPI.Services
                 try
                 {
                     logger.LogInformation("Initializing database");
-                    var initializer = services.GetRequiredService<IAppDbInitializer>();
+                    var initializer = services.GetRequiredService<IDbInitializer>();
                     initializer.ExecuteAsync().Wait();
                     logger.LogInformation("Database initialization successful");
                 }
