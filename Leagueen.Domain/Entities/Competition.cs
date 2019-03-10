@@ -53,15 +53,15 @@ namespace Leagueen.Domain.Entities
         private void ValidateCreation()
         {
             if (string.IsNullOrWhiteSpace(Name))
-                throw new DomainException(ExceptionCode.InvalidCompetitionName);
+                throw new DomainException(ExceptionCode.CompetitionNameRequired);
             if (string.IsNullOrWhiteSpace(Code))
-                throw new DomainException(ExceptionCode.InvalidCompetitionCode);
+                throw new DomainException(ExceptionCode.CompetitionCodeRequired);
             if (ExternalId == 0)
-                throw new DomainException(ExceptionCode.InvalidCompetitionExternalId);
+                throw new DomainException(ExceptionCode.CompetitionExternalIdRequired);
             if (!Enum.IsDefined(typeof(CompetitionType), Type))
-                throw new DomainException(ExceptionCode.InvalidCompetitionType);
+                throw new DomainException(ExceptionCode.CompetitionTypeInvalid);
             if (!Enum.IsDefined(typeof(CompetitionModel), Model))
-                throw new DomainException(ExceptionCode.InvalidCompetitionModel);
+                throw new DomainException(ExceptionCode.CompetitionModelInvalid);
         }
     }
 }
