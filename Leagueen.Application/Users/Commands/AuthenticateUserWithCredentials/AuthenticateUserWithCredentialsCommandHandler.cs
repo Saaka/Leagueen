@@ -27,7 +27,7 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithCredentials
             if (user == null)
                 throw new DomainException(Domain.Enums.ExceptionCode.UserNotFound);
 
-            var token = jwtTokenFactory.Create(user.Moniker);
+            var token = jwtTokenFactory.Create(user);
             return new AuthUserCommandResult
             {
                 User = user,

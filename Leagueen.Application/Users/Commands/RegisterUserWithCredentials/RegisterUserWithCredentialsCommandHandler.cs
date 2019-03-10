@@ -32,7 +32,7 @@ namespace Leagueen.Application.Users.Commands.RegisterUserWithCredentials
         {
             var moniker = guid.GetNormalizedGuid();
             var imageUrl = profileImageUrlProvider.GetImageUrl(request.Email);
-            await usersRepository.CreateAsync(new CreateUserDto
+            var user = await usersRepository.CreateAsync(new CreateUserDto
             {
                 DisplayName = request.DisplayName,
                 Email = request.Email,
@@ -41,17 +41,11 @@ namespace Leagueen.Application.Users.Commands.RegisterUserWithCredentials
                 ImageUrl = imageUrl
             });
 
-            var token = jwtTokenFactory.Create(moniker);
+            var token = jwtTokenFactory.Create(user);
 
             return new AuthUserCommandResult
             {
-                User = new UserDto
-                {
-                    DisplayName = request.DisplayName,
-                    Email = request.Email,
-                    Moniker = moniker,
-                    ImageUrl = imageUrl
-                },
+                User = user,
                 Token = token
             };
         }

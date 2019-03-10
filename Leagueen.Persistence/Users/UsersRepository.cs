@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Leagueen.Application.Users.Models;
 using Leagueen.Application.Users.Repositories;
+using Leagueen.Domain.Constants;
 using Leagueen.Domain.Exceptions;
 using Leagueen.Persistence.Identity;
 using Leagueen.Persistence.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,7 +29,7 @@ namespace Leagueen.Persistence.Users
             this.mapper = mapper;
         }
 
-        public async Task CreateAsync(CreateUserDto userData)
+        public async Task<UserDto> CreateAsync(CreateUserDto userData)
         {
             var applicationUser = new ApplicationUser
             {
@@ -41,9 +43,11 @@ namespace Leagueen.Persistence.Users
             var result = await userManager.CreateAsync(applicationUser, userData.Password);
             if (!result.Succeeded)
                 throw new RepositoryException("CreateUser", result.Errors.Select(x => x.Code));
+
+            return await GetUserDto(applicationUser);
         }
 
-        public async Task CreateAsync(CreateGoogleUserDto userData)
+        public async Task<UserDto> CreateAsync(CreateGoogleUserDto userData)
         {
             var applicationUser = new ApplicationUser
             {
@@ -58,6 +62,8 @@ namespace Leagueen.Persistence.Users
             var result = await userManager.CreateAsync(applicationUser);
             if (!result.Succeeded)
                 throw new RepositoryException("CreateGoogleUser", result.Errors.Select(x => x.Code));
+            
+            return await GetUserDto(applicationUser);
         }
 
         public async Task<UserDto> GetUserByCredentials(string email, string password)
@@ -65,8 +71,9 @@ namespace Leagueen.Persistence.Users
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
                 throw new RepositoryException(nameof(GetUserByCredentials));
-            if(await userManager.CheckPasswordAsync(user, password))
-                return mapper.Map<UserDto>(user);
+
+            if (await userManager.CheckPasswordAsync(user, password))
+                return await GetUserDto(user);
 
             return null;
         }
@@ -76,7 +83,7 @@ namespace Leagueen.Persistence.Users
             var user = await userManager.FindByIdAsync(userId.ToString());
             if (user == null) return null;
 
-            return mapper.Map<UserDto>(user);
+            return await GetUserDto(user);
         }
 
         public async Task<UserDto> GetUserByMoniker(string moniker)
@@ -86,7 +93,7 @@ namespace Leagueen.Persistence.Users
                 .FirstOrDefaultAsync();
             if (user == null) return null;
 
-            return mapper.Map<UserDto>(user);
+            return await GetUserDto(user);
         }
 
         public async Task<int?> GetUserIdByMoniker(string moniker)
@@ -138,9 +145,17 @@ namespace Leagueen.Persistence.Users
         {
             var result = await userManager.UpdateAsync(user);
             if (result.Succeeded)
-                return mapper.Map<UserDto>(user);
+                return await GetUserDto(user);
             else
                 throw new RepositoryException(nameof(MergeUserWithGoogle), result.Errors.Select(x => x.Code));
+        }
+        
+        private async Task<UserDto> GetUserDto(ApplicationUser user)
+        {
+            var userDto = mapper.Map<UserDto>(user);
+            userDto.IsAdmin = await userManager.IsInRoleAsync(user, UserRoles.Admin);
+
+            return userDto;
         }
     }
 }

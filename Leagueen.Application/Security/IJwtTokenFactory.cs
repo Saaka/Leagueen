@@ -1,7 +1,9 @@
-﻿namespace Leagueen.Application.Security
+﻿using Leagueen.Application.Users.Models;
+
+namespace Leagueen.Application.Security
 {
     public interface IJwtTokenFactory
     {
-        string Create(string moniker, bool isAdmin = false);
+        string Create(UserDto user);
     }
 }

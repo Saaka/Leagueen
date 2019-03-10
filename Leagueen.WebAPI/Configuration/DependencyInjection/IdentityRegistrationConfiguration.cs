@@ -22,6 +22,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(x =>
             {
@@ -59,6 +60,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                         RequireNonAlphanumeric = false,
                     };
                 })
+                .AddRoles<IdentityRole<int>>()
                 .AddUserStore<UserStore<ApplicationUser, IdentityRole<int>, AppIdentityDbContext, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityUserToken<int>, IdentityRoleClaim<int>>>()
                 .AddRoleStore<RoleStore<IdentityRole<int>, AppIdentityDbContext, int, IdentityUserRole<int>, IdentityRoleClaim<int>>>();
 

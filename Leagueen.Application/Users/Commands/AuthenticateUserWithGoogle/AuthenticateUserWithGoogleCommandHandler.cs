@@ -53,7 +53,7 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
         private async Task<AuthUserCommandResult> CreateNewGoogleUser(TokenInfo tokenInfo)
         {
             var moniker = guid.GetNormalizedGuid();
-            await usersRepository.CreateAsync(new CreateGoogleUserDto
+            var user = await usersRepository.CreateAsync(new CreateGoogleUserDto
             {
                 DisplayName = tokenInfo.DisplayName,
                 Email = tokenInfo.Email,
@@ -61,17 +61,11 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
                 ImageUrl = tokenInfo.ImageUrl,
                 Moniker = moniker
             });
-            var token = jwtTokenFactory.Create(moniker);
+            var token = jwtTokenFactory.Create(user);
 
             return new AuthUserCommandResult
             {
-                User = new UserDto
-                {
-                    DisplayName = tokenInfo.DisplayName,
-                    Email = tokenInfo.Email,
-                    ImageUrl = tokenInfo.ImageUrl,
-                    Moniker = moniker
-                },
+                User = user,
                 Token = token
             };
         }
@@ -81,7 +75,7 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
             var result = await usersRepository
                 .MergeUserWithGoogle(tokenInfo.Email, tokenInfo.ExternalUserId, tokenInfo.ImageUrl);
 
-            var token = jwtTokenFactory.Create(result.Moniker);
+            var token = jwtTokenFactory.Create(result);
             return new AuthUserCommandResult
             {
                 User = result,
@@ -94,7 +88,7 @@ namespace Leagueen.Application.Users.Commands.AuthenticateUserWithGoogle
             var result = await usersRepository
                 .UpdateExistingGoogleUser(tokenInfo.Email, tokenInfo.ImageUrl);
 
-            var token = jwtTokenFactory.Create(result.Moniker);
+            var token = jwtTokenFactory.Create(result);
             return new AuthUserCommandResult
             {
                 User = result,
