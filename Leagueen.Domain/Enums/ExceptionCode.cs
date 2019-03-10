@@ -10,5 +10,10 @@
         InvalidCompetitionExternalId,
         InvalidCompetitionType,
         InvalidCompetitionModel,
+        SeasonCompetitionRequried,
+        SeasonExternalIdRequired,
+        SeasonStartDateRequired,
+        SeasonEndDateRequired,
+        SeasonCurrentMatchdayRequired,
     }
 }

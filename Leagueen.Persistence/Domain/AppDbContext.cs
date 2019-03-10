@@ -15,6 +15,7 @@ namespace Leagueen.Persistence.Domain
         }
 
         public DbSet<Competition> Competitions { get; set; }
+        public DbSet<Season> Seasons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
