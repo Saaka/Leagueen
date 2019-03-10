@@ -13,6 +13,7 @@ namespace Leagueen.Domain.Entities
         public string Name { get; private set; }
         public string Code { get; private set; }
         public int ExternalId { get; private set; }
+        public DateTime? LastProviderUpdate { get; private set; }
 
         public virtual IReadOnlyCollection<Season> Seasons => _seasons.AsReadOnly();
         public List<Season> _seasons = new List<Season>();
@@ -33,6 +34,11 @@ namespace Leagueen.Domain.Entities
         public void AddSeason(Season season)
         {
             _seasons.Add(season);
+        }
+
+        public void SetLastProviderUpdate(DateTime date)
+        {
+            LastProviderUpdate = date;
         }
 
         private void ValidateCreation()

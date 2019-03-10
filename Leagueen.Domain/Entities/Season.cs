@@ -14,6 +14,7 @@ namespace Leagueen.Domain.Entities
         public int CurrentMatchday { get; private set; }
         public bool IsActive { get; private set; }
         public int? WinnerId { get; private set; }
+        
         public virtual Competition Competition { get; private set; }
 
         private Season() { }
@@ -43,6 +44,11 @@ namespace Leagueen.Domain.Entities
         {
             WinnerId = winnerId;
         }
+
+        public void UpdateMatchday(int currentMatchday, DateTime providerUpdateDate)
+        {
+            CurrentMatchday = currentMatchday;
+        }   
 
         private void ValidateCreation()
         {

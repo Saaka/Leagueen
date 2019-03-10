@@ -39,6 +39,11 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder.Metadata
                 .FindNavigation(nameof(Competition.Seasons))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            builder
+                .Property(x => x.LastProviderUpdate)
+                .IsRequired(false)
+                .HasDefaultValue(null);
         }
     }
 }
