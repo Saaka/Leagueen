@@ -15,5 +15,10 @@
         SeasonStartDateRequired,
         SeasonEndDateRequired,
         SeasonCurrentMatchdayRequired,
+        TeamNameRequired,
+        TeamShortNameRequired,
+        TeamTlaRequired,
+        TeamIdRequired,
+        SeasonIdRequired,
     }
 }
