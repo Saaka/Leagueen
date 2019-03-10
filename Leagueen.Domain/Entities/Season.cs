@@ -30,24 +30,28 @@ namespace Leagueen.Domain.Entities
             ValidateCreation();
         }
 
-        public void SetActive()
+        public Season SetActive()
         {
             IsActive = true;
+            return this;
         }
 
-        public void Deactivate()
+        public Season Deactivate()
         {
             IsActive = false;
+            return this;
         }
 
-        public void SetWinner(int winnerId)
+        public Season SetWinner(int winnerId)
         {
             WinnerId = winnerId;
+            return this;
         }
 
-        public void UpdateMatchday(int currentMatchday, DateTime providerUpdateDate)
+        public Season SetMatchday(int currentMatchday)
         {
             CurrentMatchday = currentMatchday;
+            return this;
         }   
 
         private void ValidateCreation()

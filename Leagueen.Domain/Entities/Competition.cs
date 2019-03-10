@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
 
@@ -16,7 +17,7 @@ namespace Leagueen.Domain.Entities
         public DateTime? LastProviderUpdate { get; private set; }
 
         public virtual IReadOnlyCollection<Season> Seasons => _seasons.AsReadOnly();
-        public List<Season> _seasons = new List<Season>();
+        protected List<Season> _seasons = new List<Season>();
 
         private Competition() { }
 
@@ -31,14 +32,22 @@ namespace Leagueen.Domain.Entities
             ValidateCreation();
         }
 
-        public void AddSeason(Season season)
+        public Competition AddSeason(Season season)
         {
             _seasons.Add(season);
+            return this;
         }
 
-        public void SetLastProviderUpdate(DateTime date)
+        public Competition SetLastProviderUpdate(DateTime date)
         {
             LastProviderUpdate = date;
+            return this;
+        }
+
+        public Season GetCurrentSeason()
+        {
+            return Seasons
+                .FirstOrDefault(x => x.IsActive);
         }
 
         private void ValidateCreation()
