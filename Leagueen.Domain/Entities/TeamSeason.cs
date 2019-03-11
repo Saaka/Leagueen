@@ -8,22 +8,25 @@ namespace Leagueen.Domain.Entities
         public int TeamId { get; set; }
         public int SeasonId { get; set; }
 
+        public virtual Team Team { get; private set; }
+        public virtual Season Season { get; private set; }
+
         private TeamSeason() { }
 
-        public TeamSeason(int teamId, int seasonId)
+        public TeamSeason(Team team, Season season)
         {
-            TeamId = teamId;
-            SeasonId = seasonId;
+            Team = team;
+            Season = season;
 
-            ValidateCreation();
+            ValidateRelationCreation();
         }
 
-        private void ValidateCreation()
+        private void ValidateRelationCreation()
         {
-            if (TeamId == 0)
-                throw new DomainException(ExceptionCode.TeamIdRequired);
-            if (SeasonId == 0)
-                throw new DomainException(ExceptionCode.SeasonIdRequired);
+            if (Team == null)
+                throw new DomainException(ExceptionCode.TeamRequired);
+            if (Season == null)
+                throw new DomainException(ExceptionCode.SeasonRequired);
         }
     }
 }

@@ -21,5 +21,9 @@
         TeamTlaRequired,
         TeamIdRequired,
         TeamExternalIdRequired,
+        SeasonRequired,
+        TeamRequired,
+        TeamAlreadyInSeason,
+        SeasonAlreadyInCompetition,
     }
 }

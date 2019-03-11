@@ -10,6 +10,14 @@ namespace Leagueen.Persistence.Domain.Configurations
         {
             builder
                 .HasKey(x => new { x.TeamId, x.SeasonId });
+            builder
+                .HasOne(x => x.Team)
+                .WithMany(x => x.Seasons)
+                .HasForeignKey(x => x.TeamId);
+            builder
+                .HasOne(x => x.Season)
+                .WithMany(x => x.Teams)
+                .HasForeignKey(x => x.SeasonId);
         }
     }
 }

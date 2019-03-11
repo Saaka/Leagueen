@@ -1,6 +1,8 @@
 ﻿using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Leagueen.Domain.Entities
 {
@@ -14,7 +16,10 @@ namespace Leagueen.Domain.Entities
         public int CurrentMatchday { get; private set; }
         public bool IsActive { get; private set; }
         public int? WinnerId { get; private set; }
-        
+
+        public virtual IReadOnlyCollection<TeamSeason> Teams => _seasonTeams.AsReadOnly();
+        protected List<TeamSeason> _seasonTeams = new List<TeamSeason>();
+
         public virtual Competition Competition { get; private set; }
 
         private Season() { }
@@ -52,7 +57,16 @@ namespace Leagueen.Domain.Entities
         {
             CurrentMatchday = currentMatchday;
             return this;
-        }   
+        }
+
+        public Season AddTeam(Team team)
+        {
+            if (Teams.Any(x => x.Team.ExternalId == team.ExternalId))
+                throw new DomainException(ExceptionCode.TeamAlreadyInSeason);
+
+            _seasonTeams.Add(new TeamSeason(team, this));
+            return this;
+        }
 
         private void ValidateCreation()
         {

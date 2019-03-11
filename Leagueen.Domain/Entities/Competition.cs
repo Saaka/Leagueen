@@ -34,6 +34,9 @@ namespace Leagueen.Domain.Entities
 
         public Competition AddSeason(Season season)
         {
+            if (Seasons.Any(x => x.ExternalId == season.ExternalId))
+                throw new DomainException(ExceptionCode.SeasonAlreadyInCompetition);
+
             _seasons.Add(season);
             return this;
         }

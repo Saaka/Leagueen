@@ -1,4 +1,5 @@
 ﻿using Leagueen.Domain.Exceptions;
+using System.Collections.Generic;
 
 namespace Leagueen.Domain.Entities
 {
@@ -11,6 +12,9 @@ namespace Leagueen.Domain.Entities
         public string Tla { get; private set; }
         public string CrestUrl { get; private set; }
         public string Website { get; private set; }
+
+        public virtual IReadOnlyCollection<TeamSeason> Seasons => _teamSeasons.AsReadOnly();
+        protected List<TeamSeason> _teamSeasons = new List<TeamSeason>();
 
         private Team() { }
 
