@@ -6,6 +6,7 @@ using Leagueen.Application.Infrastructure;
 using Leagueen.Application.Infrastructure.AutoMapper;
 using Leagueen.Infrastructure;
 using Leagueen.Persistence;
+using Leagueen.WebAPI.Configuration.HangfireConfig;
 using Leagueen.WebAPI.Filters;
 using MediatR;
 using MediatR.Pipeline;
@@ -62,7 +63,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                     c.UseSqlServerStorage(configuration[ApplicationSettings.AppConnectionString],
                         new Hangfire.SqlServer.SqlServerStorageOptions
                         {
-                            SchemaName = "LeagueenHangFire"
+                            SchemaName = "LeagueenHangFire",
                         });
                 })
                 .AddTransient<IRestClient, RestClient>()
@@ -79,8 +80,17 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
             application
                 .UseSwagger()
                 .UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/{SwaggerVersion}/swagger.json", "Leaguen WebAPI"))
-                .UseHangfireServer()
-                .UseHangfireDashboard();
+                .UseHangfireServer(new BackgroundJobServerOptions
+                {
+                    HeartbeatInterval = new System.TimeSpan(0, 0, 30),
+                    ServerCheckInterval = new System.TimeSpan(0, 0, 30),
+                    SchedulePollingInterval = new System.TimeSpan(0, 0, 30),
+                })
+                .UseHangfireDashboard(options: new DashboardOptions
+                {
+                    Authorization = new[] { new HangrireDashboardAuthFilter() },
+                    StatsPollingInterval = 60000
+                });
 
             return application;
         }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace Leagueen.WebAPI.Configuration
+namespace Leagueen.WebAPI.Configuration.HangfireConfig
 {
     public static class HangfireJobsConfiguration
     {
