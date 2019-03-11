@@ -21,6 +21,7 @@ namespace Leagueen.Domain.Entities
 
         public virtual Match Match { get; private set; }
 
+        private MatchScore() { }
         public MatchScore(Match match,
             MatchResult result, MatchDuration duration,
             int? fullTimeHome = null, int? fullTimeAway = null,

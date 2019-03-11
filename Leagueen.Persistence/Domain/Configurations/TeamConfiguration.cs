@@ -36,14 +36,16 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder
                 .HasMany(x => x.HomeMatches)
                 .WithOne(x => x.HomeTeam)
-                .HasForeignKey(x => x.HomeTeamId);
+                .HasForeignKey(x => x.HomeTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.Metadata
                 .FindNavigation(nameof(Team.HomeMatches))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
             builder
                 .HasMany(x => x.AwayMatches)
                 .WithOne(x => x.AwayTeam)
-                .HasForeignKey(x => x.AwayTeamId);
+                .HasForeignKey(x => x.AwayTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.Metadata
                 .FindNavigation(nameof(Team.AwayMatches))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);

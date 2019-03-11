@@ -37,7 +37,7 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .HasOne(x => x.MatchScore)
                 .WithOne(x => x.Match)
                 .HasForeignKey<MatchScore>(x => x.MatchId)
-                .IsRequired(false);
+                .OnDelete(DeleteBehavior.Cascade);
             builder
                 .HasOne(x => x.HomeTeam)
                 .WithMany(x => x.HomeMatches)
