@@ -20,8 +20,21 @@ namespace Leagueen.Persistence.Domain.Repositories
         {
             return await context
                 .Competitions
-                .Include(x=> x.Seasons)
+                .Include(x => x.Seasons)
+                    .ThenInclude(x => x.Teams)
+                        .ThenInclude(x => x.Team)
                 .ToListAsync();
+        }
+
+        public async Task<Competition> GetCompetitionByCode(string code)
+        {
+            return await context
+                .Competitions
+                .Where(x => x.Code == code)
+                .Include(c => c.Seasons)
+                    .ThenInclude(x => x.Teams)
+                        .ThenInclude(x => x.Team)
+                .FirstOrDefaultAsync();
         }
 
         public async Task SaveCompetition(Competition competition)

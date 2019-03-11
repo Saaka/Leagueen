@@ -20,5 +20,15 @@ namespace Leagueen.WebAPI.Controllers
 
             return Ok();
         }
+
+        [HttpPost("UpdateSeasonTeams/{competitionCode}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> UpdateSeasonTeams(string competitionCode)
+        {
+            await Mediator.Send(new UpdateCompetitionTeamsInCurrentSeasonCommand { CompetitionCode = competitionCode });
+
+            return Ok();
+        }
     }
 }

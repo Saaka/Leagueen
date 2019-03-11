@@ -13,8 +13,8 @@ namespace Leagueen.Domain.Entities
         public string CrestUrl { get; private set; }
         public string Website { get; private set; }
 
-        public virtual IReadOnlyCollection<TeamSeason> Seasons => _teamSeasons.AsReadOnly();
-        protected List<TeamSeason> _teamSeasons = new List<TeamSeason>();
+        public virtual IReadOnlyCollection<TeamSeason> Seasons => _seasons.AsReadOnly();
+        protected List<TeamSeason> _seasons = new List<TeamSeason>();
 
         private Team() { }
 

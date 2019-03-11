@@ -30,6 +30,9 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .Property(x => x.Website)
                 .HasMaxLength(128)
                 .IsRequired(false);
+            builder.Metadata
+                .FindNavigation(nameof(Team.Seasons))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

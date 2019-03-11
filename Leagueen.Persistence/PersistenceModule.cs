@@ -45,7 +45,9 @@ namespace Leagueen.Persistence
                 .AddTransient<IDbInitializer, DbInitializer>()
 
                 .AddTransient<ICompetitionsRepository, CompetitionsRepository>()
-
+                .AddTransient<ISeasonsRepository, SeasonsRepository>()
+                .AddTransient<ITeamsRepository, TeamsRepository>()
+                
                 .AddTransient<IdentityDbInitializer>()
                 .AddTransient<UserSeedConfiguration>()
                 .AddTransient<UserSeeder>()

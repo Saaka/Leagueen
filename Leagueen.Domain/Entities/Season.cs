@@ -17,8 +17,8 @@ namespace Leagueen.Domain.Entities
         public bool IsActive { get; private set; }
         public int? WinnerId { get; private set; }
 
-        public virtual IReadOnlyCollection<TeamSeason> Teams => _seasonTeams.AsReadOnly();
-        protected List<TeamSeason> _seasonTeams = new List<TeamSeason>();
+        public virtual IReadOnlyCollection<TeamSeason> Teams => _teams.AsReadOnly();
+        protected List<TeamSeason> _teams = new List<TeamSeason>();
 
         public virtual Competition Competition { get; private set; }
 
@@ -64,7 +64,7 @@ namespace Leagueen.Domain.Entities
             if (Teams.Any(x => x.Team.ExternalId == team.ExternalId))
                 throw new DomainException(ExceptionCode.TeamAlreadyInSeason);
 
-            _seasonTeams.Add(new TeamSeason(team, this));
+            _teams.Add(new TeamSeason(team, this));
             return this;
         }
 
