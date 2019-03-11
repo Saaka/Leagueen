@@ -15,6 +15,31 @@ namespace Leagueen.Persistence.Domain.Repositories
             this.context = context;
         }
 
+        public async Task<Season> GetCurrentSeason(string competitionCode)
+        {
+            var query = from comp in context.Competitions
+                        join season in context.Seasons on comp.CompetitionId equals season.CompetitionId
+                        where season.IsActive
+                        select season;
+
+            return await query
+                .Include(x => x.Matches)
+                .Include(x => x.Teams)
+                    .ThenInclude(x => x.Team)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<Season> GetSeasonInfo(int seasonId)
+        {
+            var query = context.Seasons
+                .Where(x => x.SeasonId == seasonId)
+                .Include(x => x.Matches)
+                .Include(x => x.Teams)
+                    .ThenInclude(x=> x.Team);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task SaveSeason(Season season)
         {
             context.Attach(season);

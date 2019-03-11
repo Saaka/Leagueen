@@ -16,9 +16,4 @@
     <ProjectReference Include="..\Leagueen.Domain\Leagueen.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Matches\Commands\" />
-    <Folder Include="Matches\Repositories\" />
-  </ItemGroup>
-
 </Project>

@@ -37,5 +37,6 @@
         MatchScoreResultRequired,
         MatchScoreDurationRequired,
         MatchProviderUpdateRequired,
+        SeasonAlreadyContainsMatch,
     }
 }

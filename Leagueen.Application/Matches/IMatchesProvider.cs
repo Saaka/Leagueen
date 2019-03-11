@@ -6,6 +6,6 @@ namespace Leagueen.Application.Matches
     public interface IMatchesProvider
     {
         Task<MatchListDto> GetTodaysMatches();
-        Task<MatchListDto> GetAllCompetitionMatches(int competitionId);
+        Task<MatchListDto> GetAllCompetitionMatches(string competitionCode);
     }
 }

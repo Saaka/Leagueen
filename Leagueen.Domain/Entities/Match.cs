@@ -61,6 +61,12 @@ namespace Leagueen.Domain.Entities
             return this;
         }
 
+        public Match SetStatus(MatchStatus status)
+        {
+            Status = status;
+            return this;
+        }
+
         public Match SetResult(MatchResult result)
         {
             Result = result;

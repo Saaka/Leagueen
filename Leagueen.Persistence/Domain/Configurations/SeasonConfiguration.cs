@@ -27,9 +27,16 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .IsRequired();
             builder
                 .Property(x => x.IsActive)
-                .IsRequired();            
+                .IsRequired();
             builder.Metadata
                 .FindNavigation(nameof(Season.Teams))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder
+                .HasMany(x => x.Matches)
+                .WithOne(x => x.Season)
+                .HasForeignKey(x => x.SeasonId);
+            builder.Metadata
+                .FindNavigation(nameof(Season.Matches))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }

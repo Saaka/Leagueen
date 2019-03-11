@@ -27,6 +27,7 @@ namespace Leagueen.Infrastructure
 
                 .AddTransient<IMatchesProvider, FootballDataClient>()
                 .AddTransient<ICompetitionsProvider, FootballDataClient>()
+                .AddTransient<IMatchesEnumHelper, FootballDataMatchesEnumHelper>()
 
                 .AddTransient<HashGenerator>()
                 .AddTransient<IProfileImageUrlProvider, GravatarProfileImageUrlProvider>();

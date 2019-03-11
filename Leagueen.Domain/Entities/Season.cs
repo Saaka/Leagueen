@@ -20,6 +20,9 @@ namespace Leagueen.Domain.Entities
         public virtual IReadOnlyCollection<TeamSeason> Teams => _teams.AsReadOnly();
         protected List<TeamSeason> _teams = new List<TeamSeason>();
 
+        public virtual IReadOnlyCollection<Match> Matches => _matches.AsReadOnly();
+        protected List<Match> _matches = new List<Match>();
+
         public virtual Competition Competition { get; private set; }
 
         private Season() { }
@@ -65,6 +68,15 @@ namespace Leagueen.Domain.Entities
                 throw new DomainException(ExceptionCode.TeamAlreadyInSeason);
 
             _teams.Add(new TeamSeason(team, this));
+            return this;
+        }
+
+        public Season AddMatch(Match match)
+        {
+            if (Matches.Any(x => x.ExternalId == match.ExternalId))
+                throw new DomainException(ExceptionCode.SeasonAlreadyContainsMatch);
+
+            _matches.Add(match);
             return this;
         }
 

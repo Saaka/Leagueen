@@ -3,11 +3,11 @@
     public enum MatchStatus
     {
         Scheduled = 1,
-        InPlay = 3,
-        Paused = 4,
-        Finised = 5,
-        Postponed = 6,
-        Suspended = 7,
-        Canceled = 9
+        InPlay = 2,
+        Paused = 3,
+        Finised = 4,
+        Postponed = 5,
+        Suspended = 6,
+        Canceled = 7
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Leagueen.Application.Competitions.Commands;
+using Leagueen.Application.Matches.Commands;
 using Leagueen.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,7 @@ namespace Leagueen.WebAPI.Controllers
     [Authorize(Roles = UserRoles.Admin)]
     public class AdminController : BaseController
     {
-        [HttpPost("UpdateCompetitionSeasons")]
+        [HttpPost("updateCompetitionSeasons")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCompetitionSeasons()
@@ -21,7 +22,7 @@ namespace Leagueen.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpPost("UpdateSeasonTeams/{competitionCode}")]
+        [HttpPost("updateSeasonTeams/{competitionCode}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateSeasonTeams(string competitionCode)
@@ -30,5 +31,15 @@ namespace Leagueen.WebAPI.Controllers
 
             return Ok();
         }
+
+        [HttpPost("updateCompetitionMatches/{competitionCode}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> UpdateSeasonMatches(string competitionCode)
+        {
+            await Mediator.Send(new UpdateSeasonMatchesCommand { CompetitionCode = competitionCode });
+
+            return Ok();
+        }        
     }
 }

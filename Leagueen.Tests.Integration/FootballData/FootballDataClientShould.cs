@@ -1,4 +1,5 @@
-﻿using Leagueen.Infrastructure.Http;
+﻿using Leagueen.Domain.Enums;
+using Leagueen.Infrastructure.Http;
 using Leagueen.Infrastructure.Providers.FootballData;
 using System.Threading.Tasks;
 using Xunit;
@@ -24,7 +25,7 @@ namespace Leagueen.Tests.Integration.FootballData
         {
             var client = CreateClient();
 
-            var result = await client.GetAllCompetitionMatches(2021);
+            var result = await client.GetAllCompetitionMatches(CompetitionType.PL.ToString());
 
             Assert.NotNull(result);
             Assert.NotEqual(0, result.Count);
@@ -55,7 +56,7 @@ namespace Leagueen.Tests.Integration.FootballData
         private FootballDataClient CreateClient()
         {
             return new FootballDataClient(
-                new RestsharpClientFactory(), 
+                new RestsharpClientFactory(),
                 TestConfiguration.Create());
         }
     }
