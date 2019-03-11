@@ -13,6 +13,8 @@ namespace Leagueen.Persistence.Domain
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamSeason> TeamSeasons { get; set; }
+        public DbSet<Match> Matches { get; set; }
+        public DbSet<MatchScore> MatchScores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

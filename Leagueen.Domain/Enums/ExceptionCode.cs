@@ -25,5 +25,17 @@
         TeamRequired,
         TeamAlreadyInSeason,
         SeasonAlreadyInCompetition,
+        MatchAlreadyHasScore,
+        MatchExternalIdRequred,
+        MatchSeasonRequired,
+        MatchHomeTeamRequired,
+        MatchAwayTeamRequired,
+        MatchDateRequired,
+        MatchStatusRequired,
+        MatchStageRequired,
+        MatchScoreMatchRequired,
+        MatchScoreResultRequired,
+        MatchScoreDurationRequired,
+        MatchProviderUpdateRequired,
     }
 }

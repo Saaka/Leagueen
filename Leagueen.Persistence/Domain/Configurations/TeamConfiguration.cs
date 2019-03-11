@@ -33,6 +33,20 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder.Metadata
                 .FindNavigation(nameof(Team.Seasons))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder
+                .HasMany(x => x.HomeMatches)
+                .WithOne(x => x.HomeTeam)
+                .HasForeignKey(x => x.HomeTeamId);
+            builder.Metadata
+                .FindNavigation(nameof(Team.HomeMatches))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder
+                .HasMany(x => x.AwayMatches)
+                .WithOne(x => x.AwayTeam)
+                .HasForeignKey(x => x.AwayTeamId);
+            builder.Metadata
+                .FindNavigation(nameof(Team.AwayMatches))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }
