@@ -54,6 +54,9 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .WithOne(x => x.Winner)
                 .HasForeignKey(x => x.WinnerId)
                 .IsRequired(false);
+            builder.Metadata
+                .FindNavigation(nameof(Team.WonSeasons))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

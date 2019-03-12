@@ -39,8 +39,18 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionTeamsInCur
             {
                 await AddTeam(teamInfo, season);
             }
+            CheckWinner(season, teamsInfo);
 
             await seasonsRepository.SaveSeason(season);
+        }
+
+        private void CheckWinner(Season season, CompetitionTeamsListDto teamsInfo)
+        {
+            if(teamsInfo.Season.Winner != null)
+            {
+                var winner = season.Teams.First(x => x.Team.ExternalId == teamsInfo.Season.Winner.Id);
+                season.SetWinner(winner.Team);
+            }
         }
 
         private async Task AddTeam(TeamDto teamInfo, Season season)
@@ -55,7 +65,6 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionTeamsInCur
 
         private Season CreateSeason(CompetitionSeasonDto seasonInfo, Competition competition)
         {
-            //TODO Set winner
             return new Season(competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
                 .SetActive();
         }
