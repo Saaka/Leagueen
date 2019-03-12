@@ -47,11 +47,9 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
             var currentSeason = competition.GetCurrentSeason();
             var seasonInfo = info.CurrentSeason;
 
-            //TODO Update Winner
-
             if (currentSeason == null)
             {
-                CreateNewSeason(competition, seasonInfo);
+                currentSeason = CreateNewSeason(competition, seasonInfo);
             }
             else if (currentSeason.ExternalId == info.CurrentSeason.Id)
             {
@@ -61,18 +59,20 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
             else
             {
                 currentSeason.Deactivate();
-                CreateNewSeason(competition, seasonInfo);
+                currentSeason = CreateNewSeason(competition, seasonInfo);
             }
-
+            
             return competition
                 .SetLastProviderUpdate(info.LastUpdated);
         }
 
-        private void CreateNewSeason(Competition competition, CompetitionSeasonDto seasonInfo)
+        private Season CreateNewSeason(Competition competition, CompetitionSeasonDto seasonInfo)
         {
             var newSeason = new Season(competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
                 .SetActive();
             competition.AddSeason(newSeason);
+
+            return newSeason;
         }
     }
 }

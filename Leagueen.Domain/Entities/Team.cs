@@ -15,7 +15,8 @@ namespace Leagueen.Domain.Entities
 
         public virtual IReadOnlyCollection<TeamSeason> Seasons => _seasons.AsReadOnly();
         protected List<TeamSeason> _seasons = new List<TeamSeason>();
-
+        public virtual IReadOnlyCollection<Season> WonSeasons => _wonSeasons.AsReadOnly();
+        protected List<Season> _wonSeasons = new List<Season>();
         public virtual IReadOnlyCollection<Match> HomeMatches => _homeMatches.AsReadOnly();
         protected List<Match> _homeMatches = new List<Match>();
         public virtual IReadOnlyCollection<Match> AwayMatches => _awayMatches.AsReadOnly();

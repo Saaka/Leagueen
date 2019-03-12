@@ -19,6 +19,13 @@ namespace Leagueen.Persistence.Domain.Repositories
             return await context.Teams.FirstOrDefaultAsync(x => x.ExternalId == externalId);
         }
 
+        public async Task<Team> SaveTeam(Team team)
+        {
+            context.Attach(team);
+            await context.SaveChangesAsync();
+            return team;
+        }
+
         public async Task<bool> TeamExistsForExternalId(int externalId)
         {
             return await context.Teams.AnyAsync(x => x.ExternalId == externalId);

@@ -7,5 +7,6 @@ namespace Leagueen.Application.Competitions.Repositories
     {
         Task<bool> TeamExistsForExternalId(int externalId);
         Task<Team> GetTeamByExternalId(int externalId);
+        Task<Team> SaveTeam(Team team);
     }
 }

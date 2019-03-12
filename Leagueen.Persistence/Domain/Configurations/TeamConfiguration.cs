@@ -49,6 +49,11 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder.Metadata
                 .FindNavigation(nameof(Team.AwayMatches))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder
+                .HasMany(x => x.WonSeasons)
+                .WithOne(x => x.Winner)
+                .HasForeignKey(x => x.WinnerId)
+                .IsRequired(false);
         }
     }
 }

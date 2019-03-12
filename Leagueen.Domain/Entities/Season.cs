@@ -24,6 +24,7 @@ namespace Leagueen.Domain.Entities
         protected List<Match> _matches = new List<Match>();
 
         public virtual Competition Competition { get; private set; }
+        public virtual Team Winner { get; private set; }
 
         private Season() { }
 
@@ -77,6 +78,12 @@ namespace Leagueen.Domain.Entities
                 throw new DomainException(ExceptionCode.SeasonAlreadyContainsMatch);
 
             _matches.Add(match);
+            return this;
+        }
+
+        public Season SetWinner(Team team)
+        {
+            Winner = team;
             return this;
         }
 
