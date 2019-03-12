@@ -38,5 +38,7 @@
         MatchScoreDurationRequired,
         MatchProviderUpdateRequired,
         SeasonAlreadyContainsMatch,
+        ActiveCompetitionNotFound,
+        AtiveSeasonNotFoundForCompetition,
     }
 }

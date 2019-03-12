@@ -32,6 +32,10 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                     return MatchStage.FirstQualifyingRound;
                 case "3RD_PLACE":
                     return MatchStage.ThirdPlace;
+                case "PRELIMINARY_SEMI_FINALS":
+                    return MatchStage.PreliminarySemiFinals;
+                case "PRELIMINARY_FINAL":
+                    return MatchStage.PreliminaryFinal;
                 default:
                     throw new ProviderCommunicationException($"Invalid MatchStage value: {stage}");
             }

@@ -1,6 +1,7 @@
 ﻿using Leagueen.Application.Competitions.ProviderModels;
 using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Domain.Entities;
+using Leagueen.Domain.Exceptions;
 using MediatR;
 using System.Linq;
 using System.Threading;
@@ -29,8 +30,10 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionTeamsInCur
 
         protected override async Task Handle(UpdateCompetitionTeamsInCurrentSeasonCommand request, CancellationToken cancellationToken)
         {
-            var teamsInfo = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
             var competition = await competitionsRepository.GetCompetitionByCode(request.CompetitionCode);
+            if (competition == null)
+                throw new DomainException(Domain.Enums.ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionCode}");
+            var teamsInfo = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
             var season = competition.GetCurrentSeason();
             if (season == null)
                 season = CreateSeason(teamsInfo.Season, competition);

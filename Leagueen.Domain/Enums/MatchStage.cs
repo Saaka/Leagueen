@@ -12,6 +12,8 @@
         ThirdQualifyingRound = 8,
         SecondQualifyingRound = 9,
         FirstQualifyingRound = 10,
-        ThirdPlace = 11
+        ThirdPlace = 11,
+        PreliminarySemiFinals = 12,
+        PreliminaryFinal = 13
     }
 }

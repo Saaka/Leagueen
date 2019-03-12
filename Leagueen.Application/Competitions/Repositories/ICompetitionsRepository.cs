@@ -6,7 +6,7 @@ namespace Leagueen.Application.Competitions.Repositories
 {
     public interface ICompetitionsRepository
     {
-        Task<IEnumerable<Competition>> GetAllCompetitions();
+        Task<IEnumerable<Competition>> GetAllActiveCompetitions();
         Task<Competition> GetCompetitionByCode(string code);
         Task SaveCompetition(Competition competition);
         Task SaveCompetitions(IEnumerable<Competition> competitions);

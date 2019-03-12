@@ -14,6 +14,7 @@ namespace Leagueen.Domain.Entities
         public string Name { get; private set; }
         public string Code { get; private set; }
         public int ExternalId { get; private set; }
+        public bool IsActive { get; private set; }
         public DateTime? LastProviderUpdate { get; private set; }
 
         public virtual IReadOnlyCollection<Season> Seasons => _seasons.AsReadOnly();
@@ -21,13 +22,14 @@ namespace Leagueen.Domain.Entities
 
         private Competition() { }
 
-        public Competition(CompetitionType type, CompetitionModel model, string name, string code, int externalId)
+        public Competition(CompetitionType type, CompetitionModel model, string name, string code, int externalId, bool isActive)
         {
             Type = type;
             Model = model;
             Name = name;
             Code = code;
             ExternalId = externalId;
+            IsActive = isActive;
 
             ValidateCreation();
         }
@@ -51,6 +53,12 @@ namespace Leagueen.Domain.Entities
         {
             return Seasons
                 .FirstOrDefault(x => x.IsActive);
+        }
+
+        public Competition SetActiveState(bool isActive)
+        {
+            IsActive = isActive;
+            return this;
         }
 
         private void ValidateCreation()

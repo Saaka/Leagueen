@@ -33,6 +33,8 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
         protected override async Task Handle(UpdateSeasonMatchesCommand request, CancellationToken cancellationToken)
         {
             var season = await seasonsRepository.GetCurrentSeason(request.CompetitionCode);
+            if (season == null)
+                throw new DomainException(ExceptionCode.AtiveSeasonNotFoundForCompetition, $"CompetitionCode:{request.CompetitionCode}");
             var matchesInfo = await matchesProvider.GetAllCompetitionMatches(request.CompetitionCode);
 
             foreach (var matchInfo in matchesInfo.Matches)
@@ -41,7 +43,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
                 {
                     TryAddMatch(season, matchInfo);
                 }
-                catch(DomainException ex)
+                catch (DomainException ex)
                 {
                     logger.LogError(ex, $"Error while updating match with externalId {matchInfo.Id}.");
                 }

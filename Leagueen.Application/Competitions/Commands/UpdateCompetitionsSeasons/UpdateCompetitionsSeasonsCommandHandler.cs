@@ -24,7 +24,7 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
 
         protected override async Task Handle(UpdateCompetitionsSeasonsCommand request, CancellationToken cancellationToken)
         {
-            var competitions = await competitionsRepository.GetAllCompetitions();
+            var competitions = await competitionsRepository.GetAllActiveCompetitions();
             var competitionsInfo = await competitionsProvider.GetCompetitionsList();
             var toUpdate = new List<Competition>();
 
@@ -60,8 +60,7 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
             {
                 currentSeason.Deactivate();
                 currentSeason = CreateNewSeason(competition, seasonInfo);
-            }
-            
+            }            
             return competition
                 .SetLastProviderUpdate(info.LastUpdated);
         }

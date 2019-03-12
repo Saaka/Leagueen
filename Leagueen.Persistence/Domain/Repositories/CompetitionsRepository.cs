@@ -16,10 +16,11 @@ namespace Leagueen.Persistence.Domain.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<Competition>> GetAllCompetitions()
+        public async Task<IEnumerable<Competition>> GetAllActiveCompetitions()
         {
             return await context
                 .Competitions
+                .Where(x => x.IsActive)
                 .Include(x => x.Seasons)
                     .ThenInclude(x => x.Teams)
                         .ThenInclude(x => x.Team)
@@ -30,6 +31,7 @@ namespace Leagueen.Persistence.Domain.Repositories
         {
             return await context
                 .Competitions
+                .Where(x => x.IsActive)
                 .Where(x => x.Code == code)
                 .Include(c => c.Seasons)
                     .ThenInclude(x => x.Teams)

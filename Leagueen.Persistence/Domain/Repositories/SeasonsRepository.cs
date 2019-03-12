@@ -19,7 +19,7 @@ namespace Leagueen.Persistence.Domain.Repositories
         {
             var query = from comp in context.Competitions
                         join season in context.Seasons on comp.CompetitionId equals season.CompetitionId
-                        where season.IsActive
+                        where season.IsActive && comp.Code == competitionCode
                         select season;
 
             return await query
