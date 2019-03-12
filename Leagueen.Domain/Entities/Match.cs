@@ -41,8 +41,16 @@ namespace Leagueen.Domain.Entities
             Group = group;
             Matchday = matchday;
             LastProviderUpdate = lastProviderUpdate;
+            Result = MatchResult.Unknown;
 
+            season.AddMatch(this);
             ValidateCreation();
+        }
+
+        public Match SetResult(MatchResult result)
+        {
+            Result = result;
+            return this;
         }
 
         public Match AddScore(MatchScore score)
@@ -64,12 +72,6 @@ namespace Leagueen.Domain.Entities
         public Match SetStatus(MatchStatus status)
         {
             Status = status;
-            return this;
-        }
-
-        public Match SetResult(MatchResult result)
-        {
-            Result = result;
             return this;
         }
 

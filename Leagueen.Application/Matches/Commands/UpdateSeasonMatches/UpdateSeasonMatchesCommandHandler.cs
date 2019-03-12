@@ -5,6 +5,7 @@ using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,26 +57,61 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
         {
             var match = season.Matches.FirstOrDefault(x => x.ExternalId == matchInfo.Id);
             if (match == null)
-                CreateMatch(season, matchInfo);
+                match = CreateMatch(season, matchInfo);
             else if (match.LastProviderUpdate != matchInfo.LastUpdated)
                 UpdateMatch(match, matchInfo);
         }
 
         private void UpdateMatch(Match match, MatchDto info)
         {
+            if (!string.IsNullOrEmpty(info.Score.Winner))
+            {
+                if (match.MatchScore != null)
+                    UpdateScore(match.MatchScore, info.Score);
+                else
+                    CreateScore(match, info.Score);
+            }
             match
-                .SetStatus(GetStatus(info.Status))
-                .UpdateDate(info.UtcDate)
-                .SetProviderUpdate(info.LastUpdated);
+            .SetStatus(GetStatus(info.Status))
+            .UpdateDate(info.UtcDate)
+            .SetProviderUpdate(info.LastUpdated);
         }
 
-        private void CreateMatch(Season season, MatchDto matchInfo)
+        private void UpdateScore(MatchScore matchScore, MatchScoreDto info)
         {
-            var homeTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == matchInfo.HomeTeam?.Id);
-            var awayTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == matchInfo.AwayTeam?.Id);
-            var match = new Match(matchInfo.Id, season, homeTeam.Team, awayTeam.Team, matchInfo.UtcDate, GetStatus(matchInfo.Status), GetStage(matchInfo.Stage), matchInfo.LastUpdated);
+            matchScore.UpdateScore(GetResult(info.Winner), GetDuration(info.Duration),
+                info.FullTime?.HomeTeam, info.FullTime?.AwayTeam, info.HalfTime?.HomeTeam, info.HalfTime.AwayTeam,
+                info.ExtraTime?.HomeTeam, info.ExtraTime?.AwayTeam, info.Penalties?.HomeTeam, info.Penalties?.AwayTeam);
+        }
 
-            season.AddMatch(match);
+        private Match CreateMatch(Season season, MatchDto info)
+        {
+            var homeTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.HomeTeam?.Id);
+            var awayTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.AwayTeam?.Id);
+            var match = new Match(info.Id, season, homeTeam.Team, awayTeam.Team,
+                info.UtcDate, GetStatus(info.Status), GetStage(info.Stage), info.LastUpdated);
+            
+            if (!string.IsNullOrEmpty(info.Score.Winner))
+                CreateScore(match, info.Score);
+
+            return match;
+        }
+
+        private MatchScore CreateScore(Match match, MatchScoreDto info)
+        {
+            return new MatchScore(match, GetResult(info.Winner), GetDuration(info.Duration),
+                info.FullTime?.HomeTeam, info.FullTime?.AwayTeam, info.HalfTime?.HomeTeam, info.HalfTime.AwayTeam,
+                info.ExtraTime?.HomeTeam, info.ExtraTime?.AwayTeam, info.Penalties?.HomeTeam, info.Penalties?.AwayTeam);
+        }
+
+        private MatchDuration GetDuration(string duration)
+        {
+            return matchesEnumHelper.ConvertDuration(duration);
+        }
+
+        private MatchResult GetResult(string winner)
+        {
+            return matchesEnumHelper.ConvertResult(winner);
         }
 
         private MatchStage GetStage(string stage)

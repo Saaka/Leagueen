@@ -63,5 +63,39 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                     throw new ProviderCommunicationException($"Invalid MatchStatus value: {status}");
             }
         }
+
+        public MatchResult ConvertResult(string result)
+        {
+            if (string.IsNullOrEmpty(result))
+                return MatchResult.Unknown;
+
+            switch(result)
+            {
+                case "HOME_TEAM":
+                    return MatchResult.HomeTeam;
+                case "AWAY_TEAM":
+                    return MatchResult.AwayTeam;
+                case "DRAW":
+                    return MatchResult.Draw;
+                default:
+                    throw new ProviderCommunicationException($"Invalid Matchresult value: {result}");
+            }
+        }
+
+        public MatchDuration ConvertDuration(string duration)
+        {
+            switch(duration)
+            {
+                case "REGULAR":
+                    return MatchDuration.Regular;
+                case "EXTRA_TIME":
+                    return MatchDuration.ExtraTime;
+                case "PENALTY_SHOOTOUT":
+                    return MatchDuration.PenaltyShootout;
+                default:
+                    throw new ProviderCommunicationException($"Invalid MatchDuration value: {duration}");
+
+            }
+        }
     }
 }

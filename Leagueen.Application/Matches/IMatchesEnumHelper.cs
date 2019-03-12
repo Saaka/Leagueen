@@ -6,5 +6,7 @@ namespace Leagueen.Application.Matches
     {
         MatchStatus ConvertStatusCode(string status);
         MatchStage ConvertStage(string stage);
+        MatchResult ConvertResult(string result);
+        MatchDuration ConvertDuration(string duration);
     }
 }

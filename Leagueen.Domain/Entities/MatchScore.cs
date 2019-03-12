@@ -41,7 +41,30 @@ namespace Leagueen.Domain.Entities
             PentaltiesHome = pentaltiesHome;
             PentaltiesAway = pentaltiesAway;
 
+            Match.AddScore(this);
             ValidateCreation();
+        }
+
+        public MatchScore UpdateScore(
+            MatchResult result, MatchDuration duration,
+            int? fullTimeHome, int? fullTimeAway,
+            int? halfTimeHome = null, int? halfTimeAway = null,
+            int? extraTimeHome = null, int? extraTimeAway = null,
+            int? pentaltiesHome = null, int? pentaltiesAway = null)
+        {
+            Result = result;
+            Match.SetResult(Result);
+
+            FullTimeHome = fullTimeHome;
+            FullTimeAway = fullTimeAway;
+            HalfTimeHome = halfTimeHome;
+            HalfTimeAway = halfTimeAway;
+            ExtraTimeHome = extraTimeHome;
+            ExtraTimeAway = extraTimeAway;
+            PentaltiesHome = pentaltiesHome;
+            PentaltiesAway = pentaltiesAway;
+            Duration = duration;
+            return this;
         }
 
         public MatchScore UpdateRegularScore(
@@ -50,6 +73,8 @@ namespace Leagueen.Domain.Entities
             int? halfTimeHome = null, int? halfTimeAway = null)
         {
             Result = result;
+            Match.SetResult(Result);
+
             FullTimeHome = fullTimeHome;
             FullTimeAway = fullTimeAway;
             HalfTimeHome = halfTimeHome;
@@ -65,6 +90,8 @@ namespace Leagueen.Domain.Entities
             int? extraTimeHome = null, int? extraTimeAway = null)
         {
             Result = result;
+            Match.SetResult(Result);
+
             FullTimeHome = fullTimeHome;
             FullTimeAway = fullTimeAway;
             HalfTimeHome = halfTimeHome;
@@ -83,6 +110,8 @@ namespace Leagueen.Domain.Entities
             int? pentaltiesHome = null, int? pentaltiesAway = null)
         {
             Result = result;
+            Match.SetResult(Result);
+
             FullTimeHome = fullTimeHome;
             FullTimeAway = fullTimeAway;
             HalfTimeHome = halfTimeHome;
