@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Leagueen.Application.Competitions.ProviderModels
+namespace Leagueen.Application.DataProviders.Competitions
 {
     public class CompetitionsListDto
     {

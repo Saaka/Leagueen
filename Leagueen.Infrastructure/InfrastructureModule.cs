@@ -1,6 +1,5 @@
-﻿using Leagueen.Application.Competitions;
+﻿using Leagueen.Application.DataProviders;
 using Leagueen.Application.Infrastructure;
-using Leagueen.Application.Matches;
 using Leagueen.Application.Security;
 using Leagueen.Application.Security.Google;
 using Leagueen.Common;
@@ -27,7 +26,6 @@ namespace Leagueen.Infrastructure
 
                 .AddTransient<IMatchesProvider, FootballDataClient>()
                 .AddTransient<ICompetitionsProvider, FootballDataClient>()
-                .AddTransient<IMatchesEnumHelper, FootballDataMatchesEnumHelper>()
 
                 .AddTransient<HashGenerator>()
                 .AddTransient<IProfileImageUrlProvider, GravatarProfileImageUrlProvider>();

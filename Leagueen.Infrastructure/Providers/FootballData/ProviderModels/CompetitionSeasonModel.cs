@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Leagueen.Application.Matches.ProviderModels
+namespace Leagueen.Infrastructure.Providers.FootballData.ProviderModels
 {
-    public class MatchSeasonDto
+    public class CompetitionSeasonModel
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int CurrentMatchday { get; set; }
-        public MatchTeamDto Winner { get; set; }
+        public TeamSimpleModel Winner { get; set; }
     }
 }

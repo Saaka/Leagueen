@@ -1,7 +1,7 @@
-﻿using Leagueen.Application.Competitions.ProviderModels;
+﻿using Leagueen.Application.DataProviders.Competitions;
 using System.Threading.Tasks;
 
-namespace Leagueen.Application.Competitions
+namespace Leagueen.Application.DataProviders
 {
     public interface ICompetitionsProvider
     {

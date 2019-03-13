@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Leagueen.Application.Matches.ProviderModels
+namespace Leagueen.Application.DataProviders.Matches
 {
     public class MatchListDto
     {

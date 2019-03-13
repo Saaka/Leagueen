@@ -1,12 +1,14 @@
 ﻿using Leagueen.Application.Exceptions;
-using Leagueen.Application.Matches;
 using Leagueen.Domain.Enums;
+using Leagueen.Infrastructure.Providers.FootballData.ProviderModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Leagueen.Infrastructure.Providers.FootballData
 {
-    public class FootballDataMatchesEnumHelper : IMatchesEnumHelper
+    public static class FootballDataMapperHelper
     {
-        public MatchStage ConvertStage(string stage)
+        public static MatchStage ConvertStage(string stage)
         {
             switch (stage)
             {
@@ -41,7 +43,7 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             }
         }
 
-        public MatchStatus ConvertStatusCode(string status)
+        public static MatchStatus ConvertStatus(string status)
         {
             switch (status)
             {
@@ -64,12 +66,12 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             }
         }
 
-        public MatchResult ConvertResult(string result)
+        public static MatchResult ConvertResult(string result)
         {
-            if (string.IsNullOrEmpty(result))
+            if (string.IsNullOrWhiteSpace(result))
                 return MatchResult.Unknown;
 
-            switch(result)
+            switch (result)
             {
                 case "HOME_TEAM":
                     return MatchResult.HomeTeam;
@@ -82,9 +84,12 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             }
         }
 
-        public MatchDuration ConvertDuration(string duration)
+        public static MatchDuration ConvertDuration(string duration)
         {
-            switch(duration)
+            if (string.IsNullOrWhiteSpace(duration))
+                return MatchDuration.Unknown;
+
+            switch (duration)
             {
                 case "REGULAR":
                     return MatchDuration.Regular;
@@ -96,6 +101,32 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                     throw new ProviderCommunicationException($"Invalid MatchDuration value: {duration}");
 
             }
+        }
+
+        public static string ConvertGroup(string group)
+        {
+            const string GroupPlaceholder = "GROUP";
+            if (string.IsNullOrWhiteSpace(group) || !group.ToUpper().Contains(GroupPlaceholder))
+                return null;
+
+            return group.ToUpper().Replace(GroupPlaceholder, string.Empty).Trim();
+        }
+
+        public static List<string> ConvertClubColors(string colors)
+        {
+            if (string.IsNullOrWhiteSpace(colors))
+                return new List<string>();
+
+            var colorList = colors.Split('/');
+
+            return colorList
+                .Select(c => c.Trim())
+                .ToList();
+        }
+
+        public static int? MapOptionalTeamId(TeamSimpleModel winner)
+        {
+            return winner?.Id;
         }
     }
 }

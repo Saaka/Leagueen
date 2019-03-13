@@ -1,6 +1,6 @@
-﻿namespace Leagueen.Application.Matches.ProviderModels
+﻿namespace Leagueen.Application.DataProviders.Matches
 {
-    public class MatchScoreValueDto
+    public class ScoreValueDto
     {
         public int? HomeTeam { get; set; }
         public int? AwayTeam { get; set; }

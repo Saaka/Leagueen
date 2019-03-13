@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Leagueen.Application.Competitions.ProviderModels
+namespace Leagueen.Application.DataProviders.Competitions
 {
     public class CompetitionTeamsListDto
     {
@@ -11,6 +11,5 @@ namespace Leagueen.Application.Competitions.ProviderModels
         public int Count { get; set; }
         public CompetitionSeasonDto Season { get; set; }
         public List<TeamDto> Teams { get; set; }
-
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Leagueen.Application.Competitions;
-using Leagueen.Application.Competitions.ProviderModels;
+using AutoMapper;
+using Leagueen.Application.DataProviders;
+using Leagueen.Application.DataProviders.Competitions;
+using Leagueen.Application.DataProviders.Matches;
 using Leagueen.Application.Exceptions;
-using Leagueen.Application.Matches;
-using Leagueen.Application.Matches.ProviderModels;
 using Leagueen.Infrastructure.Http;
+using Leagueen.Infrastructure.Providers.FootballData.ProviderModels;
 using RestSharp;
 
 namespace Leagueen.Infrastructure.Providers.FootballData
@@ -13,13 +14,16 @@ namespace Leagueen.Infrastructure.Providers.FootballData
     {
         private readonly IRestsharpClientFactory clientFactory;
         private readonly IFootballDataConfiguration configuration;
+        private readonly IMapper mapper;
 
         public FootballDataClient(
             IRestsharpClientFactory clientFactory,
-            IFootballDataConfiguration configuration)
+            IFootballDataConfiguration configuration,
+            IMapper mapper)
         {
             this.clientFactory = clientFactory;
             this.configuration = configuration;
+            this.mapper = mapper;
         }
 
         public async Task<CompetitionTeamsListDto> GetCompetitionTeamsList(string code)
@@ -28,10 +32,10 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             var request = clientFactory
                 .CreateRequest($"competitions/{code}/teams", Method.GET);
 
-            var response = await client.ExecuteTaskAsync<CompetitionTeamsListDto>(request);
+            var response = await client.ExecuteTaskAsync<CompetitionTeamsListModel>(request);
             EnsureSuccessfulStatusCode(response);
 
-            return response.Data;
+            return mapper.Map<CompetitionTeamsListDto>(response.Data);
         }
 
         public async Task<CompetitionsListDto> GetCompetitionsList()
@@ -41,10 +45,10 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 .CreateRequest("competitions", Method.GET)
                 .AddQueryParameter("plan", configuration.ApiPlan);
 
-            var response = await client.ExecuteTaskAsync<CompetitionsListDto>(request);
+            var response = await client.ExecuteTaskAsync<CompetitionsListModel>(request);
             EnsureSuccessfulStatusCode(response);
 
-            return response.Data;
+            return mapper.Map<CompetitionsListDto>(response.Data);
         }
 
         public async Task<MatchListDto> GetTodaysMatches()
@@ -52,10 +56,10 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             var client = CreateClient();
             var request = clientFactory.CreateRequest("matches", Method.GET);
 
-            var response = await client.ExecuteTaskAsync<MatchListDto>(request);
+            var response = await client.ExecuteTaskAsync<MatchListModel>(request);
             EnsureSuccessfulStatusCode(response);
 
-            return response.Data;
+            return mapper.Map<MatchListDto>(response.Data);
         }
 
         public async Task<MatchListDto> GetAllCompetitionMatches(string competitionCode)
@@ -64,10 +68,10 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             var request = clientFactory
                 .CreateRequest($"competitions/{competitionCode}/matches", Method.GET);
 
-            var response = await client.ExecuteTaskAsync<MatchListDto>(request);
+            var response = await client.ExecuteTaskAsync<MatchListModel>(request);
             EnsureSuccessfulStatusCode(response);
 
-            return response.Data;
+            return mapper.Map<MatchListDto>(response.Data);
         }
 
         private void EnsureSuccessfulStatusCode<T>(IRestResponse<T> response)

@@ -1,5 +1,6 @@
-﻿using Leagueen.Application.Competitions.ProviderModels;
-using Leagueen.Application.Competitions.Repositories;
+﻿using Leagueen.Application.Competitions.Repositories;
+using Leagueen.Application.DataProviders;
+using Leagueen.Application.DataProviders.Competitions;
 using Leagueen.Domain.Entities;
 using MediatR;
 using System.Collections.Generic;

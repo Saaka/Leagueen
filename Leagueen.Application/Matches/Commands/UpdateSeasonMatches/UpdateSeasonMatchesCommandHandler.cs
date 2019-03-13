@@ -1,11 +1,11 @@
 ﻿using Leagueen.Application.Competitions.Repositories;
-using Leagueen.Application.Matches.ProviderModels;
+using Leagueen.Application.DataProviders;
+using Leagueen.Application.DataProviders.Matches;
 using Leagueen.Domain.Entities;
 using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,18 +17,15 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
         private readonly ILogger<UpdateSeasonMatchesCommandHandler> logger;
         private readonly ISeasonsRepository seasonsRepository;
         private readonly IMatchesProvider matchesProvider;
-        private readonly IMatchesEnumHelper matchesEnumHelper;
 
         public UpdateSeasonMatchesCommandHandler(
             ILogger<UpdateSeasonMatchesCommandHandler> logger,
             ISeasonsRepository seasonsRepository,
-            IMatchesProvider matchesProvider,
-            IMatchesEnumHelper matchesEnumHelper)
+            IMatchesProvider matchesProvider)
         {
             this.logger = logger;
             this.seasonsRepository = seasonsRepository;
             this.matchesProvider = matchesProvider;
-            this.matchesEnumHelper = matchesEnumHelper;
         }
 
         protected override async Task Handle(UpdateSeasonMatchesCommand request, CancellationToken cancellationToken)
@@ -64,7 +61,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
 
         private void UpdateMatch(Match match, MatchDto info)
         {
-            if (!string.IsNullOrEmpty(info.Score.Winner))
+            if (info.Score.Winner == MatchResult.Unknown)
             {
                 if (match.MatchScore != null)
                     UpdateScore(match.MatchScore, info.Score);
@@ -72,26 +69,26 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
                     CreateScore(match, info.Score);
             }
             match
-            .SetStatus(GetStatus(info.Status))
+            .SetStatus(info.Status)
             .UpdateDate(info.UtcDate)
             .SetProviderUpdate(info.LastUpdated);
         }
 
         private void UpdateScore(MatchScore matchScore, MatchScoreDto info)
         {
-            matchScore.UpdateScore(GetResult(info.Winner), GetDuration(info.Duration),
+            matchScore.UpdateScore(info.Winner, info.Duration,
                 info.FullTime?.HomeTeam, info.FullTime?.AwayTeam, info.HalfTime?.HomeTeam, info.HalfTime.AwayTeam,
                 info.ExtraTime?.HomeTeam, info.ExtraTime?.AwayTeam, info.Penalties?.HomeTeam, info.Penalties?.AwayTeam);
         }
 
         private Match CreateMatch(Season season, MatchDto info)
         {
-            var homeTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.HomeTeam?.Id);
-            var awayTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.AwayTeam?.Id);
+            var homeTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.HomeTeamId);
+            var awayTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.AwayTeamId);
             var match = new Match(info.Id, season, homeTeam.Team, awayTeam.Team,
-                info.UtcDate, GetStatus(info.Status), GetStage(info.Stage), info.LastUpdated, GetGroup(info), info.Matchday);
+                info.UtcDate, info.Status, info.Stage, info.LastUpdated, info.Group, info.Matchday);
             
-            if (!string.IsNullOrEmpty(info.Score.Winner))
+            if (info.Score.Winner != MatchResult.Unknown)
                 CreateScore(match, info.Score);
 
             return match;
@@ -99,38 +96,9 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
 
         private MatchScore CreateScore(Match match, MatchScoreDto info)
         {
-            return new MatchScore(match, GetResult(info.Winner), GetDuration(info.Duration),
+            return new MatchScore(match, info.Winner, info.Duration,
                 info.FullTime?.HomeTeam, info.FullTime?.AwayTeam, info.HalfTime?.HomeTeam, info.HalfTime.AwayTeam,
                 info.ExtraTime?.HomeTeam, info.ExtraTime?.AwayTeam, info.Penalties?.HomeTeam, info.Penalties?.AwayTeam);
-        }
-
-        private string GetGroup(MatchDto info)
-        {
-            const string GroupPlaceholder = "GROUP";
-            if (string.IsNullOrWhiteSpace(info.Group) || !info.Group.ToUpper().Contains(GroupPlaceholder))
-                return null;
-
-            return info.Group.ToUpper().Replace(GroupPlaceholder, string.Empty).Trim();
-        }
-
-        private MatchDuration GetDuration(string duration)
-        {
-            return matchesEnumHelper.ConvertDuration(duration);
-        }
-
-        private MatchResult GetResult(string winner)
-        {
-            return matchesEnumHelper.ConvertResult(winner);
-        }
-
-        private MatchStage GetStage(string stage)
-        {
-            return matchesEnumHelper.ConvertStage(stage);
-        }
-
-        private MatchStatus GetStatus(string status)
-        {
-            return matchesEnumHelper.ConvertStatusCode(status);
         }
     }
 }

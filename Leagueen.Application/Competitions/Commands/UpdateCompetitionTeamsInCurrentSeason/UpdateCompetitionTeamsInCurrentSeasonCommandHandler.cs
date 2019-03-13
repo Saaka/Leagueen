@@ -1,5 +1,6 @@
-﻿using Leagueen.Application.Competitions.ProviderModels;
-using Leagueen.Application.Competitions.Repositories;
+﻿using Leagueen.Application.Competitions.Repositories;
+using Leagueen.Application.DataProviders;
+using Leagueen.Application.DataProviders.Competitions;
 using Leagueen.Domain.Entities;
 using Leagueen.Domain.Exceptions;
 using MediatR;
@@ -49,9 +50,9 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionTeamsInCur
 
         private void CheckWinner(Season season, CompetitionTeamsListDto teamsInfo)
         {
-            if(teamsInfo.Season.Winner != null)
+            if(teamsInfo.Season.SeasonWinnerId.HasValue)
             {
-                var winner = season.Teams.First(x => x.Team.ExternalId == teamsInfo.Season.Winner.Id);
+                var winner = season.Teams.First(x => x.Team.ExternalId == teamsInfo.Season.SeasonWinnerId);
                 season.SetWinner(winner.Team);
             }
         }
