@@ -21,6 +21,7 @@ namespace Leagueen.Persistence.Domain.Repositories
             return await context
                 .Competitions
                 .Where(x => x.IsActive)
+                .Include(x => x.DataProvider)
                 .Include(x => x.Seasons)
                     .ThenInclude(x => x.Teams)
                         .ThenInclude(x => x.Team)
@@ -33,6 +34,7 @@ namespace Leagueen.Persistence.Domain.Repositories
                 .Competitions
                 .Where(x => x.IsActive)
                 .Where(x => x.Code == code)
+                .Include(x => x.DataProvider)
                 .Include(c => c.Seasons)
                     .ThenInclude(x => x.Teams)
                         .ThenInclude(x => x.Team)

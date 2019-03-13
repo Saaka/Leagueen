@@ -52,12 +52,6 @@ namespace Leagueen.Domain.Entities
             return this;
         }
 
-        public Season SetWinner(int winnerId)
-        {
-            WinnerId = winnerId;
-            return this;
-        }
-
         public Season SetMatchday(int currentMatchday)
         {
             CurrentMatchday = currentMatchday;

@@ -9,6 +9,7 @@ namespace Leagueen.Infrastructure.Providers.FootballData.ProviderModels
             Teams = new List<TeamModel>();
         }
         public int Count { get; set; }
+        public CompetitionInfoModel Competition { get; set; }
         public CompetitionSeasonModel Season { get; set; }
         public List<TeamModel> Teams { get; set; }
     }

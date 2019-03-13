@@ -50,7 +50,7 @@ namespace Leagueen.Tests.Integration.FootballData
             var result = await client.GetCompetitionTeamsList("PL");
 
             Assert.NotNull(result);
-            Assert.NotEqual(0, result.Count);
+            Assert.NotEqual(0, result.TeamsCount);
         }
 
         private FootballDataClient CreateClient()

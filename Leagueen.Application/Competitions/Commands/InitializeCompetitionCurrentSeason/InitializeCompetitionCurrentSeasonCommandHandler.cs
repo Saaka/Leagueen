@@ -1,56 +1,84 @@
 ﻿using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Application.DataProviders;
 using Leagueen.Application.DataProviders.Competitions;
+using Leagueen.Application.Matches.Commands;
 using Leagueen.Domain.Entities;
 using Leagueen.Domain.Exceptions;
 using MediatR;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionTeamsInCurrentSeason
+namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurrentSeason
 {
-    public class UpdateCompetitionTeamsInCurrentSeasonCommandHandler : AsyncRequestHandler<UpdateCompetitionTeamsInCurrentSeasonCommand>
+    public class InitializeCompetitionCurrentSeasonCommandHandler : AsyncRequestHandler<InitializeCompetitionCurrentSeasonCommand>
     {
         private readonly ICompetitionsProvider competitionsProvider;
         private readonly ISeasonsRepository seasonsRepository;
         private readonly ICompetitionsRepository competitionsRepository;
         private readonly ITeamsRepository teamsRepository;
+        private readonly IMediator mediator;
 
-        public UpdateCompetitionTeamsInCurrentSeasonCommandHandler(
+        public InitializeCompetitionCurrentSeasonCommandHandler(
             ICompetitionsProvider competitionsProvider,
             ISeasonsRepository seasonsRepository,
             ICompetitionsRepository competitionsRepository,
-            ITeamsRepository teamsRepository)
+            ITeamsRepository teamsRepository,
+            IMediator mediator)
         {
             this.competitionsProvider = competitionsProvider;
             this.seasonsRepository = seasonsRepository;
             this.competitionsRepository = competitionsRepository;
             this.teamsRepository = teamsRepository;
+            this.mediator = mediator;
         }
 
-        protected override async Task Handle(UpdateCompetitionTeamsInCurrentSeasonCommand request, CancellationToken cancellationToken)
+        protected override async Task Handle(InitializeCompetitionCurrentSeasonCommand request, CancellationToken cancellationToken)
         {
             var competition = await competitionsRepository.GetCompetitionByCode(request.CompetitionCode);
             if (competition == null)
                 throw new DomainException(Domain.Enums.ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionCode}");
-            var teamsInfo = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
+            var info = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
+
+            if (competition.LastProviderUpdate == info.Competition.LastUpdated) return;
+
+            competition
+                .SetLastProviderUpdate(info.Competition.LastUpdated);
+
             var season = competition.GetCurrentSeason();
             if (season == null)
-                season = CreateSeason(teamsInfo.Season, competition);
+                season = CreateSeason(info.Season, competition);
+            else
+                season = UpdateSeason(season, info);
 
-            foreach (var teamInfo in teamsInfo.Teams)
+            foreach (var teamInfo in info.Teams)
             {
                 await AddTeam(teamInfo, season);
             }
-            CheckWinner(season, teamsInfo);
+            CheckWinner(season, info);
 
-            await seasonsRepository.SaveSeason(season);
+            await competitionsRepository.SaveCompetition(competition);
+
+            await mediator.Send(new UpdateSeasonMatchesCommand { CompetitionCode = request.CompetitionCode });
+        }
+
+        private Season UpdateSeason(Season season, CompetitionTeamsListDto info)
+        {
+            if (season.ExternalId != info.Season.Id)
+            {
+                season.Deactivate();
+                season = CreateSeason(info.Season, season.Competition);
+            }
+            else
+                season.SetMatchday(info.Season.CurrentMatchday);
+
+            return season;
         }
 
         private void CheckWinner(Season season, CompetitionTeamsListDto teamsInfo)
         {
-            if(teamsInfo.Season.SeasonWinnerId.HasValue)
+            if (teamsInfo.Season.SeasonWinnerId.HasValue)
             {
                 var winner = season.Teams.First(x => x.Team.ExternalId == teamsInfo.Season.SeasonWinnerId);
                 season.SetWinner(winner.Team);

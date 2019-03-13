@@ -35,35 +35,37 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
 
                 if (competition == null || competition.LastProviderUpdate == info.LastUpdated)
                     continue;
-                else
-                    toUpdate.Add(UpdateCompetition(competition, info));
+
+                if (UpdateCompetition(competition, info))
+                    toUpdate.Add(competition);
             }
 
             if (toUpdate.Any())
                 await competitionsRepository.SaveCompetitions(toUpdate);
         }
 
-        private Competition UpdateCompetition(Competition competition, CompetitionDto info)
+        private bool UpdateCompetition(Competition competition, CompetitionDto info)
         {
             var currentSeason = competition.GetCurrentSeason();
             var seasonInfo = info.CurrentSeason;
 
             if (currentSeason == null)
+                return false;
+
+            if (currentSeason.ExternalId != info.CurrentSeason.Id)
             {
+                currentSeason.Deactivate();
                 currentSeason = CreateNewSeason(competition, seasonInfo);
             }
-            else if (currentSeason.ExternalId == info.CurrentSeason.Id)
+            else
             {
                 currentSeason
                     .SetMatchday(seasonInfo.CurrentMatchday);
             }
-            else
-            {
-                currentSeason.Deactivate();
-                currentSeason = CreateNewSeason(competition, seasonInfo);
-            }            
-            return competition
+            competition
                 .SetLastProviderUpdate(info.LastUpdated);
+
+            return true;
         }
 
         private Season CreateNewSeason(Competition competition, CompetitionSeasonDto seasonInfo)

@@ -14,7 +14,9 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             CreateMap<CompetitionSeasonModel, CompetitionSeasonDto>()
                 .ForMember(d => d.SeasonWinnerId, cfg => cfg.MapFrom(m => FootballDataMapperHelper.MapOptionalTeamId(m.Winner)));
             
-            CreateMap<CompetitionTeamsListModel, CompetitionTeamsListDto>();
+            CreateMap<CompetitionTeamsListModel, CompetitionTeamsListDto>()
+                .ForMember(x=> x.TeamsCount, c => c.MapFrom(m => m.Count));
+            CreateMap<CompetitionInfoModel, CompetitionInfoDto>();
             CreateMap<TeamModel, TeamDto>()
                 .ForMember(d => d.ClubColors, c => c.MapFrom(m => FootballDataMapperHelper.ConvertClubColors(m.ClubColors)));
 
