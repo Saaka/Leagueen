@@ -12,6 +12,7 @@ namespace Leagueen.Application.Matches.ProviderModels
         public string Status { get; set; }
         public int? Matchday { get; set; }
         public string Stage { get; set; }
+        public string Group { get; set; }
         public MatchScoreDto Score { get; set; }
         public MatchTeamDto HomeTeam { get; set; }
         public MatchTeamDto AwayTeam { get; set; }

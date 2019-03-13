@@ -89,7 +89,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
             var homeTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.HomeTeam?.Id);
             var awayTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.AwayTeam?.Id);
             var match = new Match(info.Id, season, homeTeam.Team, awayTeam.Team,
-                info.UtcDate, GetStatus(info.Status), GetStage(info.Stage), info.LastUpdated);
+                info.UtcDate, GetStatus(info.Status), GetStage(info.Stage), info.LastUpdated, GetGroup(info), info.Matchday);
             
             if (!string.IsNullOrEmpty(info.Score.Winner))
                 CreateScore(match, info.Score);
@@ -102,6 +102,15 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
             return new MatchScore(match, GetResult(info.Winner), GetDuration(info.Duration),
                 info.FullTime?.HomeTeam, info.FullTime?.AwayTeam, info.HalfTime?.HomeTeam, info.HalfTime.AwayTeam,
                 info.ExtraTime?.HomeTeam, info.ExtraTime?.AwayTeam, info.Penalties?.HomeTeam, info.Penalties?.AwayTeam);
+        }
+
+        private string GetGroup(MatchDto info)
+        {
+            const string GroupPlaceholder = "GROUP";
+            if (string.IsNullOrWhiteSpace(info.Group) || !info.Group.ToUpper().Contains(GroupPlaceholder))
+                return null;
+
+            return info.Group.ToUpper().Replace(GroupPlaceholder, string.Empty).Trim();
         }
 
         private MatchDuration GetDuration(string duration)
