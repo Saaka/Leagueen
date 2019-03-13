@@ -24,7 +24,7 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .IsRequired();
             builder
                 .Property(x => x.CrestUrl)
-                .HasMaxLength(128)
+                .HasMaxLength(256)
                 .IsRequired(false);
             builder
                 .Property(x => x.Website)

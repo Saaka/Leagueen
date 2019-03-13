@@ -67,63 +67,6 @@ namespace Leagueen.Domain.Entities
             return this;
         }
 
-        public MatchScore UpdateRegularScore(
-            MatchResult result,
-            int fullTimeHome, int fullTimeAway,
-            int? halfTimeHome = null, int? halfTimeAway = null)
-        {
-            Result = result;
-            Match.SetResult(Result);
-
-            FullTimeHome = fullTimeHome;
-            FullTimeAway = fullTimeAway;
-            HalfTimeHome = halfTimeHome;
-            HalfTimeAway = halfTimeAway;
-            Duration = MatchDuration.Regular;
-            return this;
-        }
-
-        public MatchScore UpdateExtraTimeScore(
-            MatchResult result,
-            int fullTimeHome, int fullTimeAway,
-            int? halfTimeHome = null, int? halfTimeAway = null,
-            int? extraTimeHome = null, int? extraTimeAway = null)
-        {
-            Result = result;
-            Match.SetResult(Result);
-
-            FullTimeHome = fullTimeHome;
-            FullTimeAway = fullTimeAway;
-            HalfTimeHome = halfTimeHome;
-            HalfTimeAway = halfTimeAway;
-            ExtraTimeHome = extraTimeHome;
-            ExtraTimeAway = extraTimeAway;
-            Duration = MatchDuration.ExtraTime;
-            return this;
-        }
-
-        public MatchScore UpdatePenaltiesScore(
-            MatchResult result,
-            int fullTimeHome, int fullTimeAway,
-            int? halfTimeHome = null, int? halfTimeAway = null,
-            int? extraTimeHome = null, int? extraTimeAway = null,
-            int? pentaltiesHome = null, int? pentaltiesAway = null)
-        {
-            Result = result;
-            Match.SetResult(Result);
-
-            FullTimeHome = fullTimeHome;
-            FullTimeAway = fullTimeAway;
-            HalfTimeHome = halfTimeHome;
-            HalfTimeAway = halfTimeAway;
-            ExtraTimeHome = extraTimeHome;
-            ExtraTimeAway = extraTimeAway;
-            PentaltiesHome = pentaltiesHome;
-            PentaltiesAway = pentaltiesAway;
-            Duration = MatchDuration.PenaltyShootout;
-            return this;
-        }
-
         private void ValidateCreation()
         {
             if (Match == null)

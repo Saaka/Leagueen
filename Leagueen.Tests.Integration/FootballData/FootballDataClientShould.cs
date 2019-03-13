@@ -57,7 +57,7 @@ namespace Leagueen.Tests.Integration.FootballData
         {
             return new FootballDataClient(
                 new RestsharpClientFactory(),
-                TestConfiguration.Create());
+                TestConfiguration.Create(), AutoMapper.Mapper.Instance);
         }
     }
 }

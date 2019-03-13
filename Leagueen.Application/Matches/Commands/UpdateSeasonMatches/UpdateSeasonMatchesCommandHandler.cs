@@ -61,7 +61,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
 
         private void UpdateMatch(Match match, MatchDto info)
         {
-            if (info.Score.Winner == MatchResult.Unknown)
+            if (info.Score.Result == MatchResult.Unknown)
             {
                 if (match.MatchScore != null)
                     UpdateScore(match.MatchScore, info.Score);
@@ -76,7 +76,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
 
         private void UpdateScore(MatchScore matchScore, MatchScoreDto info)
         {
-            matchScore.UpdateScore(info.Winner, info.Duration,
+            matchScore.UpdateScore(info.Result, info.Duration,
                 info.FullTime?.HomeTeam, info.FullTime?.AwayTeam, info.HalfTime?.HomeTeam, info.HalfTime.AwayTeam,
                 info.ExtraTime?.HomeTeam, info.ExtraTime?.AwayTeam, info.Penalties?.HomeTeam, info.Penalties?.AwayTeam);
         }
@@ -88,7 +88,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
             var match = new Match(info.Id, season, homeTeam.Team, awayTeam.Team,
                 info.UtcDate, info.Status, info.Stage, info.LastUpdated, info.Group, info.Matchday);
             
-            if (info.Score.Winner != MatchResult.Unknown)
+            if (info.Score.Result != MatchResult.Unknown)
                 CreateScore(match, info.Score);
 
             return match;
@@ -96,7 +96,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateSeasonMatches
 
         private MatchScore CreateScore(Match match, MatchScoreDto info)
         {
-            return new MatchScore(match, info.Winner, info.Duration,
+            return new MatchScore(match, info.Result, info.Duration,
                 info.FullTime?.HomeTeam, info.FullTime?.AwayTeam, info.HalfTime?.HomeTeam, info.HalfTime.AwayTeam,
                 info.ExtraTime?.HomeTeam, info.ExtraTime?.AwayTeam, info.Penalties?.HomeTeam, info.Penalties?.AwayTeam);
         }

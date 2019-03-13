@@ -8,9 +8,9 @@ namespace Leagueen.Infrastructure.Providers.FootballData
 {
     public static class FootballDataMapperHelper
     {
-        public static MatchStage ConvertStage(string stage)
+        public static MatchStage ConvertStage(MatchModel model)
         {
-            switch (stage)
+            switch (model.Stage)
             {
                 case "REGULAR_SEASON":
                     return MatchStage.RegularSeason;
@@ -39,13 +39,13 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 case "PRELIMINARY_FINAL":
                     return MatchStage.PreliminaryFinal;
                 default:
-                    throw new ProviderCommunicationException($"Invalid MatchStage value: {stage}");
+                    throw new ProviderCommunicationException($"Invalid MatchStage value: {model.Stage}");
             }
         }
 
-        public static MatchStatus ConvertStatus(string status)
+        public static MatchStatus ConvertStatus(MatchModel model)
         {
-            switch (status)
+            switch (model.Status)
             {
                 case "SCHEDULED":
                     return MatchStatus.Scheduled;
@@ -62,16 +62,16 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 case "CANCELED":
                     return MatchStatus.Canceled;
                 default:
-                    throw new ProviderCommunicationException($"Invalid MatchStatus value: {status}");
+                    throw new ProviderCommunicationException($"Invalid MatchStatus value: {model.Status}");
             }
         }
 
-        public static MatchResult ConvertResult(string result)
+        public static MatchResult ConvertResult(MatchScoreModel model)
         {
-            if (string.IsNullOrWhiteSpace(result))
+            if (string.IsNullOrWhiteSpace(model.Winner))
                 return MatchResult.Unknown;
 
-            switch (result)
+            switch (model.Winner)
             {
                 case "HOME_TEAM":
                     return MatchResult.HomeTeam;
@@ -80,16 +80,16 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 case "DRAW":
                     return MatchResult.Draw;
                 default:
-                    throw new ProviderCommunicationException($"Invalid Matchresult value: {result}");
+                    throw new ProviderCommunicationException($"Invalid Matchresult value: {model.Winner}");
             }
         }
 
-        public static MatchDuration ConvertDuration(string duration)
+        public static MatchDuration ConvertDuration(MatchScoreModel model)
         {
-            if (string.IsNullOrWhiteSpace(duration))
+            if (string.IsNullOrWhiteSpace(model.Duration))
                 return MatchDuration.Unknown;
 
-            switch (duration)
+            switch (model.Duration)
             {
                 case "REGULAR":
                     return MatchDuration.Regular;
@@ -98,26 +98,26 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 case "PENALTY_SHOOTOUT":
                     return MatchDuration.PenaltyShootout;
                 default:
-                    throw new ProviderCommunicationException($"Invalid MatchDuration value: {duration}");
+                    throw new ProviderCommunicationException($"Invalid MatchDuration value: {model.Duration}");
 
             }
         }
 
-        public static string ConvertGroup(string group)
+        public static string ConvertGroup(MatchModel model)
         {
             const string GroupPlaceholder = "GROUP";
-            if (string.IsNullOrWhiteSpace(group) || !group.ToUpper().Contains(GroupPlaceholder))
+            if (string.IsNullOrWhiteSpace(model.Group) || !model.Group.ToUpper().Contains(GroupPlaceholder))
                 return null;
 
-            return group.ToUpper().Replace(GroupPlaceholder, string.Empty).Trim();
+            return model.Group.ToUpper().Replace(GroupPlaceholder, string.Empty).Trim();
         }
 
-        public static List<string> ConvertClubColors(string colors)
+        public static List<string> ConvertClubColors(TeamModel model)
         {
-            if (string.IsNullOrWhiteSpace(colors))
+            if (string.IsNullOrWhiteSpace(model.ClubColors))
                 return new List<string>();
 
-            var colorList = colors.Split('/');
+            var colorList = model.ClubColors.Split('/');
 
             return colorList
                 .Select(c => c.Trim())
