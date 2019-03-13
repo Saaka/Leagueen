@@ -69,7 +69,6 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
         {
             var newSeason = new Season(competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
                 .SetActive();
-            competition.AddSeason(newSeason);
 
             return newSeason;
         }

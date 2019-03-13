@@ -40,5 +40,8 @@
         SeasonAlreadyContainsMatch,
         ActiveCompetitionNotFound,
         AtiveSeasonNotFoundForCompetition,
+        DataProviderTypeInvalid,
+        DataProviderNameRequired,
+        DataProviderAlreadyConatinsCompetition,
     }
 }

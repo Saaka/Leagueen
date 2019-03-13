@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leagueen.Persistence.Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190312203243_AddSeasonWinnerRelation")]
-    partial class AddSeasonWinnerRelation
+    [Migration("20190313172402_InitialMigrationV2")]
+    partial class InitialMigrationV2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,11 @@ namespace Leagueen.Persistence.Domain.Migrations
                         .IsRequired()
                         .HasMaxLength(16);
 
+                    b.Property<int>("DataProviderId");
+
                     b.Property<int>("ExternalId");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<DateTime?>("LastProviderUpdate")
                         .ValueGeneratedOnAdd()
@@ -48,7 +52,26 @@ namespace Leagueen.Persistence.Domain.Migrations
 
                     b.HasKey("CompetitionId");
 
+                    b.HasIndex("DataProviderId");
+
                     b.ToTable("Competitions");
+                });
+
+            modelBuilder.Entity("Leagueen.Domain.Entities.DataProvider", b =>
+                {
+                    b.Property<int>("DataProviderId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32);
+
+                    b.Property<byte>("Type");
+
+                    b.HasKey("DataProviderId");
+
+                    b.ToTable("DataProviders");
                 });
 
             modelBuilder.Entity("Leagueen.Domain.Entities.Match", b =>
@@ -198,6 +221,14 @@ namespace Leagueen.Persistence.Domain.Migrations
                     b.HasIndex("SeasonId");
 
                     b.ToTable("TeamSeasons");
+                });
+
+            modelBuilder.Entity("Leagueen.Domain.Entities.Competition", b =>
+                {
+                    b.HasOne("Leagueen.Domain.Entities.DataProvider", "DataProvider")
+                        .WithMany("Competitions")
+                        .HasForeignKey("DataProviderId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Leagueen.Domain.Entities.Match", b =>

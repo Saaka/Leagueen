@@ -36,6 +36,7 @@ namespace Leagueen.Domain.Entities
             EndDate = endDate;
             CurrentMatchday = currentMatchday;
 
+            competition.AddSeason(this);
             ValidateCreation();
         }
 

@@ -15,14 +15,16 @@ namespace Leagueen.Domain.Entities
         public string Code { get; private set; }
         public int ExternalId { get; private set; }
         public bool IsActive { get; private set; }
+        public int DataProviderId { get; set; }
         public DateTime? LastProviderUpdate { get; private set; }
 
         public virtual IReadOnlyCollection<Season> Seasons => _seasons.AsReadOnly();
         protected List<Season> _seasons = new List<Season>();
+        public virtual DataProvider DataProvider { get; private set; }
 
         private Competition() { }
 
-        public Competition(CompetitionType type, CompetitionModel model, string name, string code, int externalId, bool isActive)
+        public Competition(CompetitionType type, CompetitionModel model, string name, string code, int externalId, bool isActive, DataProvider dataProvider)
         {
             Type = type;
             Model = model;
@@ -30,7 +32,9 @@ namespace Leagueen.Domain.Entities
             Code = code;
             ExternalId = externalId;
             IsActive = isActive;
+            DataProvider = dataProvider;
 
+            dataProvider.AddCompetition(this);
             ValidateCreation();
         }
 

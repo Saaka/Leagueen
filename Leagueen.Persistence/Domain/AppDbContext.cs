@@ -9,6 +9,7 @@ namespace Leagueen.Persistence.Domain
         protected AppDbContext() { }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+        public DbSet<DataProvider> DataProviders { get; set; }
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Team> Teams { get; set; }
