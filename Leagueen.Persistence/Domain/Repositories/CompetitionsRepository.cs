@@ -32,7 +32,6 @@ namespace Leagueen.Persistence.Domain.Repositories
         {
             return await context
                 .Competitions
-                .Where(x => x.IsActive)
                 .Where(x => x.Code == code)
                 .Include(x => x.DataProvider)
                 .Include(c => c.Seasons)

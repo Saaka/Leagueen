@@ -44,6 +44,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             if (competition.LastProviderUpdate == info.Competition.LastUpdated) return;
 
             competition
+                .SetActiveState(true)
                 .SetLastProviderUpdate(info.Competition.LastUpdated);
 
             var season = competition.GetCurrentSeason();
