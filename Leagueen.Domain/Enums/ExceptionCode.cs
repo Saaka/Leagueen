@@ -43,5 +43,7 @@
         DataProviderTypeInvalid,
         DataProviderNameRequired,
         DataProviderAlreadyConatinsCompetition,
+        UpdateLogTypeRequred,
+        UpdateLogDateRequred,
     }
 }
