@@ -1,4 +1,5 @@
-﻿using Leagueen.Common;
+﻿using Leagueen.Application;
+using Leagueen.Common;
 using Leagueen.Infrastructure;
 using Leagueen.Infrastructure.Providers.FootballData;
 using Leagueen.Persistence;
@@ -19,6 +20,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                 .AddTransient<IUserContextDataProvider, UserContextDataProvider>();
 
             services
+                .AddApplicationModule()
                 .AddInfrastructure()
                 .AddPersistence();
 

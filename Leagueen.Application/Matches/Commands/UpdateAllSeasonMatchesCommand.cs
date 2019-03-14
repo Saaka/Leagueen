@@ -2,7 +2,7 @@
 
 namespace Leagueen.Application.Matches.Commands
 {
-    public class UpdateSeasonMatchesCommand : IRequest
+    public class UpdateAllSeasonMatchesCommand : IRequest
     {
         public string CompetitionCode { get; set; }
     }
