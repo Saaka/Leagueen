@@ -16,12 +16,12 @@ namespace Leagueen.Persistence.Domain.Repositories
             this.context = context;
         }
 
-        public async Task<UpdateLog> GetLastUpdateLog(UpdateLogType type)
+        public async Task<UpdateLog> GetLastUpdateLog(UpdateLogType logType, DataProviderType providerType)
         {
             return await context.UpdateLogs
-                .Where(x => x.LogType == type)
+                .Where(x => x.LogType == logType && x.ProviderType == providerType)
                 .OrderByDescending(x => x.Date)
-                .LastOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task SaveUpdateLog(UpdateLog log)

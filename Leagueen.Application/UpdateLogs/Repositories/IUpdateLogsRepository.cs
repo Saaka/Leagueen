@@ -6,7 +6,7 @@ namespace Leagueen.Application.UpdateLogs.Repositories
 {
     public interface IUpdateLogsRepository
     {
-        Task<UpdateLog> GetLastUpdateLog(UpdateLogType type);
+        Task<UpdateLog> GetLastUpdateLog(UpdateLogType type, DataProviderType provider);
         Task SaveUpdateLog(UpdateLog log);
     }
 }

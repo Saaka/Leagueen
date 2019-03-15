@@ -8,12 +8,14 @@ namespace Leagueen.Domain.Entities
     {
         public int UpdateLogId { get; private set; }
         public UpdateLogType LogType { get; private set; }
+        public DataProviderType ProviderType { get; private set; }
         public DateTime Date { get; private set; }
 
         private UpdateLog() { }
-        public UpdateLog(UpdateLogType type, DateTime date)
+        public UpdateLog(UpdateLogType type, DataProviderType provider, DateTime date)
         {
             LogType = type;
+            ProviderType = provider;
             Date = date;
 
             ValidateCreation();
@@ -23,6 +25,8 @@ namespace Leagueen.Domain.Entities
         {
             if (!Enum.IsDefined(typeof(UpdateLogType), LogType))
                 throw new DomainException(ExceptionCode.UpdateLogTypeRequred);
+            if (!Enum.IsDefined(typeof(DataProviderType), ProviderType))
+                throw new DomainException(ExceptionCode.UpdateLogProviderTypeRequred);
             if (Date == null || Date == DateTime.MinValue)
                 throw new DomainException(ExceptionCode.UpdateLogDateRequred);
         }

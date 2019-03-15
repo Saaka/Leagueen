@@ -45,5 +45,6 @@
         DataProviderAlreadyConatinsCompetition,
         UpdateLogTypeRequred,
         UpdateLogDateRequred,
+        UpdateLogProviderTypeRequred,
     }
 }

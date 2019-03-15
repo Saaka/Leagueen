@@ -20,6 +20,12 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .HasConversion(
                     v => (byte)v,
                     v => (UpdateLogType)v);
+            builder
+                .Property(x => x.ProviderType)
+                .IsRequired()
+                .HasConversion(
+                    v => (byte)v,
+                    v => (DataProviderType)v);
         }
     }
 }
