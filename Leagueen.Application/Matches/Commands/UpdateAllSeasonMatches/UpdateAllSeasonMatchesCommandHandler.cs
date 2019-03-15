@@ -41,11 +41,13 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
                 throw new DomainException(ExceptionCode.AtiveSeasonNotFoundForCompetition, $"CompetitionCode:{request.CompetitionCode}");
             var matchesInfo = await matchesProvider.GetAllCompetitionMatches(request.CompetitionCode);
 
+            int count = 0;
             foreach (var matchInfo in matchesInfo.Matches)
             {
                 try
                 {
-                    AddOrCreateMatch(season, matchInfo);
+                    if (AddOrCreateMatch(season, matchInfo))
+                        count++;
                 }
                 catch (DomainException ex)
                 {
@@ -54,15 +56,19 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
             }
 
             await seasonsRepository.SaveSeason(season);
+            logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Updated {count} matches");
         }
 
-        private void AddOrCreateMatch(Season season, MatchDto matchInfo)
+        private bool AddOrCreateMatch(Season season, MatchDto matchInfo)
         {
             var match = season.Matches.FirstOrDefault(x => x.ExternalId == matchInfo.Id);
             if (match == null)
+            {
                 match = matchFactory.CreateMatch(season, matchInfo);
+                return true;
+            }
             else
-                matchUpdater.UpdateMatch(match, matchInfo);
+                return matchUpdater.UpdateMatch(match, matchInfo);
         }
 
     }

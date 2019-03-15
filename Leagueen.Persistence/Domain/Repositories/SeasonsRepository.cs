@@ -24,6 +24,7 @@ namespace Leagueen.Persistence.Domain.Repositories
 
             return await query
                 .Include(x => x.Matches)
+                    .ThenInclude(x => x.MatchScore)
                 .Include(x => x.Teams)
                     .ThenInclude(x => x.Team)
                 .FirstOrDefaultAsync();

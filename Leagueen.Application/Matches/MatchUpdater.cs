@@ -23,10 +23,10 @@ namespace Leagueen.Application.Matches
 
         public bool UpdateMatch(Match match, MatchDto info)
         {
-            if (match.LastProviderUpdate != info.LastUpdated)
+            if (match.LastProviderUpdate == info.LastUpdated)
                 return false;
 
-            if (info.Score.Result == MatchResult.Unknown)
+            if (info.Score.Result != MatchResult.Unknown)
             {
                 if (match.MatchScore != null)
                     scoreUpdater.UpdateScore(match.MatchScore, info.Score);
