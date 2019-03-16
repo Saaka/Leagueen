@@ -2,6 +2,7 @@
 using Leagueen.Application.DataProviders;
 using Leagueen.Application.DataProviders.Competitions;
 using Leagueen.Application.Matches.Commands;
+using Leagueen.Common;
 using Leagueen.Domain.Entities;
 using Leagueen.Domain.Exceptions;
 using MediatR;
@@ -19,19 +20,22 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
         private readonly ICompetitionsRepository competitionsRepository;
         private readonly ITeamsRepository teamsRepository;
         private readonly IMediator mediator;
+        private readonly IGuid guid;
 
         public InitializeCompetitionCurrentSeasonCommandHandler(
             ICompetitionsProvider competitionsProvider,
             ISeasonsRepository seasonsRepository,
             ICompetitionsRepository competitionsRepository,
             ITeamsRepository teamsRepository,
-            IMediator mediator)
+            IMediator mediator,
+            IGuid guid)
         {
             this.competitionsProvider = competitionsProvider;
             this.seasonsRepository = seasonsRepository;
             this.competitionsRepository = competitionsRepository;
             this.teamsRepository = teamsRepository;
             this.mediator = mediator;
+            this.guid = guid;
         }
 
         protected override async Task Handle(InitializeCompetitionCurrentSeasonCommand request, CancellationToken cancellationToken)
@@ -79,7 +83,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
 
         private void CheckWinner(Season season, CompetitionTeamsListDto teamsInfo)
         {
-            if (teamsInfo.Season.SeasonWinnerId.HasValue)
+            if (!string.IsNullOrWhiteSpace(teamsInfo.Season.SeasonWinnerId))
             {
                 var winner = season.Teams.First(x => x.Team.ExternalId == teamsInfo.Season.SeasonWinnerId);
                 season.SetWinner(winner.Team);
@@ -93,12 +97,12 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             if (await teamsRepository.TeamExistsForExternalId(teamInfo.Id))
                 season.AddTeam(await teamsRepository.GetTeamByExternalId(teamInfo.Id));
             else
-                season.AddTeam(new Team(teamInfo.Id, teamInfo.Name, teamInfo.ShortName, teamInfo.Tla, teamInfo.CrestUrl, teamInfo.Website));
+                season.AddTeam(new Team(guid.GetGuid(), teamInfo.Id, teamInfo.Name, teamInfo.ShortName, teamInfo.Tla, teamInfo.CrestUrl, teamInfo.Website));
         }
 
         private Season CreateSeason(CompetitionSeasonDto seasonInfo, Competition competition)
         {
-            return new Season(competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
+            return new Season(guid.GetGuid(), competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
                 .SetActive();
         }
     }

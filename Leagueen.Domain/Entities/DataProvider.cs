@@ -8,7 +8,7 @@ namespace Leagueen.Domain.Entities
 {
     public class DataProvider
     {
-        public int DataProviderId { get; private set; }
+        public Guid DataProviderId { get; private set; }
         public DataProviderType Type { get; private set; }
         public string Name { get; private set; }
         
@@ -16,8 +16,9 @@ namespace Leagueen.Domain.Entities
         protected List<Competition> _competitions = new List<Competition>();
 
         private DataProvider() { }
-        public DataProvider(DataProviderType type, string name)
+        public DataProvider(Guid dataProviderId, DataProviderType type, string name)
         {
+            DataProviderId = dataProviderId;
             Type = type;
             Name = name;
 
@@ -35,6 +36,8 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
+            if (DataProviderId == Guid.Empty)
+                throw new DomainException(ExceptionCode.DataProviderIdRequired);
             if (!Enum.IsDefined(typeof(DataProviderType), Type))
                 throw new DomainException(ExceptionCode.DataProviderTypeInvalid);
             if (string.IsNullOrWhiteSpace(Name))

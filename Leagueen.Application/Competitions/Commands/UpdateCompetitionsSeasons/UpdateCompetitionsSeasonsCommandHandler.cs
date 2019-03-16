@@ -1,6 +1,7 @@
 ﻿using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Application.DataProviders;
 using Leagueen.Application.DataProviders.Competitions;
+using Leagueen.Common;
 using Leagueen.Domain.Entities;
 using MediatR;
 using System.Collections.Generic;
@@ -14,13 +15,16 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
     {
         private readonly ICompetitionsProvider competitionsProvider;
         private readonly ICompetitionsRepository competitionsRepository;
+        private readonly IGuid guid;
 
         public UpdateCompetitionsSeasonsCommandHandler(
             ICompetitionsProvider competitionsProvider,
-            ICompetitionsRepository competitionsRepository)
+            ICompetitionsRepository competitionsRepository,
+            IGuid guid)
         {
             this.competitionsProvider = competitionsProvider;
             this.competitionsRepository = competitionsRepository;
+            this.guid = guid;
         }
 
         protected override async Task Handle(UpdateCompetitionsSeasonsCommand request, CancellationToken cancellationToken)
@@ -70,7 +74,7 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
 
         private Season CreateNewSeason(Competition competition, CompetitionSeasonDto seasonInfo)
         {
-            var newSeason = new Season(competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
+            var newSeason = new Season(guid.GetGuid(), competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
                 .SetActive();
 
             return newSeason;

@@ -11,6 +11,9 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder
                 .HasKey(x => x.TeamId);
             builder
+                .Property(x => x.TeamId)
+                .ValueGeneratedNever();
+            builder
                 .Property(x => x.Name)
                 .HasMaxLength(64)
                 .IsRequired();

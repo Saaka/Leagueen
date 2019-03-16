@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leagueen.Persistence.Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190313231521_IncreaseCrestUrlLength")]
-    partial class IncreaseCrestUrlLength
+    [Migration("20190316132123_InitialMigraionGuidKey")]
+    partial class InitialMigraionGuidKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,17 +24,15 @@ namespace Leagueen.Persistence.Domain.Migrations
 
             modelBuilder.Entity("Leagueen.Domain.Entities.Competition", b =>
                 {
-                    b.Property<int>("CompetitionId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("CompetitionId");
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(16);
 
-                    b.Property<int>("DataProviderId");
+                    b.Property<Guid>("DataProviderId");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<bool>("IsActive");
 
@@ -59,9 +57,7 @@ namespace Leagueen.Persistence.Domain.Migrations
 
             modelBuilder.Entity("Leagueen.Domain.Entities.DataProvider", b =>
                 {
-                    b.Property<int>("DataProviderId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("DataProviderId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -76,20 +72,18 @@ namespace Leagueen.Persistence.Domain.Migrations
 
             modelBuilder.Entity("Leagueen.Domain.Entities.Match", b =>
                 {
-                    b.Property<int>("MatchId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("MatchId");
 
-                    b.Property<int>("AwayTeamId");
+                    b.Property<Guid>("AwayTeamId");
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Group")
                         .HasMaxLength(8);
 
-                    b.Property<int>("HomeTeamId");
+                    b.Property<Guid>("HomeTeamId");
 
                     b.Property<DateTime>("LastProviderUpdate");
 
@@ -97,7 +91,7 @@ namespace Leagueen.Persistence.Domain.Migrations
 
                     b.Property<byte>("Result");
 
-                    b.Property<int>("SeasonId");
+                    b.Property<Guid>("SeasonId");
 
                     b.Property<byte>("Stage");
 
@@ -116,9 +110,7 @@ namespace Leagueen.Persistence.Domain.Migrations
 
             modelBuilder.Entity("Leagueen.Domain.Entities.MatchScore", b =>
                 {
-                    b.Property<int>("MatchScoreId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("MatchScoreId");
 
                     b.Property<byte>("Duration");
 
@@ -134,7 +126,7 @@ namespace Leagueen.Persistence.Domain.Migrations
 
                     b.Property<int?>("HalfTimeHome");
 
-                    b.Property<int>("MatchId");
+                    b.Property<Guid>("MatchId");
 
                     b.Property<int?>("PentaltiesAway");
 
@@ -152,23 +144,22 @@ namespace Leagueen.Persistence.Domain.Migrations
 
             modelBuilder.Entity("Leagueen.Domain.Entities.Season", b =>
                 {
-                    b.Property<int>("SeasonId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("SeasonId");
 
-                    b.Property<int>("CompetitionId");
+                    b.Property<Guid>("CompetitionId");
 
                     b.Property<int>("CurrentMatchday");
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId")
+                        .IsRequired();
 
                     b.Property<bool>("IsActive");
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<int?>("WinnerId");
+                    b.Property<Guid?>("WinnerId");
 
                     b.HasKey("SeasonId");
 
@@ -181,14 +172,12 @@ namespace Leagueen.Persistence.Domain.Migrations
 
             modelBuilder.Entity("Leagueen.Domain.Entities.Team", b =>
                 {
-                    b.Property<int>("TeamId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("TeamId");
 
                     b.Property<string>("CrestUrl")
                         .HasMaxLength(256);
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -212,15 +201,32 @@ namespace Leagueen.Persistence.Domain.Migrations
 
             modelBuilder.Entity("Leagueen.Domain.Entities.TeamSeason", b =>
                 {
-                    b.Property<int>("TeamId");
+                    b.Property<Guid>("TeamId");
 
-                    b.Property<int>("SeasonId");
+                    b.Property<Guid>("SeasonId");
 
                     b.HasKey("TeamId", "SeasonId");
 
                     b.HasIndex("SeasonId");
 
                     b.ToTable("TeamSeasons");
+                });
+
+            modelBuilder.Entity("Leagueen.Domain.Entities.UpdateLog", b =>
+                {
+                    b.Property<Guid>("UpdateLogId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<bool>("IsExecuted");
+
+                    b.Property<byte>("LogType");
+
+                    b.Property<byte>("ProviderType");
+
+                    b.HasKey("UpdateLogId");
+
+                    b.ToTable("UpdateLogs");
                 });
 
             modelBuilder.Entity("Leagueen.Domain.Entities.Competition", b =>

@@ -46,5 +46,10 @@
         UpdateLogTypeRequred,
         UpdateLogDateRequred,
         UpdateLogProviderTypeRequred,
+        CompetitionIdRequired,
+        DataProviderIdRequired,
+        MatchIdRequired,
+        MatchScoreIdRequired,
+        UpdateLogIdRequired,
     }
 }

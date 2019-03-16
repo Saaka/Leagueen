@@ -1,12 +1,13 @@
 ﻿using Leagueen.Domain.Exceptions;
+using System;
 using System.Collections.Generic;
 
 namespace Leagueen.Domain.Entities
 {
     public class Team
     {
-        public int TeamId { get; private set; }
-        public int ExternalId { get; private set; }
+        public Guid TeamId { get; private set; }
+        public string ExternalId { get; private set; }
         public string Name { get; private set; }
         public string ShortName { get; private set; }
         public string Tla { get; private set; }
@@ -24,8 +25,9 @@ namespace Leagueen.Domain.Entities
 
         private Team() { }
 
-        public Team(int externalId, string name, string shortName, string tla, string crestUrl = null, string website = null)
+        public Team(Guid teamId, string externalId, string name, string shortName, string tla, string crestUrl = null, string website = null)
         {
+            TeamId = teamId;
             ExternalId = externalId;
             Name = name;
             ShortName = shortName;
@@ -38,7 +40,9 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
-            if (ExternalId == 0)
+            if (TeamId == Guid.Empty)
+                throw new DomainException(Enums.ExceptionCode.TeamIdRequired);
+            if (string.IsNullOrWhiteSpace(ExternalId))
                 throw new DomainException(Enums.ExceptionCode.TeamExternalIdRequired);
             if (string.IsNullOrWhiteSpace(Name))
                 throw new DomainException(Enums.ExceptionCode.TeamNameRequired);

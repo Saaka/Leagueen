@@ -6,15 +6,16 @@ namespace Leagueen.Domain.Entities
 {
     public class UpdateLog
     {
-        public int UpdateLogId { get; private set; }
+        public Guid UpdateLogId { get; private set; }
         public UpdateLogType LogType { get; private set; }
         public DataProviderType ProviderType { get; private set; }
         public DateTime Date { get; private set; }
         public bool IsExecuted { get; private set; }
 
         private UpdateLog() { }
-        public UpdateLog(UpdateLogType type, DataProviderType provider, DateTime date, bool isExecuted)
+        public UpdateLog(Guid updateLogId, UpdateLogType type, DataProviderType provider, DateTime date, bool isExecuted)
         {
+            UpdateLogId = updateLogId;
             LogType = type;
             ProviderType = provider;
             Date = date;
@@ -24,6 +25,8 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
+            if (UpdateLogId == Guid.Empty)
+                throw new DomainException(ExceptionCode.UpdateLogIdRequired);
             if (!Enum.IsDefined(typeof(UpdateLogType), LogType))
                 throw new DomainException(ExceptionCode.UpdateLogTypeRequred);
             if (!Enum.IsDefined(typeof(DataProviderType), ProviderType))

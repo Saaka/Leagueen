@@ -11,6 +11,9 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder
                 .HasKey(e => e.SeasonId);
             builder
+                .Property(x => x.SeasonId)
+                .ValueGeneratedNever();
+            builder
                 .Property(x => x.CompetitionId)
                 .IsRequired();
             builder

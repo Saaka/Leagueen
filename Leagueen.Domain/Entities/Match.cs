@@ -6,17 +6,17 @@ namespace Leagueen.Domain.Entities
 {
     public class Match
     {
-        public int MatchId { get; private set; }
-        public int ExternalId { get; private set; }
-        public int SeasonId { get; private set; }
+        public Guid MatchId { get; private set; }
+        public string ExternalId { get; private set; }
+        public Guid SeasonId { get; private set; }
         public DateTime Date { get; private set; }
         public MatchStatus Status { get; private set; }
         public MatchStage Stage { get; private set; }
         public MatchResult Result { get; private set; }
         public string Group { get; private set; }
         public int? Matchday { get; private set; }
-        public int HomeTeamId { get; private set; }
-        public int AwayTeamId { get; private set; }
+        public Guid HomeTeamId { get; private set; }
+        public Guid AwayTeamId { get; private set; }
         public DateTime LastProviderUpdate { get; private set; }
 
         public virtual Season Season { get; private set; }
@@ -26,11 +26,12 @@ namespace Leagueen.Domain.Entities
 
         private Match() { }
 
-        public Match(int externalId, Season season,
+        public Match(Guid matchId, string externalId, Season season,
             Team homeTeam, Team awayTeam, DateTime date,
             MatchStatus status, MatchStage stage, DateTime lastProviderUpdate,
             string group = null, int? matchday = null)
         {
+            MatchId = matchId;
             ExternalId = externalId;
             Season = season;
             HomeTeam = homeTeam;
@@ -83,7 +84,9 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
-            if (ExternalId == 0)
+            if (MatchId == Guid.Empty)
+                throw new DomainException(ExceptionCode.MatchIdRequired);
+            if (string.IsNullOrWhiteSpace(ExternalId))
                 throw new DomainException(ExceptionCode.MatchExternalIdRequred);
             if (Season == null)
                 throw new DomainException(ExceptionCode.MatchSeasonRequired);

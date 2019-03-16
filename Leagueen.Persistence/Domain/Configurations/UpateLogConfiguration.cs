@@ -12,6 +12,9 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder
                 .HasKey(x => x.UpdateLogId);
             builder
+                .Property(x => x.UpdateLogId)
+                .ValueGeneratedNever();
+            builder
                 .Property(x => x.Date)
                 .IsRequired();
             builder
