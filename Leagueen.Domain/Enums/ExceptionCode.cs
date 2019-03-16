@@ -39,7 +39,7 @@
         MatchProviderUpdateRequired,
         SeasonAlreadyContainsMatch,
         ActiveCompetitionNotFound,
-        AtiveSeasonNotFoundForCompetition,
+        ActiveSeasonNotFoundForCompetition,
         DataProviderTypeInvalid,
         DataProviderNameRequired,
         DataProviderAlreadyConatinsCompetition,

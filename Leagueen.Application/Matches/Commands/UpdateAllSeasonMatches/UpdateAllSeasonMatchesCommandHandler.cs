@@ -38,7 +38,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
         {
             var season = await seasonsRepository.GetCurrentSeason(request.CompetitionCode);
             if (season == null)
-                throw new DomainException(ExceptionCode.AtiveSeasonNotFoundForCompetition, $"CompetitionCode:{request.CompetitionCode}");
+                throw new DomainException(ExceptionCode.ActiveSeasonNotFoundForCompetition, $"CompetitionCode:{request.CompetitionCode}");
             var matchesInfo = await matchesProvider.GetAllCompetitionMatches(request.CompetitionCode);
 
             int count = 0;

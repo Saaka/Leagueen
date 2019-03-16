@@ -9,7 +9,7 @@ namespace Leagueen.WebAPI.Configuration.HangfireConfig
     {
         public static IApplicationBuilder ConfigureHangfireJobs(this IApplicationBuilder application, IConfiguration configuration)
         {
-            RecurringJob.AddOrUpdate<Jobs.LeagueenTestJob>((j) => j.Run(), Cron.Minutely, TimeZoneInfo.Utc);
+            //RecurringJob.AddOrUpdate<Jobs.LeagueenTestJob>((j) => j.Run(), Cron.Minutely, TimeZoneInfo.Utc);
 
             if (Convert.ToBoolean(configuration["APIInfrastructure:UseKeepAlive"]))
                 RecurringJob.AddOrUpdate<Jobs.KeepAliveJob>((job) => job.Run(), Cron.MinuteInterval(15), TimeZoneInfo.Utc);
