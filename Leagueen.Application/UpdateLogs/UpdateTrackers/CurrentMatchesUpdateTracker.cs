@@ -1,4 +1,5 @@
 ﻿using Leagueen.Application.Matches.Commands;
+using Leagueen.Application.Matches.Repositories;
 using Leagueen.Application.UpdateLogs.Repositories;
 using Leagueen.Common;
 using Leagueen.Domain.Entities;
@@ -11,13 +12,16 @@ namespace Leagueen.Application.UpdateLogs.UpdateTrackers
     public class CurrentMatchesUpdateTracker : IUpdateTracker<UpdateCurrentMatchesCommand, Unit>
     {
         private readonly IUpdateLogsRepository updateLogsRepository;
+        private readonly IMatchesRepository matchesRepository;
         private readonly IDateTime dateTime;
 
         public CurrentMatchesUpdateTracker(
             IUpdateLogsRepository updateLogsRepository,
+            IMatchesRepository matchesRepository,
             IDateTime dateTime)
         {
             this.updateLogsRepository = updateLogsRepository;
+            this.matchesRepository = matchesRepository;
             this.dateTime = dateTime;
         }
 
@@ -30,7 +34,12 @@ namespace Leagueen.Application.UpdateLogs.UpdateTrackers
         public async Task<bool> ShouldPerformUpdate(UpdateCurrentMatchesCommand request)
         {
             var lastUpdate = await updateLogsRepository.GetLastUpdateLog(UpdateLogType.CurrentMatch, request.ProviderType);
-            return lastUpdate == null || lastUpdate.Date.Hour != dateTime.GetUtcNow().Hour;
+            if (lastUpdate == null)
+                return true;
+
+            var areMatchesInPlay = await matchesRepository.AreMatchesInPlay(dateTime.GetUtcNow());
+
+            return areMatchesInPlay || lastUpdate.Date.Hour != dateTime.GetUtcNow().Hour;
         }
     }
 }

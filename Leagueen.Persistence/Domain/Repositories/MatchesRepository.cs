@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Leagueen.Domain.Enums;
 
 namespace Leagueen.Persistence.Domain.Repositories
 {
@@ -31,5 +32,19 @@ namespace Leagueen.Persistence.Domain.Repositories
 
             return await query.ToListAsync();
         }
+
+        public async Task<bool> AreMatchesInPlay(DateTime dateTime)
+        {
+            var dateTimeFrom = dateTime.AddMinutes(-5);
+            var dateTimeTo = dateTime.AddMinutes(15);
+            var query = from m in context.Matches
+                        where ActiveMatchesStatuses.Contains(m.Status)
+                            || (m.Date >= dateTimeFrom && m.Date <= dateTimeTo)
+                        select m.MatchId;
+
+            return await query.AnyAsync();
+        }
+
+        private MatchStatus[] ActiveMatchesStatuses => new MatchStatus[] { MatchStatus.InPlay, MatchStatus.Paused };
     }
 }

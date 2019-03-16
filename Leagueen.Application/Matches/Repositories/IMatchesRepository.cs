@@ -8,5 +8,6 @@ namespace Leagueen.Application.Matches.Repositories
     public interface IMatchesRepository
     {
         Task<IEnumerable<Match>> GetAllMatchesByDate(DateTime date);
+        Task<bool> AreMatchesInPlay(DateTime dateTime);
     }
 }
