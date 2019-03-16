@@ -27,12 +27,12 @@ namespace Leagueen.Application.Infrastructure
             var performUpdate = await dataUpdateTracker.ShouldPerformUpdate(request);
             if (!performUpdate)
             {
-                await dataUpdateTracker.TrackUpdate(request);
+                await dataUpdateTracker.TrackUpdate(request, false);
                 return default(TResponse);
             }
 
             var response = await next();
-            await dataUpdateTracker.TrackUpdate(request);
+            await dataUpdateTracker.TrackUpdate(request, true);
 
             return response;
         }

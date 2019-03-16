@@ -9,7 +9,7 @@ namespace Leagueen.Application.UpdateLogs
         //In .NET Core this can be changed to just ITrackable
         where T : IRequest<R>
     {
-        Task TrackUpdate(T request);
+        Task TrackUpdate(T request, bool isExecuted);
         Task<bool> ShouldPerformUpdate(T request);
     }
 }

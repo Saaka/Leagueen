@@ -21,10 +21,10 @@ namespace Leagueen.Application.UpdateLogs.UpdateTrackers
             this.dateTime = dateTime;
         }
 
-        public async Task TrackUpdate(UpdateCurrentMatchesCommand request)
+        public async Task TrackUpdate(UpdateCurrentMatchesCommand request, bool isExecuted)
         {
             await updateLogsRepository
-                .SaveUpdateLog(new UpdateLog(UpdateLogType.CurrentMatch, request.ProviderType, dateTime.GetUtcNow()));
+                .SaveUpdateLog(new UpdateLog(UpdateLogType.CurrentMatch, request.ProviderType, dateTime.GetUtcNow(), isExecuted));
         }
 
         public async Task<bool> ShouldPerformUpdate(UpdateCurrentMatchesCommand request)

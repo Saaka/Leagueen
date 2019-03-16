@@ -10,14 +10,15 @@ namespace Leagueen.Domain.Entities
         public UpdateLogType LogType { get; private set; }
         public DataProviderType ProviderType { get; private set; }
         public DateTime Date { get; private set; }
+        public bool IsExecuted { get; private set; }
 
         private UpdateLog() { }
-        public UpdateLog(UpdateLogType type, DataProviderType provider, DateTime date)
+        public UpdateLog(UpdateLogType type, DataProviderType provider, DateTime date, bool isExecuted)
         {
             LogType = type;
             ProviderType = provider;
             Date = date;
-
+            IsExecuted = isExecuted;
             ValidateCreation();
         }
 

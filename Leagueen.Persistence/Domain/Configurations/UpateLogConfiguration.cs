@@ -26,6 +26,9 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .HasConversion(
                     v => (byte)v,
                     v => (DataProviderType)v);
+            builder
+                .Property(x => x.IsExecuted)
+                .IsRequired();
         }
     }
 }
