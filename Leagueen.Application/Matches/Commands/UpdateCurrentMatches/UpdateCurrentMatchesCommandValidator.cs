@@ -6,6 +6,9 @@ namespace Leagueen.Application.Matches.Commands.UpdateCurrentMatches
     {
         public UpdateCurrentMatchesCommandValidator()
         {
+            RuleFor(x => x.ProviderType)
+                .IsInEnum()
+                .NotEmpty();
         }
     }
 }

@@ -40,6 +40,16 @@ namespace Leagueen.WebAPI.Controllers
             await Mediator.Send(new UpdateAllSeasonMatchesCommand { CompetitionCode = competitionCode });
 
             return Ok();
-        }        
+        }
+
+        [HttpPost("updateCurrentMatches")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> UpdateCurrentMatches()
+        {
+            await Mediator.Send(new UpdateCurrentMatchesCommand { ProviderType = Domain.Enums.DataProviderType.FootballData });
+
+            return Ok();
+        }
     }
 }

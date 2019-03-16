@@ -68,7 +68,8 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                 })
                 .AddTransient<IRestClient, RestClient>()
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPostProcessorBehavior<,>))
+                .AddMediatrBehaviors()
                 .AddMemoryCache()
                 .AddMediatR(typeof(ApplicationModule).Assembly);
 
