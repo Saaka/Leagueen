@@ -9,5 +9,6 @@ namespace Leagueen.Application.Matches.Repositories
     {
         Task<IEnumerable<Match>> GetAllMatchesByDate(DateTime date);
         Task<bool> AreMatchesInPlay(DateTime dateTime);
+        Task SaveMatches(List<Match> toSave);
     }
 }

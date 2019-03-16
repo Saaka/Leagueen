@@ -46,7 +46,8 @@ namespace Leagueen.WebAPI
                 .UseExternalAppServices()
                 .UseAuthentication()
                 .UseMvc()
-                .ConfigureHangfireJobs(Configuration);
+                .ConfigureKeepAliveJob(Configuration)
+                .ConfigureApplicationJobs(Configuration);
         }
     }
 }

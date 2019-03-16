@@ -35,7 +35,7 @@ namespace Leagueen.Persistence.Domain.Repositories
 
         public async Task<bool> AreMatchesInPlay(DateTime dateTime)
         {
-            var dateTimeFrom = dateTime.AddMinutes(-5);
+            var dateTimeFrom = dateTime.AddMinutes(-15);
             var dateTimeTo = dateTime.AddMinutes(15);
             var query = from m in context.Matches
                         where ActiveMatchesStatuses.Contains(m.Status)
@@ -43,6 +43,12 @@ namespace Leagueen.Persistence.Domain.Repositories
                         select m.MatchId;
 
             return await query.AnyAsync();
+        }
+
+        public async Task SaveMatches(List<Match> toSave)
+        {
+            context.Matches.AttachRange(toSave);
+            await context.SaveChangesAsync();
         }
 
         private MatchStatus[] ActiveMatchesStatuses => new MatchStatus[] { MatchStatus.InPlay, MatchStatus.Paused };

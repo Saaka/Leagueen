@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Leagueen.Common\Leagueen.Common.csproj" />
+    <ProjectReference Include="..\Leagueen.Domain\Leagueen.Domain.csproj" />
     <ProjectReference Include="..\Leagueen.Infrastructure\Leagueen.Infrastructure.csproj" />
     <ProjectReference Include="..\Leagueen.Persistence\Leagueen.Persistence.csproj" />
   </ItemGroup>
