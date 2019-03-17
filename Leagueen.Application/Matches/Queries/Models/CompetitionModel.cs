@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Leagueen.Domain.Enums;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Leagueen.Application.Matches.Queries.Models
 {
     public class CompetitionModel
     {
         public int CompetitionId { get; set; }
-        public string CompetitionName { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public CompetitionModelType Model { get; set; }
         public List<MatchModel> Matches { get; set; }
     }
 }

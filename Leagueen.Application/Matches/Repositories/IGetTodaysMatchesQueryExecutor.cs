@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace Leagueen.Application.Matches.Repositories
 {
-    public interface IMatchQueries
+    public interface IGetTodaysMatchesQueryExecutor
     {
-        Task<ICollection<CompetitionModel>> GetTodaysMatches();
+        Task<ICollection<CompetitionModel>> Run();
     }
 }

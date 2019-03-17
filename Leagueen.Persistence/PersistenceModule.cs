@@ -6,6 +6,7 @@ using Leagueen.Application.Users.Repositories;
 using Leagueen.Persistence.Connections;
 using Leagueen.Persistence.Domain;
 using Leagueen.Persistence.Domain.Initializer;
+using Leagueen.Persistence.Domain.Queries;
 using Leagueen.Persistence.Domain.Repositories;
 using Leagueen.Persistence.Identity;
 using Leagueen.Persistence.Identity.Initializer;
@@ -47,14 +48,15 @@ namespace Leagueen.Persistence
                 .AddTransient<IUsersRepository, UsersRepository>()
                 .AddTransient<IDbInitializer, DbInitializer>()
 
-                .AddTransient<IDbConnectionFactory, SqlConnectionFactory>()
-
                 .AddTransient<ICompetitionsRepository, CompetitionsRepository>()
                 .AddTransient<ISeasonsRepository, SeasonsRepository>()
                 .AddTransient<ITeamsRepository, TeamsRepository>()
                 .AddTransient<IMatchesRepository, MatchesRepository>()
                 .AddTransient<IUpdateLogsRepository, UpdateLogsRepository>()
-                
+
+                .AddTransient<IDbConnectionFactory, SqlConnectionFactory>()
+                .AddTransient<IGetTodaysMatchesQueryExecutor, GetTodaysMatchesQueryExecutor>()
+
                 .AddTransient<IdentityDbInitializer>()
                 .AddTransient<UserSeedConfiguration>()
                 .AddTransient<UserSeeder>()

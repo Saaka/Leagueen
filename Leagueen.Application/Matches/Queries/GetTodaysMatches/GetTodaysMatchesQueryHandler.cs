@@ -1,7 +1,6 @@
 ﻿using Leagueen.Application.Matches.Queries.Models;
 using Leagueen.Application.Matches.Repositories;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,16 +8,21 @@ namespace Leagueen.Application.Matches.Queries.GetTodaysMatches
 {
     public class GetTodaysMatchesQueryHandler : IRequestHandler<GetTodaysMatchesQuery, GetTodaysMatchesQueryResult>
     {
-        private readonly IMatchQueries matchQueries;
+        private readonly IGetTodaysMatchesQueryExecutor queryExecutor;
 
-        public GetTodaysMatchesQueryHandler(IMatchQueries matchQueries)
+        public GetTodaysMatchesQueryHandler(IGetTodaysMatchesQueryExecutor matchQueries)
         {
-            this.matchQueries = matchQueries;
+            this.queryExecutor = matchQueries;
         }
 
         public async Task<GetTodaysMatchesQueryResult> Handle(GetTodaysMatchesQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var competitions = await queryExecutor.Run();
+
+            return new GetTodaysMatchesQueryResult
+            {
+                Competitions = competitions
+            };
         }
     }
 }
