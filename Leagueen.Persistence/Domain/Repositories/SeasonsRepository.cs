@@ -3,7 +3,6 @@ using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Domain.Entities;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Leagueen.Persistence.Domain.Repositories
 {
@@ -31,7 +30,7 @@ namespace Leagueen.Persistence.Domain.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<Season> GetSeasonInfo(Guid seasonId)
+        public async Task<Season> GetSeasonInfo(int seasonId)
         {
             var query = context.Seasons
                 .Where(x => x.SeasonId == seasonId)

@@ -1,13 +1,12 @@
 ﻿using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
-using System;
 
 namespace Leagueen.Domain.Entities
 {
     public class TeamSeason
     {
-        public Guid TeamId { get; set; }
-        public Guid SeasonId { get; set; }
+        public int TeamId { get; set; }
+        public int SeasonId { get; set; }
 
         public virtual Team Team { get; private set; }
         public virtual Season Season { get; private set; }

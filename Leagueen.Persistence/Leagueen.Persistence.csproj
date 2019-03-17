@@ -22,8 +22,4 @@
     <ProjectReference Include="..\Leagueen.Domain\Leagueen.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Identity\Migrations\" />
-  </ItemGroup>
-
 </Project>

@@ -6,8 +6,8 @@ namespace Leagueen.Domain.Entities
 {
     public class MatchScore
     {
-        public Guid MatchScoreId { get; private set; }
-        public Guid MatchId { get; private set; }
+        public int MatchScoreId { get; private set; }
+        public int MatchId { get; private set; }
         public MatchResult Result { get; private set; }
         public MatchDuration Duration { get; private set; }
         public int? FullTimeHome { get; private set; }
@@ -22,14 +22,13 @@ namespace Leagueen.Domain.Entities
         public virtual Match Match { get; private set; }
 
         private MatchScore() { }
-        public MatchScore(Guid matchScoreId, Match match,
+        public MatchScore(Match match,
             MatchResult result, MatchDuration duration,
             int? fullTimeHome = null, int? fullTimeAway = null,
             int? halfTimeHome = null, int? halfTimeAway = null,
             int? extraTimeHome = null, int? extraTimeAway = null,
             int? pentaltiesHome = null, int? pentaltiesAway = null)
         {
-            MatchScoreId = matchScoreId;
             Match = match;
             Result = result;
             Duration = duration;
@@ -70,8 +69,6 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
-            if (MatchScoreId == Guid.Empty)
-                throw new DomainException(ExceptionCode.MatchScoreIdRequired);
             if (Match == null)
                 throw new DomainException(ExceptionCode.MatchScoreMatchRequired);
             if (!Enum.IsDefined(typeof(MatchResult), Result))

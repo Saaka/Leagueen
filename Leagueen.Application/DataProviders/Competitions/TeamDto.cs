@@ -8,7 +8,7 @@ namespace Leagueen.Application.DataProviders.Competitions
         {
             ClubColors = new List<string>();
         }
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }
         public string Tla { get; set; }

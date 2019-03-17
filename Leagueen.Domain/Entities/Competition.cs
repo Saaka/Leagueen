@@ -8,14 +8,14 @@ namespace Leagueen.Domain.Entities
 {
     public class Competition
     {
-        public Guid CompetitionId { get; private set; }
+        public int CompetitionId { get; private set; }
         public CompetitionType Type { get; private set; }
         public CompetitionModel Model { get; set; }
         public string Name { get; private set; }
         public string Code { get; private set; }
-        public string ExternalId { get; private set; }
+        public int ExternalId { get; private set; }
         public bool IsActive { get; private set; }
-        public Guid DataProviderId { get; set; }
+        public int DataProviderId { get; set; }
         public DateTime? LastProviderUpdate { get; private set; }
 
         public virtual IReadOnlyCollection<Season> Seasons => _seasons.AsReadOnly();
@@ -24,9 +24,8 @@ namespace Leagueen.Domain.Entities
 
         private Competition() { }
 
-        public Competition(Guid competitionId, CompetitionType type, CompetitionModel model, string name, string code, string externalId, bool isActive, DataProvider dataProvider)
+        public Competition(CompetitionType type, CompetitionModel model, string name, string code, int externalId, bool isActive, DataProvider dataProvider)
         {
-            CompetitionId = competitionId;
             Type = type;
             Model = model;
             Name = name;
@@ -68,13 +67,11 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
-            if (CompetitionId == Guid.Empty)
-                throw new DomainException(ExceptionCode.CompetitionIdRequired);
             if (string.IsNullOrWhiteSpace(Name))
                 throw new DomainException(ExceptionCode.CompetitionNameRequired);
             if (string.IsNullOrWhiteSpace(Code))
                 throw new DomainException(ExceptionCode.CompetitionCodeRequired);
-            if (string.IsNullOrWhiteSpace(ExternalId))
+            if (ExternalId == 0)
                 throw new DomainException(ExceptionCode.CompetitionExternalIdRequired);
             if (!Enum.IsDefined(typeof(CompetitionType), Type))
                 throw new DomainException(ExceptionCode.CompetitionTypeInvalid);

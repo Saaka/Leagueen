@@ -12,9 +12,6 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder
                 .HasKey(x => x.MatchScoreId);
             builder
-                .Property(x => x.MatchScoreId)
-                .ValueGeneratedNever();
-            builder
                 .Property(x => x.Result)
                 .IsRequired()
                 .HasConversion(

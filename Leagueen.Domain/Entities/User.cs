@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Leagueen.Domain.Entities
+﻿namespace Leagueen.Domain.Entities
 {
     public class User
     {

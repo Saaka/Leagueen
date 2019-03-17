@@ -14,24 +14,21 @@ namespace Leagueen.Application.UpdateLogs.UpdateTrackers
         private readonly IUpdateLogsRepository updateLogsRepository;
         private readonly IMatchesRepository matchesRepository;
         private readonly IDateTime dateTime;
-        private readonly IGuid guid;
 
         public CurrentMatchesUpdateTracker(
             IUpdateLogsRepository updateLogsRepository,
             IMatchesRepository matchesRepository,
-            IDateTime dateTime,
-            IGuid guid)
+            IDateTime dateTime)
         {
             this.updateLogsRepository = updateLogsRepository;
             this.matchesRepository = matchesRepository;
             this.dateTime = dateTime;
-            this.guid = guid;
         }
 
         public async Task TrackUpdate(UpdateCurrentMatchesCommand request, bool isExecuted)
         {
             await updateLogsRepository
-                .SaveUpdateLog(new UpdateLog(guid.GetGuid(), UpdateLogType.CurrentMatch, request.ProviderType, dateTime.GetUtcNow(), isExecuted));
+                .SaveUpdateLog(new UpdateLog(UpdateLogType.CurrentMatch, request.ProviderType, dateTime.GetUtcNow(), isExecuted));
         }
 
         public async Task<bool> ShouldPerformUpdate(UpdateCurrentMatchesCommand request)

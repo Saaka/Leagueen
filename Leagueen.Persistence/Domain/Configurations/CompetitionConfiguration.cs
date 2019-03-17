@@ -10,10 +10,7 @@ namespace Leagueen.Persistence.Domain.Configurations
         public void Configure(EntityTypeBuilder<Competition> builder)
         {
             builder
-                .HasKey(x => x.CompetitionId);
-            builder
-                .Property(x => x.CompetitionId)
-                .ValueGeneratedNever();
+                .HasKey(e => e.CompetitionId);
             builder
                 .Property(x => x.Name)
                 .IsRequired()

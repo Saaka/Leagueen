@@ -12,9 +12,6 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder
                 .HasKey(x => x.DataProviderId);
             builder
-                .Property(x => x.DataProviderId)
-                .ValueGeneratedNever();
-            builder
                 .Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(32);

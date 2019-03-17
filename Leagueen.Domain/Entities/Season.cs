@@ -8,14 +8,14 @@ namespace Leagueen.Domain.Entities
 {
     public class Season
     {
-        public Guid SeasonId { get; private set; }
-        public Guid CompetitionId { get; private set; }
-        public string ExternalId { get; private set; }
+        public int SeasonId { get; private set; }
+        public int CompetitionId { get; private set; }
+        public int ExternalId { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
         public int CurrentMatchday { get; private set; }
         public bool IsActive { get; private set; }
-        public Guid? WinnerId { get; private set; }
+        public int? WinnerId { get; private set; }
 
         public virtual IReadOnlyCollection<TeamSeason> Teams => _teams.AsReadOnly();
         protected List<TeamSeason> _teams = new List<TeamSeason>();
@@ -28,9 +28,8 @@ namespace Leagueen.Domain.Entities
 
         private Season() { }
 
-        public Season(Guid seasonId, Competition competition, string externalId, DateTime startDate, DateTime endDate, int currentMatchday)
+        public Season(Competition competition, int externalId, DateTime startDate, DateTime endDate, int currentMatchday)
         {
-            SeasonId = seasonId;
             Competition = competition;
             ExternalId = externalId;
             StartDate = startDate;
@@ -85,11 +84,9 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
-            if (SeasonId == Guid.Empty)
-                throw new DomainException(ExceptionCode.SeasonIdRequired);
             if (Competition == null)
                 throw new DomainException(ExceptionCode.SeasonCompetitionRequried);
-            if (string.IsNullOrEmpty(ExternalId))
+            if (ExternalId == 0)
                 throw new DomainException(ExceptionCode.SeasonExternalIdRequired);
             if (StartDate == null)
                 throw new DomainException(ExceptionCode.SeasonStartDateRequired);

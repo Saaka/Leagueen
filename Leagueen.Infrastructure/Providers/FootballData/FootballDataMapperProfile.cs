@@ -13,9 +13,9 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             CreateMap<CompetitionModel, CompetitionDto>();
             CreateMap<CompetitionSeasonModel, CompetitionSeasonDto>()
                 .ForMember(d => d.SeasonWinnerId, cfg => cfg.MapFrom(m => FootballDataMapperHelper.MapOptionalTeamId(m.Winner)));
-
+            
             CreateMap<CompetitionTeamsListModel, CompetitionTeamsListDto>()
-                .ForMember(x => x.TeamsCount, c => c.MapFrom(m => m.Count));
+                .ForMember(x=> x.TeamsCount, c => c.MapFrom(m => m.Count));
             CreateMap<CompetitionInfoModel, CompetitionInfoDto>();
             CreateMap<TeamModel, TeamDto>()
                 .ForMember(d => d.ClubColors, c => c.MapFrom(m => FootballDataMapperHelper.ConvertClubColors(m)));
@@ -25,9 +25,9 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 .ForMember(d => d.Status, c => c.MapFrom(m => FootballDataMapperHelper.ConvertStatus(m)))
                 .ForMember(d => d.Stage, c => c.MapFrom(m => FootballDataMapperHelper.ConvertStage(m)))
                 .ForMember(d => d.Group, c => c.MapFrom(m => FootballDataMapperHelper.ConvertGroup(m)))
-                .ForMember(d => d.SeasonId, c => c.MapFrom(m => m.Season.Id))
-                .ForMember(d => d.CompetitionId, c => c.MapFrom(m => m.Competition.Id))
-                .ForMember(d => d.HomeTeamId, c => c.MapFrom(m => m.HomeTeam.Id))
+                .ForMember(d => d.SeasonId, c=> c.MapFrom(m => m.Season.Id))
+                .ForMember(d => d.CompetitionId, c=> c.MapFrom(m => m.Competition.Id))
+                .ForMember(d => d.HomeTeamId, c=> c.MapFrom(m => m.HomeTeam.Id))
                 .ForMember(d => d.AwayTeamId, c => c.MapFrom(m => m.AwayTeam.Id));
             CreateMap<MatchScoreModel, MatchScoreDto>()
                 .ForMember(d => d.Result, c => c.MapFrom(m => FootballDataMapperHelper.ConvertResult(m)))

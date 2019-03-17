@@ -1,9 +1,10 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Leagueen.Persistence.Domain.Migrations
 {
-    public partial class InitialMigraionGuidKey : Migration
+    public partial class InitialMigrationV2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +16,8 @@ namespace Leagueen.Persistence.Domain.Migrations
                 schema: "leagueen",
                 columns: table => new
                 {
-                    DataProviderId = table.Column<Guid>(nullable: false),
+                    DataProviderId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<byte>(nullable: false),
                     Name = table.Column<string>(maxLength: 32, nullable: false)
                 },
@@ -29,12 +31,13 @@ namespace Leagueen.Persistence.Domain.Migrations
                 schema: "leagueen",
                 columns: table => new
                 {
-                    TeamId = table.Column<Guid>(nullable: false),
-                    ExternalId = table.Column<string>(nullable: true),
+                    TeamId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ExternalId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 64, nullable: false),
                     ShortName = table.Column<string>(maxLength: 32, nullable: false),
                     Tla = table.Column<string>(maxLength: 3, nullable: false),
-                    CrestUrl = table.Column<string>(maxLength: 256, nullable: true),
+                    CrestUrl = table.Column<string>(maxLength: 128, nullable: true),
                     Website = table.Column<string>(maxLength: 128, nullable: true)
                 },
                 constraints: table =>
@@ -43,34 +46,19 @@ namespace Leagueen.Persistence.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UpdateLogs",
-                schema: "leagueen",
-                columns: table => new
-                {
-                    UpdateLogId = table.Column<Guid>(nullable: false),
-                    LogType = table.Column<byte>(nullable: false),
-                    ProviderType = table.Column<byte>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    IsExecuted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UpdateLogs", x => x.UpdateLogId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Competitions",
                 schema: "leagueen",
                 columns: table => new
                 {
-                    CompetitionId = table.Column<Guid>(nullable: false),
+                    CompetitionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<byte>(nullable: false),
                     Model = table.Column<byte>(nullable: false),
                     Name = table.Column<string>(maxLength: 64, nullable: false),
                     Code = table.Column<string>(maxLength: 16, nullable: false),
-                    ExternalId = table.Column<string>(nullable: true),
+                    ExternalId = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    DataProviderId = table.Column<Guid>(nullable: false),
+                    DataProviderId = table.Column<int>(nullable: false),
                     LastProviderUpdate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -90,14 +78,15 @@ namespace Leagueen.Persistence.Domain.Migrations
                 schema: "leagueen",
                 columns: table => new
                 {
-                    SeasonId = table.Column<Guid>(nullable: false),
-                    CompetitionId = table.Column<Guid>(nullable: false),
-                    ExternalId = table.Column<string>(nullable: false),
+                    SeasonId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CompetitionId = table.Column<int>(nullable: false),
+                    ExternalId = table.Column<int>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
                     CurrentMatchday = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    WinnerId = table.Column<Guid>(nullable: true)
+                    WinnerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -123,17 +112,18 @@ namespace Leagueen.Persistence.Domain.Migrations
                 schema: "leagueen",
                 columns: table => new
                 {
-                    MatchId = table.Column<Guid>(nullable: false),
-                    ExternalId = table.Column<string>(nullable: true),
-                    SeasonId = table.Column<Guid>(nullable: false),
+                    MatchId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ExternalId = table.Column<int>(nullable: false),
+                    SeasonId = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Status = table.Column<byte>(nullable: false),
                     Stage = table.Column<byte>(nullable: false),
                     Result = table.Column<byte>(nullable: false),
                     Group = table.Column<string>(maxLength: 8, nullable: true),
                     Matchday = table.Column<int>(nullable: true),
-                    HomeTeamId = table.Column<Guid>(nullable: false),
-                    AwayTeamId = table.Column<Guid>(nullable: false),
+                    HomeTeamId = table.Column<int>(nullable: false),
+                    AwayTeamId = table.Column<int>(nullable: false),
                     LastProviderUpdate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -167,8 +157,8 @@ namespace Leagueen.Persistence.Domain.Migrations
                 schema: "leagueen",
                 columns: table => new
                 {
-                    TeamId = table.Column<Guid>(nullable: false),
-                    SeasonId = table.Column<Guid>(nullable: false)
+                    TeamId = table.Column<int>(nullable: false),
+                    SeasonId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,8 +184,9 @@ namespace Leagueen.Persistence.Domain.Migrations
                 schema: "leagueen",
                 columns: table => new
                 {
-                    MatchScoreId = table.Column<Guid>(nullable: false),
-                    MatchId = table.Column<Guid>(nullable: false),
+                    MatchScoreId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    MatchId = table.Column<int>(nullable: false),
                     Result = table.Column<byte>(nullable: false),
                     Duration = table.Column<byte>(nullable: false),
                     FullTimeHome = table.Column<int>(nullable: true),
@@ -277,10 +268,6 @@ namespace Leagueen.Persistence.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "TeamSeasons",
-                schema: "leagueen");
-
-            migrationBuilder.DropTable(
-                name: "UpdateLogs",
                 schema: "leagueen");
 
             migrationBuilder.DropTable(

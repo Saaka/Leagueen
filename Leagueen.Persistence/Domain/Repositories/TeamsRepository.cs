@@ -14,14 +14,9 @@ namespace Leagueen.Persistence.Domain.Repositories
             this.context = context;
         }
 
-        public async Task<Team> GetTeamByExternalId(string externalId)
+        public async Task<Team> GetTeamByExternalId(int externalId)
         {
             return await context.Teams.FirstOrDefaultAsync(x => x.ExternalId == externalId);
-        }
-
-        public async Task<bool> TeamExistsForExternalId(string externalId)
-        {
-            return await context.Teams.AnyAsync(x => x.ExternalId == externalId);
         }
 
         public async Task<Team> SaveTeam(Team team)
@@ -29,6 +24,11 @@ namespace Leagueen.Persistence.Domain.Repositories
             context.Attach(team);
             await context.SaveChangesAsync();
             return team;
+        }
+
+        public async Task<bool> TeamExistsForExternalId(int externalId)
+        {
+            return await context.Teams.AnyAsync(x => x.ExternalId == externalId);
         }
     }
 }

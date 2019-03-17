@@ -4,14 +4,16 @@ using Leagueen.Persistence.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Leagueen.Persistence.Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190313172402_InitialMigrationV2")]
+    partial class InitialMigrationV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,7 +186,7 @@ namespace Leagueen.Persistence.Domain.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CrestUrl")
-                        .HasMaxLength(256);
+                        .HasMaxLength(128);
 
                     b.Property<int>("ExternalId");
 
@@ -219,25 +221,6 @@ namespace Leagueen.Persistence.Domain.Migrations
                     b.HasIndex("SeasonId");
 
                     b.ToTable("TeamSeasons");
-                });
-
-            modelBuilder.Entity("Leagueen.Domain.Entities.UpdateLog", b =>
-                {
-                    b.Property<int>("UpdateLogId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<bool>("IsExecuted");
-
-                    b.Property<byte>("LogType");
-
-                    b.Property<byte>("ProviderType");
-
-                    b.HasKey("UpdateLogId");
-
-                    b.ToTable("UpdateLogs");
                 });
 
             modelBuilder.Entity("Leagueen.Domain.Entities.Competition", b =>
