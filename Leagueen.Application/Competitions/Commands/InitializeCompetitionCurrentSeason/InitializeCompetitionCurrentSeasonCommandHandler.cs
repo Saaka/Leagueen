@@ -1,11 +1,11 @@
-﻿using Leagueen.Application.Competitions.Repositories;
+﻿using Leagueen.Application.Competitions.Events;
+using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Application.DataProviders;
 using Leagueen.Application.DataProviders.Competitions;
 using Leagueen.Application.Matches.Commands;
 using Leagueen.Domain.Entities;
 using Leagueen.Domain.Exceptions;
 using MediatR;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,6 +62,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             await competitionsRepository.SaveCompetition(competition);
 
             await mediator.Send(new UpdateAllSeasonMatchesCommand { CompetitionCode = request.CompetitionCode });
+            await mediator.Publish(new CompetitionInitializedEvent { CompetitionType = competition.Type });
         }
 
         private Season UpdateSeason(Season season, CompetitionTeamsListDto info)

@@ -4,6 +4,7 @@ using Hangfire;
 using Leagueen.Application;
 using Leagueen.Application.Infrastructure;
 using Leagueen.Application.Infrastructure.AutoMapper;
+using Leagueen.Application.Infrastructure.Jobs;
 using Leagueen.Infrastructure;
 using Leagueen.Persistence;
 using Leagueen.WebAPI.Configuration.HangfireConfig;
@@ -66,6 +67,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                             SchemaName = "LeagueenHangFire",
                         });
                 })
+                .AddTransient<IJobsManager, HangfireJobsManager>()
                 .AddTransient<IRestClient, RestClient>()
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>))
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPostProcessorBehavior<,>))
