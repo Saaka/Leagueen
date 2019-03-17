@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -9,25 +10,22 @@ using Leagueen.Persistence.Connections;
 
 namespace Leagueen.Persistence.Domain.Queries
 {
-    public class GetTodaysMatchesQueryExecutor : IGetTodaysMatchesQueryExecutor
+    public class GetMatchesByDateQueryExecutor : IGetMatchesByDateQueryExecutor
     {
         protected readonly IDbConnectionFactory dbConnectionFactory;
-        private readonly IDateTime dateTime;
 
-        public GetTodaysMatchesQueryExecutor(
-            IDbConnectionFactory dbConnectionFactory,
-            IDateTime dateTime)
+        public GetMatchesByDateQueryExecutor(
+            IDbConnectionFactory dbConnectionFactory)
         {
             this.dbConnectionFactory = dbConnectionFactory;
-            this.dateTime = dateTime;
         }
 
-        public async Task<ICollection<CompetitionModel>> Run()
+        public async Task<ICollection<CompetitionModel>> Run(DateTime date)
         {
-            var date = dateTime.GetUtcNow().Date;
+            date = date.Date;
             using (var connection = dbConnectionFactory.CreateConnection())
             {
-                using (var multi = await connection.QueryMultipleAsync(GetTodaysMatchesQuery, new { date }))
+                using (var multi = await connection.QueryMultipleAsync(GetMatchesQuery, new { date }))
                 {
                     var competitions = await multi.ReadAsync<CompetitionModel>();
                     var matches = await multi.ReadAsync<MatchModel>();
@@ -45,19 +43,19 @@ namespace Leagueen.Persistence.Domain.Queries
             }
         }
 
-        private const string GetTodaysMatchesQuery = @"
+        private const string GetMatchesQuery = @"
         SELECT DISTINCT	C.CompetitionId, C.Code, C.Name, C.Model
         FROM	leagueen.Competitions C
 		        JOIN leagueen.Seasons S ON C.CompetitionId = S.CompetitionId
 		        JOIN leagueen.Matches M ON S.SeasonId = M.SeasonId
-        WHERE	CAST(M.[Date] AS DATE) = @date;
+        WHERE	CAST(M.[Date] AS DATE) = CAST(@date AS DATE);
         SELECT	M.MatchId, HT.[Name] AS [HomeTeam], AT.[Name] AS [AwayTeam], ISNULL(MS.FullTimeHome, 0) AS [HomeScore], ISNULL(MS.FullTimeAway, 0) AS [AwayScore], M.Result, M.Status, M.Date, S.CompetitionId
         FROM	leagueen.Matches M 
 		        JOIN leagueen.Seasons S ON M.SeasonId = S.SeasonId
 		        JOIN leagueen.Teams HT ON M.HomeTeamId = HT.TeamId
 		        JOIN leagueen.Teams AT ON M.AwayTeamId = AT.TeamId
 		        LEFT JOIN leagueen.MatchScores MS ON M.MatchId = MS.MatchId
-        WHERE	CAST(M.[Date] AS Date) = @date
+        WHERE	CAST(M.[Date] AS Date) = CAST(@date AS DATE)
         ORDER BY S.CompetitionId, M.Date;";
     }
 }

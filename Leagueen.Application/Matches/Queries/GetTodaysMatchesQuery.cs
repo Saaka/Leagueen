@@ -3,6 +3,6 @@ using MediatR;
 
 namespace Leagueen.Application.Matches.Queries
 {
-    public class GetTodaysMatchesQuery : IRequest<GetTodaysMatchesQueryResult>
+    public class GetTodaysMatchesQuery : IRequest<GetMatchesQueryResult>
     { }
 }

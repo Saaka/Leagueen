@@ -1,25 +1,31 @@
 ﻿using Leagueen.Application.Matches.Queries.Models;
 using Leagueen.Application.Matches.Repositories;
+using Leagueen.Common;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Leagueen.Application.Matches.Queries.GetTodaysMatches
 {
-    public class GetTodaysMatchesQueryHandler : IRequestHandler<GetTodaysMatchesQuery, GetTodaysMatchesQueryResult>
+    public class GetTodaysMatchesQueryHandler : IRequestHandler<GetTodaysMatchesQuery, GetMatchesQueryResult>
     {
-        private readonly IGetTodaysMatchesQueryExecutor queryExecutor;
+        private readonly IGetMatchesByDateQueryExecutor queryExecutor;
+        private readonly IDateTime dateTime;
 
-        public GetTodaysMatchesQueryHandler(IGetTodaysMatchesQueryExecutor matchQueries)
+        public GetTodaysMatchesQueryHandler(
+            IGetMatchesByDateQueryExecutor matchQueries,
+            IDateTime dateTime)
         {
             this.queryExecutor = matchQueries;
+            this.dateTime = dateTime;
         }
 
-        public async Task<GetTodaysMatchesQueryResult> Handle(GetTodaysMatchesQuery request, CancellationToken cancellationToken)
+        public async Task<GetMatchesQueryResult> Handle(GetTodaysMatchesQuery request, CancellationToken cancellationToken)
         {
-            var competitions = await queryExecutor.Run();
+            var date = dateTime.GetUtcNow().Date;
+            var competitions = await queryExecutor.Run(date);
 
-            return new GetTodaysMatchesQueryResult
+            return new GetMatchesQueryResult
             {
                 Competitions = competitions
             };

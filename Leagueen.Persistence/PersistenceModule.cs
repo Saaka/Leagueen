@@ -55,7 +55,7 @@ namespace Leagueen.Persistence
                 .AddTransient<IUpdateLogsRepository, UpdateLogsRepository>()
 
                 .AddTransient<IDbConnectionFactory, SqlConnectionFactory>()
-                .AddTransient<IGetTodaysMatchesQueryExecutor, GetTodaysMatchesQueryExecutor>()
+                .AddTransient<IGetMatchesByDateQueryExecutor, GetMatchesByDateQueryExecutor>()
 
                 .AddTransient<IdentityDbInitializer>()
                 .AddTransient<UserSeedConfiguration>()

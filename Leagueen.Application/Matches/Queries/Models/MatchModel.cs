@@ -11,6 +11,7 @@ namespace Leagueen.Application.Matches.Queries.Models
         public DateTime Date { get; set; }
         public MatchResult Result { get; set; }
         public MatchStatus Status { get; set; }
+        public string StatusTest => Status.ToString();
         public int HomeScore { get; set; }
         public int AwayScore { get; set; }
         public int CompetitionId { get; set; }

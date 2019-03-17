@@ -13,6 +13,7 @@ namespace Leagueen.Application.Matches.Queries.Models
         public string Name { get; set; }
         public string Code { get; set; }
         public CompetitionModelType Model { get; set; }
+        public string ModelText => Model.ToString();
         public ICollection<MatchModel> Matches { get; set; }
     }
 }

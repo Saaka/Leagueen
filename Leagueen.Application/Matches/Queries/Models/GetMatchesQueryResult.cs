@@ -2,9 +2,9 @@
 
 namespace Leagueen.Application.Matches.Queries.Models
 {
-    public class GetTodaysMatchesQueryResult
+    public class GetMatchesQueryResult
     {
-        public GetTodaysMatchesQueryResult()
+        public GetMatchesQueryResult()
         {
             Competitions = new List<CompetitionModel>();
         }
