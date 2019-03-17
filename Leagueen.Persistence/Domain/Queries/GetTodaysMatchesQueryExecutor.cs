@@ -48,7 +48,7 @@ namespace Leagueen.Persistence.Domain.Queries
         private const string GetTodaysMatchesQuery = @"
         SELECT DISTINCT	C.CompetitionId, C.Code, C.Name, C.Model
         FROM	leagueen.Competitions C
-		        JOIN leagueen.Seasons S ON C.CompetitionId = S.SeasonId
+		        JOIN leagueen.Seasons S ON C.CompetitionId = S.CompetitionId
 		        JOIN leagueen.Matches M ON S.SeasonId = M.SeasonId
         WHERE	CAST(M.[Date] AS DATE) = @date;
         SELECT	M.MatchId, HT.[Name] AS [HomeTeam], AT.[Name] AS [AwayTeam], ISNULL(MS.FullTimeHome, 0) AS [HomeScore], ISNULL(MS.FullTimeAway, 0) AS [AwayScore], M.Result, M.Status, M.Date, S.CompetitionId

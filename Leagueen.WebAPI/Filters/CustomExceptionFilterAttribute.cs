@@ -40,7 +40,8 @@ namespace Leagueen.WebAPI.Filters
                 context.HttpContext.Response.StatusCode = (int)code;
                 context.Result = new JsonResult(new
                 {
-                    Error = context.Exception.Message
+                    Error = context.Exception.Message,
+                    ErrorDetails = context.Exception.StackTrace
                 });
             }
         }

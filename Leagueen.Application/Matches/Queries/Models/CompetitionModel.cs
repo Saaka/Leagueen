@@ -5,10 +5,14 @@ namespace Leagueen.Application.Matches.Queries.Models
 {
     public class CompetitionModel
     {
+        public CompetitionModel()
+        {
+            Matches = new List<MatchModel>();
+        }
         public int CompetitionId { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public CompetitionModelType Model { get; set; }
-        public List<MatchModel> Matches { get; set; }
+        public ICollection<MatchModel> Matches { get; set; }
     }
 }
