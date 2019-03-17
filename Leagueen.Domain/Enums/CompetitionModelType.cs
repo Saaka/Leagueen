@@ -1,6 +1,6 @@
 ﻿namespace Leagueen.Domain.Enums
 {
-    public enum CompetitionModel
+    public enum CompetitionModelType
     {
         League = 1,
         Cup = 2

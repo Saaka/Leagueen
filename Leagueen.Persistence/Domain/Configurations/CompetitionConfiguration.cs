@@ -30,7 +30,7 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .IsRequired()
                 .HasConversion(
                     v => (byte)v,
-                    v => (CompetitionModel)v);
+                    v => (CompetitionModelType)v);
             builder
                 .HasMany(x => x.Seasons)
                 .WithOne(x => x.Competition)
