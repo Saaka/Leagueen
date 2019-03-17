@@ -3,6 +3,7 @@ using Leagueen.Application.Infrastructure.DbInitializer;
 using Leagueen.Application.Matches.Repositories;
 using Leagueen.Application.UpdateLogs.Repositories;
 using Leagueen.Application.Users.Repositories;
+using Leagueen.Persistence.Connections;
 using Leagueen.Persistence.Domain;
 using Leagueen.Persistence.Domain.Initializer;
 using Leagueen.Persistence.Domain.Repositories;
@@ -45,6 +46,8 @@ namespace Leagueen.Persistence
             services
                 .AddTransient<IUsersRepository, UsersRepository>()
                 .AddTransient<IDbInitializer, DbInitializer>()
+
+                .AddTransient<IDbConnectionFactory, SqlConnectionFactory>()
 
                 .AddTransient<ICompetitionsRepository, CompetitionsRepository>()
                 .AddTransient<ISeasonsRepository, SeasonsRepository>()
