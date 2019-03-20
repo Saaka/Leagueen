@@ -1,8 +1,8 @@
 import 'bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import indexRoutes from './routes/index';
 require('dotenv').config();
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
@@ -10,6 +10,10 @@ const rootElement = document.getElementById('root');
 
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>
-    <App />
+    <Switch>
+      {indexRoutes.map((prop, key) => {
+        return <Route to={prop.path} component={prop.component} key={key} />;
+      })}
+    </Switch>
   </BrowserRouter>,
   rootElement);
