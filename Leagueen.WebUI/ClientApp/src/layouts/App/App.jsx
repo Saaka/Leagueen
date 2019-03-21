@@ -1,4 +1,3 @@
-import "./App.scss";
 import React from "react";
 import { Switch, Route, Redirect } from "react-router";
 import { NavMenu, Sidebar } from "components/exports";

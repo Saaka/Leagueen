@@ -94,8 +94,12 @@
 
     .nav{
         margin-top: 20px;
+        display: block; 
 
         li{
+            position: relative;
+            display: block;
+
             > a{
                 color: #FFFFFF;
                 margin: 5px 15px;
