@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import Axios from "axios";
-import { Button } from "components/exports";
+import React, { Component } from 'react';
+import Axios from 'axios';
+
 
 export class Counter extends Component {
     state = {
@@ -46,8 +46,7 @@ export class Counter extends Component {
                 <p>Increment value: <strong>{this.state.incrementValue}</strong></p>
                 <p>Current count: <strong>{this.state.currentCount}</strong></p>
 
-                <button className="btn btn-info btn-fill" onClick={this.incrementCounter}>Increment</button>
-                <button className="btn btn-info btn-fill" disabled>Decrement</button>
+                <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
             </div>
         );
     }

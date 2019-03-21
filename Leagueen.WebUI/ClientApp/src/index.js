@@ -1,12 +1,8 @@
+import 'bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import indexRoutes from './routes/index';
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./assets/css/animate.min.css";
-import "./assets/sass/_custom.scss";
-
 require('dotenv').config();
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
