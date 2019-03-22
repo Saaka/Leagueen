@@ -11,11 +11,13 @@ function NavMenu(props) {
   }
 
   return (
-      <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+      <nav className="navbar navbar-light navbar-expand-md navbar-toggleable-md ng-white border-bottom box-shadow mb-3">
         <div className="container-fluid">
+          <button className="mr-2 navbar-toggler" type="button" onClick={props.toggleSidebar}>
+            <span className="navbar-toggler-icon"></span>
+          </button>
           <NavbarBrand tag={Link} to="/">Leagueen</NavbarBrand>
-          <NavbarToggler onClick={props.toggleSidebar} className="mr-2" />
-          <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
+          <Collapse className="d-md-inline-flex flex-md-row-reverse" isOpen={!collapsed} navbar>
             <ul className="navbar-nav flex-grow">
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
@@ -26,7 +28,7 @@ function NavMenu(props) {
             </ul>
           </Collapse>
         </div>
-      </Navbar>
+      </nav>
   );
 };
 
