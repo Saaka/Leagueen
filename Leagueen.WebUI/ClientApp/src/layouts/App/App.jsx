@@ -1,17 +1,27 @@
 import "./App.scss";
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router";
 import { NavMenu } from "components/NavMenu/NavMenu";
 import { Sidebar } from "components/Sidebar/Sidebar";
 import appRoutes from "routes/app";
 
 function App(props) {
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [wrapperClasses, setWrapperClasses] = useState("d-flex");
+
+  function toggleSidebar() {
+    setShowSidebar(!showSidebar);
+    if (showSidebar)
+      setWrapperClasses("d-flex toggled");
+    else
+      setWrapperClasses("d-flex");
+  }
 
   return (
-    <div className="d-flex" id="wrapper">
-      <Sidebar {...props} />
+    <div className={wrapperClasses} id="wrapper">
+      <Sidebar {...props} showSidebar={showSidebar} />
       <div id="page-content-wrapper">
-        <NavMenu />
+        <NavMenu toggleSidebar={toggleSidebar} />
         <div className="container-fluid">
           <Switch>
             {appRoutes.map((prop, key) => {
