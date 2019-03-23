@@ -1,20 +1,5 @@
-body {
-    background: #fafafa;
-}
 
-// .navbar {
-//     padding: 15px 10px;
-//     background: #fff;
-//     border: none;
-//     border-radius: 0;
-//     margin-bottom: 40px;
-//     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-// }
-
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
+/* Sidebar */
 #wrapper {
     width: 100%;
 }
@@ -26,7 +11,7 @@ body {
     left: -250px;
     height: 100vh;
     z-index: 999;
-    background: #7386D5;
+    background: var(--primary);
     color: #fff;
     transition: all 0.3s;
 
@@ -37,15 +22,18 @@ body {
 
     & .sidebar-header {
         padding: 20px;
-        background: #6d7fcc;
+        background: var(--primary);
     }
 
     & ul.components {
         padding: 20px 0;
         display: block;
-    
+        text-align: center;
+
         button {
-            width: 100%;
+            text-align: start;
+            width: 90%;
+            margin-bottom: 5px;
         }
     }
 }
@@ -55,7 +43,6 @@ body {
     height: 35px;
     line-height: 35px;
     text-align: center;
-    background: #7386D5;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -63,11 +50,6 @@ body {
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
-
-    &:hover {
-        background: #fff;
-        color: #7386D5;
-    }
 }
 
 /* ---------------------------------------------------
