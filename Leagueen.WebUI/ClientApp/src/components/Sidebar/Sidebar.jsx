@@ -4,14 +4,14 @@ import "./Sidebar.scss";
 
 function Sidebar(props) {
 
-    function sidebarClasses() {
+    function setActivity() {
         if(props.showSidebar)
             return "active";
         return "";
     };
 
     return (
-        <div className={sidebarClasses()} id="sidebar">
+        <div className={setActivity()} id="sidebar">
             <div id="dismiss" onClick={props.toggleSidebar}>
                 <i className="fas fa-arrow-left"></i>
             </div>

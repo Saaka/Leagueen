@@ -11,6 +11,7 @@ function NavMenu(props) {
           <button className="mr-2 navbar-toggler" type="button" onClick={props.toggleSidebar}>
             <span className="navbar-toggler-icon"></span>
           </button>
+          <span className="navbar-brand">Leagueen</span>
         </div>
         <ul className="navbar-nav flex-row float-right">
           <li className="nav-item">
