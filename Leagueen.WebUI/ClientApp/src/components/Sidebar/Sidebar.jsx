@@ -23,7 +23,7 @@ function Sidebar(props) {
 
         return (
             <li key={key}>
-                <RedirectLink className={linkClass(prop)} name={prop.name} to={prop.path}></RedirectLink>
+                <RedirectLink className={linkClass(prop)} name={prop.name} to={prop.path} onRedirect={props.toggleSidebar}></RedirectLink>
             </li>
         );
     };

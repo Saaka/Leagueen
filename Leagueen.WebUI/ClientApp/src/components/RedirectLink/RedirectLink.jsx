@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 function RedirectLink(props) {
 
     function redirect() {
+        if(!!props.onRedirect)
+            props.onRedirect();
         props.history.push(props.to);
     };
 
