@@ -23,18 +23,20 @@ function App(props) {
     <div>
       <div className={wrapperClasses} id="wrapper">
         <Sidebar {...props} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
-        <div className="container-fluid" id="content">
+        <div id="content">
           <NavMenu toggleSidebar={toggleSidebar} />
-          <Switch>
-            {appRoutes.map((prop, key) => {
-              if (prop.redirect)
-                return <Redirect from={prop.path} to={prop.to} key={key} />
-              else
-                return <Route path={prop.path} component={prop.component} name={prop.name} key={key} />
-            })}
-          </Switch>
+          <div className="container-fluid">
+            <Switch>
+              {appRoutes.map((prop, key) => {
+                if (prop.redirect)
+                  return <Redirect from={prop.path} to={prop.to} key={key} />
+                else
+                  return <Route path={prop.path} component={prop.component} name={prop.name} key={key} />
+              })}
+            </Switch>
+          </div>
+          {/* <Footer /> */}
         </div>
-        {/* <Footer /> */}
       </div>
       <Overlay showOverlay={showSidebar} toggleSidebar={toggleSidebar} />
     </div>
