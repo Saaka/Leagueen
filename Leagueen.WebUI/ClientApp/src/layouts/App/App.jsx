@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router";
 import { NavMenu } from "components/NavMenu/NavMenu";
 import { Sidebar } from "components/Sidebar/Sidebar";
+import { Footer } from "components/Footer/Footer";
 import appRoutes from "routes/app";
 
 function App(props) {
@@ -22,7 +23,7 @@ function App(props) {
       <Sidebar {...props} showSidebar={showSidebar} />
       <div id="page-content-wrapper">
         <NavMenu toggleSidebar={toggleSidebar} />
-        <div className="container-fluid">
+        <div className="container-fluid" id="content">
           <Switch>
             {appRoutes.map((prop, key) => {
               if (prop.redirect)
@@ -32,6 +33,7 @@ function App(props) {
             })}
           </Switch>
         </div>
+        <Footer />
       </div>
     </div>
   );
