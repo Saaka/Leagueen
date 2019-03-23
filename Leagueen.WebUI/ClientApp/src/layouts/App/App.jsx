@@ -4,26 +4,27 @@ import { Switch, Route, Redirect } from "react-router";
 import { NavMenu } from "components/NavMenu/NavMenu";
 import { Sidebar } from "components/Sidebar/Sidebar";
 import { Footer } from "components/Footer/Footer";
+import { Overlay } from "components/Overlay/Overlay";
 import appRoutes from "routes/app";
 
 function App(props) {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
   const [wrapperClasses, setWrapperClasses] = useState("d-flex");
 
   function toggleSidebar() {
     setShowSidebar(!showSidebar);
     if (showSidebar)
-      setWrapperClasses("d-flex toggled");
+      setWrapperClasses("active");
     else
-      setWrapperClasses("d-flex");
+      setWrapperClasses("");
   }
 
   return (
-    <div className={wrapperClasses} id="wrapper">
-      <Sidebar {...props} showSidebar={showSidebar} />
-      <div id="page-content-wrapper">
-        <NavMenu toggleSidebar={toggleSidebar} />
+    <div>
+      <div className={wrapperClasses} id="wrapper">
+        <Sidebar {...props} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
         <div className="container-fluid" id="content">
+          <NavMenu toggleSidebar={toggleSidebar} />
           <Switch>
             {appRoutes.map((prop, key) => {
               if (prop.redirect)
@@ -33,8 +34,9 @@ function App(props) {
             })}
           </Switch>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
+      <Overlay showOverlay={showSidebar} />
     </div>
   );
 }
