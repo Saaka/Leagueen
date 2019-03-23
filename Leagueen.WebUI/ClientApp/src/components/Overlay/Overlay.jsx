@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Overlay.scss";
 
 function Overlay(props) {
 
@@ -9,7 +10,7 @@ function Overlay(props) {
     }
 
     return (
-        <div className={showOverlay()} />
+        <div className={showOverlay()} onClick={props.toggleSidebar} />
     );
 };
 

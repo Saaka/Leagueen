@@ -36,7 +36,7 @@ function App(props) {
         </div>
         {/* <Footer /> */}
       </div>
-      <Overlay showOverlay={showSidebar} />
+      <Overlay showOverlay={showSidebar} toggleSidebar={toggleSidebar} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { RedirectLink } from "components/RedirectLink/RedirectLink";
 import "./Sidebar.scss";
 
 function Sidebar(props) {
@@ -18,11 +18,11 @@ function Sidebar(props) {
             <div className="sidebar-header"><h3>Leagueen</h3></div>
 
             <ul className="list-unstyled components">
-                <li className="active">
-                    <Link className="list-group-item list-group-item-action bg-light nav-link" to="/home" >Home</Link>
+                <li>
+                    <RedirectLink className="btn btn-primary" name="Home" to="/home"></RedirectLink>
                 </li>
-                <li className="active">
-                <Link className="list-group-item list-group-item-action bg-light nav-link" to="/counter" >Counter</Link>
+                <li>
+                    <RedirectLink name="Counter" to="/counter"></RedirectLink>
                 </li>
             </ul>
         </div>
