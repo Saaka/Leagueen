@@ -8,7 +8,7 @@ const appRoutes = [
         name: "Home",
     },
     {
-        auth: true,
+        useAuth: true,
         path: "/app/counter",
         component: Counter,
         name: "Counter"

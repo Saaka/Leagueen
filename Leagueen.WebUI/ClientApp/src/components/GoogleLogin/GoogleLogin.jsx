@@ -1,12 +1,36 @@
-import React from "react";
+import React from 'react';
+import { AuthService, ConfigService } from 'Services';
+import { GoogleLogin } from 'react-google-login';
+import { Icon } from 'components/Icon/Icon';
 
-function GoogleLogin(props) {
+const LoginWithGoogle = (props) => {
+    const configService = new ConfigService();
+    const authService = new AuthService();
 
-    return(
-        <div>
-            Google login
-        </div>
+    function onLogin(response) {
+        props.showLoader();
+        authService
+            .loginWithGoogle(response.tokenId)
+            .then(props.onLoggedIn)
+            .catch(props.onError);
+    }
+
+    function onLoginFail(response) {
+        props.onError(response.error);
+    }
+
+    return (
+        <GoogleLogin
+            clientId={configService.GoogleClientId}
+            onSuccess={onLogin}
+            onFailure={onLoginFail}
+            render={props => (
+                <button className="btn btn-light login-button"
+                    onClick={props.onClick}>
+                    <Icon icon="google"></Icon> Sign in with Google
+                </button>
+            )}></GoogleLogin>
     );
 };
 
-export { GoogleLogin };
+export { LoginWithGoogle as GoogleLogin };

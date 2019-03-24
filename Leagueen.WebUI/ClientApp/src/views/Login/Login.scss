@@ -1,0 +1,26 @@
+html,
+body,
+#root {
+    height: 100%;
+}
+
+.login-button {
+    min-width: 250px;
+}
+
+.auto-center {
+    margin-top: auto;
+    margin-bottom: auto;
+    position: relative;
+    text-align: center;
+}
+
+.login-content {
+    color: var(--light);
+    background-color: var(--dark);
+    height: 100%;
+}
+
+.bottom-offset {
+    margin-bottom: 25em;
+}

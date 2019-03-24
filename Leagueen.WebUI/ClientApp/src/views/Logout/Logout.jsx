@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { Icon } from "components/Icon/Icon";
+import { AuthService } from 'Services';
 import "./Logout.scss";
 
 function Logout(props) {
+    const authService = new AuthService();
 
     useEffect(() => {
-        
+        props.onLogout();
+        authService.logout();
+        props.history.replace('/');
     });
 
     return (

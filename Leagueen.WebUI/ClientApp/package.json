@@ -19,7 +19,8 @@
     "reactstrap": "^7.1.0",
     "react-google-login": "^5.0.2",
     "rimraf": "^2.6.3",
-    "jwt-decode": "^2.2.0"
+    "jwt-decode": "^2.2.0",
+    "query-string": "^6.4.0"
   },
   "devDependencies": {
     "ajv": "^6.7.0",

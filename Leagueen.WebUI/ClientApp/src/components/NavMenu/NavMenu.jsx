@@ -19,7 +19,11 @@ function NavMenu(props) {
             <span className="navbar-text">Welcome, <strong>Guest</strong>!</span>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/login"> Login</Link>
+            {
+              props.user.isLoggedIn ?
+                <Link className="nav-link" to="/logout"> Logout</Link> :
+                <Link className="nav-link" to="/login"> Login</Link>
+            }
           </li>
         </ul>
       </div>
