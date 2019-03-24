@@ -23,7 +23,7 @@ export class Counter extends Component {
 
     componentDidMount = () => {
         this.axios
-            .get('/values/2')
+            .get('values/2')
             .then(resp => this.setState({
                 incrementValue: resp.data
             }))
