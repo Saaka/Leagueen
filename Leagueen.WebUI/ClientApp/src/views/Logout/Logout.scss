@@ -4,13 +4,18 @@ body,
     height: 100%;
 }
 
+.logout-content {
+    color: var(--light);
+    background-color: var(--dark);
+}
+
 .auto-center {
     margin-top: auto;
     margin-bottom: auto;
     position: relative;
+    text-align: center;
 }
 
-.logout-spinner {
-    margin-bottom: 10em;
-    width: 100%;
+.bottom-offset {
+    margin-bottom: 25em;
 }
