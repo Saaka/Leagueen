@@ -19,28 +19,38 @@ function App(props) {
       setWrapperClasses("");
   }
 
+  function renderApp(props) {
+    return (
+      <div>
+        <div className={wrapperClasses} id="wrapper">
+          <Sidebar {...props} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+          <div id="content">
+            <NavMenu toggleSidebar={toggleSidebar} />
+            <div className="container">
+              <Switch>
+                {appRoutes.map((prop, key) => {
+                  if (prop.redirect)
+                    return <Redirect from={prop.path} to={prop.to} key={key} />
+                  else
+                    return <Route path={prop.path} component={prop.component} name={prop.name} key={key} />
+                })}
+              </Switch>
+            </div>
+            {/* <Footer /> */}
+          </div>
+        </div>
+        <Overlay showOverlay={showSidebar} toggleSidebar={toggleSidebar} />
+      </div>
+    );
+  };
+
   return (
     <div>
-      <div className={wrapperClasses} id="wrapper">
-        <Sidebar {...props} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
-        <div id="content">
-          <NavMenu toggleSidebar={toggleSidebar} />
-          <div className="container">
-            <Switch>
-              {appRoutes.map((prop, key) => {
-                if (prop.redirect)
-                  return <Redirect from={prop.path} to={prop.to} key={key} />
-                else
-                  return <Route path={prop.path} component={prop.component} name={prop.name} key={key} />
-              })}
-            </Switch>
-          </div>
-          {/* <Footer /> */}
-        </div>
-      </div>
-      <Overlay showOverlay={showSidebar} toggleSidebar={toggleSidebar} />
+      <Route exact path="/" render={(props) => <Redirect to="/app" from={props.path} />} />
+      <Route path="/login" render={() => <div>Login</div>} />
+      <Route path="/app" render={(props) => renderApp(props)} />
     </div>
   );
 }
 
-export default App;
+export { App };

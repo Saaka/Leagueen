@@ -3,19 +3,19 @@ import { Counter } from "components/tempComponents/Counter";
 
 const appRoutes = [
     {
-        path: "/home",
+        path: "/app/home",
         component: Home,
-        name: "Home"
+        name: "Home",
     },
     {
-        path: "/counter",
+        path: "/app/counter",
         component: Counter,
         name: "Counter"
     },
     {
         redirect: true,
-        path: "/",
-        to: "/home",
+        path: "/app",
+        to: "/app/home",
         name: "Home"
     }
 ];

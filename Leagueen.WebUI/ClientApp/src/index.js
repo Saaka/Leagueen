@@ -1,8 +1,8 @@
 import "bootstrap";
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import indexRoutes from "./routes/index";
+import { BrowserRouter, Route } from "react-router-dom";
+import { App } from "./layouts/App/App";
 import "./assets/vendor/font-awesome";
 require("dotenv").config();
 
@@ -11,10 +11,6 @@ const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>
-    <Switch>
-      {indexRoutes.map((prop, key) => {
-        return <Route to={prop.path} component={prop.component} key={key} />;
-      })}
-    </Switch>
+    <Route component={App} />
   </BrowserRouter>,
   rootElement);
