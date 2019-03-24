@@ -1,12 +1,13 @@
-import 'bootstrap';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import indexRoutes from './routes/index';
-require('dotenv').config();
+import "bootstrap";
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import indexRoutes from "./routes/index";
+import "./assets/vendor/font-awesome";
+require("dotenv").config();
 
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
-const rootElement = document.getElementById('root');
+const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
+const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>

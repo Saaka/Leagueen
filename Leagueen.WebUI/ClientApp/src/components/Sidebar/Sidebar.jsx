@@ -1,7 +1,7 @@
 import React from "react";
 import { RedirectLink } from "components/RedirectLink/RedirectLink";
 import "./Sidebar.scss";
-
+import { Icon } from "components/Icon/Icon";
 import appRoutes from "routes/app";
 
 function Sidebar(props) {
@@ -31,7 +31,7 @@ function Sidebar(props) {
     return (
         <div className={setActivity()} id="sidebar">
             <button className="btn btn-primary-dark" id="dismiss" onClick={props.toggleSidebar}>
-                <i className="fas fa-arrow-left"></i>
+                <Icon icon="arrow-left" />
             </button>
             <div className="sidebar-header"><h3>Leagueen</h3></div>
 

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './NavMenu.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Icon } from "components/Icon/Icon";
+import "./NavMenu.scss";
 
 function NavMenu(props) {
 
@@ -9,7 +10,7 @@ function NavMenu(props) {
       <div className="container-fluid">
         <div className="navbar-header navbar-left pull-left">
           <button className="mr-2 navbar-toggler" type="button" onClick={props.toggleSidebar}>
-            <span className="navbar-toggler-icon"></span>
+            <Icon icon="align-left" />
           </button>
           <span className="navbar-brand">Leagueen</span>
         </div>
