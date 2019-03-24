@@ -9,7 +9,7 @@ function NavMenu(props) {
     <nav className="navbar border-bottom box-shadow mb-3 ng-white navbar-light" role="navigation">
       <div className="container-fluid">
         <div className="navbar-header navbar-left pull-left">
-          <button className="mr-2 navbar-toggler" type="button" onClick={props.toggleSidebar}>
+          <button className="navbar-toggler mr-2" type="button" onClick={props.toggleSidebar}>
             <Icon icon="align-left" />
           </button>
           <span className="navbar-brand">Leagueen</span>

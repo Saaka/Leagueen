@@ -25,7 +25,7 @@ function App(props) {
         <Sidebar {...props} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
         <div id="content">
           <NavMenu toggleSidebar={toggleSidebar} />
-          <div className="container-fluid">
+          <div className="container">
             <Switch>
               {appRoutes.map((prop, key) => {
                 if (prop.redirect)
