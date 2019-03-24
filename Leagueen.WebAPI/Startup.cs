@@ -34,7 +34,9 @@ namespace Leagueen.WebAPI
         {
             if (env.IsProduction())
             {
-                application.UseHsts();
+                application
+                    .UseHsts()
+                    .UseHttpsRedirection();
             }
 
             application
