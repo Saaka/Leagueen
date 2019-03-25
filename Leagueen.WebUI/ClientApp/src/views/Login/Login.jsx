@@ -28,16 +28,13 @@ function Login(props) {
     };
 
     return (
-        <div className="container h-100 d-flex justify-content-center logout-content login-content">
-            <div className="auto-center">
+        <div className="h-100 d-flex justify-content-center login-content">
+            <div className="center-h">
+                <div className="row justify-content-center">
+                    <h1 className="text-center">Leagueen</h1>
+                </div>
                 <div className="row justify-content-center bottom-offset">
-                    <div className="col-md-9 col-lg-6">
-                        <h1 className="text-center">Leagueen</h1>
-                        <br />
-                        <div className="row justify-content-center">
-                            <GoogleLogin onLoggedIn={onLoggedIn} onError={onError} showLoader={() => props.toggleLoader(true)}></GoogleLogin>
-                        </div>
-                    </div>
+                    <GoogleLogin onLoggedIn={onLoggedIn} onError={onError} showLoader={() => props.toggleLoader(true)} />
                 </div>
             </div>
         </div>

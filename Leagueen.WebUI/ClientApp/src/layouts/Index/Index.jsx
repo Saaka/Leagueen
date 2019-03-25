@@ -4,8 +4,9 @@ import { App } from "layouts/exports";
 import { Logout, Login } from "views/exports";
 import { AuthService } from "Services";
 import { Loader } from "components/Loader/Loader";
+import "./Index.scss";
 
-function IndexRoutes(props) {
+function Index(props) {
     const authService = new AuthService();
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState({ isLoggedIn: false });
@@ -68,4 +69,4 @@ function IndexRoutes(props) {
     return isLoading === true ? renderLoader() : renderApp();
 };
 
-export { IndexRoutes };
+export { Index };

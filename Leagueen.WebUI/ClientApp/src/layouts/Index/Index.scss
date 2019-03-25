@@ -1,0 +1,14 @@
+@import '~assets/custom';
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+.center-h {
+    margin-top: auto;
+    margin-bottom: auto;
+    position: relative;
+    text-align: center;
+}

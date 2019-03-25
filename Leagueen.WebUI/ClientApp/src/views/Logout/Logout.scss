@@ -1,21 +1,7 @@
-html,
-body,
-#root {
-    height: 100%;
-}
-
 .logout-content {
     color: var(--light);
     background-color: var(--dark);
 }
-
-.auto-center {
-    margin-top: auto;
-    margin-bottom: auto;
-    position: relative;
-    text-align: center;
-}
-
 .bottom-offset {
     margin-bottom: 25em;
 }
