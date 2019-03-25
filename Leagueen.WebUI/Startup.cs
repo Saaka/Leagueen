@@ -32,7 +32,8 @@ namespace Leagueen.WebUI
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsProduction())
-                app.UseHttpsRedirection();
+                app.UseHttpsRedirection()
+                    .UseHsts();
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
