@@ -1,8 +1,11 @@
 
 //Colors
-$primary: #123456;
-$primary-dark:#091b2c;
+$accent: #123456;
+$accent-dark: #091b2c;
+$theme: #f8f9fa;
 
 $theme-colors: (
-    "primary-dark": $primary-dark
+    "accent": $accent,
+    "accent-dark": $accent-dark,
+    "theme": $theme
 );

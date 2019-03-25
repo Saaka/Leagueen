@@ -22,6 +22,12 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-.navbar-toggler {
+#nav-toggler {
   display: inline-block !important;
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  vertical-align: baseline;
 }

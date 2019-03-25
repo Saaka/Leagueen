@@ -6,10 +6,10 @@ import "./NavMenu.scss";
 function NavMenu(props) {
 
   return (
-    <nav className="navbar border-bottom box-shadow mb-3 ng-white navbar-light" role="navigation">
+    <nav className="navbar border-bottom box-shadow mb-3 bg-accent text-theme" role="navigation">
       <div className="container-fluid">
         <div className="navbar-header navbar-left pull-left">
-          <button className="navbar-toggler mr-2" type="button" onClick={props.toggleSidebar}>
+          <button className="btn btn-theme mr-2" id="nav-toggler" type="button" onClick={props.toggleSidebar}>
             <Icon icon="align-left" />
           </button>
           <span className="navbar-brand">Leagueen</span>
@@ -21,8 +21,8 @@ function NavMenu(props) {
           <li className="nav-item">
             {
               props.user.isLoggedIn ?
-                <Link className="nav-link" to="/logout"> Logout</Link> :
-                <Link className="nav-link" to="/login"> Login</Link>
+                <Link className="nav-link text-theme" to="/logout"> Logout</Link> :
+                <Link className="nav-link text-theme" to="/login"> Login</Link>
             }
           </li>
         </ul>

@@ -26,7 +26,7 @@ export function Counter(props) {
             <p>Increment value: <strong>{incrementValue}</strong></p>
             <p>Current count: <strong>{currentValue}</strong></p>
 
-            <button className="btn btn-primary" onClick={incrementCounter}>Increment</button>
+            <button className="btn btn-accent" onClick={incrementCounter}>Increment</button>
         </div>
     );
 };

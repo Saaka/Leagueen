@@ -25,7 +25,7 @@ const LoginWithGoogle = (props) => {
             onSuccess={onLogin}
             onFailure={onLoginFail}
             render={props => (
-                <button className="btn btn-light login-button"
+                <button className="btn btn-theme login-button"
                     onClick={props.onClick}>
                     <Icon icon="google"></Icon> Sign in with Google
                 </button>

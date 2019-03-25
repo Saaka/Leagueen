@@ -14,9 +14,9 @@ function Sidebar(props) {
 
     function linkClass(prop) {
         if(prop.path === props.location.pathname)
-            return "btn btn-primary active"
+            return "btn btn-accent active"
 
-        return "btn btn-primary";
+        return "btn btn-accent";
     };
 
     function renderLink(prop, key) {
@@ -30,7 +30,7 @@ function Sidebar(props) {
 
     return (
         <div className={setActivity()} id="sidebar">
-            <button className="btn btn-primary-dark" id="dismiss" onClick={props.toggleSidebar}>
+            <button className="btn btn-accent-dark" id="dismiss" onClick={props.toggleSidebar}>
                 <Icon icon="arrow-left" />
             </button>
             <div className="sidebar-header"><h3>Leagueen</h3></div>
