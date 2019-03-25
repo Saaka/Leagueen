@@ -8,7 +8,7 @@ function Login(props) {
     useEffect(() => {
         if (props.user.isLoggedIn)
             redirectToMainPage();
-    });
+    }, []);
     function onLoggedIn(userData) {
         props.onLogin(userData);
         var searchValue = queryString.parse(props.location.search);
@@ -25,6 +25,7 @@ function Login(props) {
     };
     function onError(err) {
         console.log(err);
+        redirectToMainPage();
     };
 
     return (

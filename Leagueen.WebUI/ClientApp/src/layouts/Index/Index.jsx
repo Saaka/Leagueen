@@ -34,14 +34,16 @@ function Index(props) {
     };
 
     function updateUser(user) {
-        hideLoader();
         setUser({
             ...user,
             isLoggedIn: true
         });
     };
 
-    const onLogin = (user) => updateUser(user);
+    const onLogin = (user) => {
+        hideLoader();
+        updateUser(user);
+    };
 
     const onLogout = () => removeUser();
 

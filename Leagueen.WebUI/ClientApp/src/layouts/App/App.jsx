@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router";
 import { NavMenu } from "components/NavMenu/NavMenu";
 import { Sidebar } from "components/Sidebar/Sidebar";
-import { Footer } from "components/Footer/Footer";
 import { Overlay } from "components/Overlay/Overlay";
 import { useAuth } from "Services";
 import appRoutes from "routes/app";
@@ -45,7 +44,6 @@ function App(props) {
               })}
             </Switch>
           </div>
-          {/* <Footer /> */}
         </div>
       </div>
       <Overlay showOverlay={showSidebar} toggleSidebar={toggleSidebar} />

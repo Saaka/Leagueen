@@ -9,7 +9,7 @@ function Logout(props) {
     useEffect(() => {
         authService.logout();
         props.onLogout();
-        // props.history.replace('/');
+        props.history.replace('/');
     });
 
     return (

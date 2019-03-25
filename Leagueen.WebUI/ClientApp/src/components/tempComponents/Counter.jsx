@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { HttpService } from "Services";
-
+import "./Counter.scss";
 
 export function Counter(props) {
     const [currentValue, setCurrentValue] = useState(0);
@@ -18,7 +18,7 @@ export function Counter(props) {
     }
 
     return (
-        <div>
+        <div className="counter-content">
             <h1>Counter</h1>
 
             <p>This is a simple example of a React component.</p>
