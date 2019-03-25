@@ -15,7 +15,7 @@ function IndexRoutes(props) {
             loadUserData();
         else
             hideLoader();
-    }, [user]);
+    }, []);
 
     function loadUserData() {
         authService
@@ -33,6 +33,7 @@ function IndexRoutes(props) {
     };
 
     function updateUser(user) {
+        hideLoader();
         setUser({
             ...user,
             isLoggedIn: true
@@ -48,7 +49,7 @@ function IndexRoutes(props) {
     function renderApp() {
         return (
             <span>
-                <Route exact path="/" render={(props) => <Redirect to="/app" from={props.path} />} />
+                <Route exact path="/" render={(props) => <Redirect to="/app" from={props.path} {...props} user={user} />} />
                 <Route path="/login" render={(props) => <Login {...props} onLogin={onLogin} onLogout={onLogout} user={user} toggleLoader={setIsLoading} />} />
                 <Route path="/logout" render={(props) => <Logout {...props} onLogout={onLogout} />} />
                 <Route path="/app" render={(props) => <App {...props} user={user} />} />

@@ -1,35 +1,27 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 
 const useAuth = (AuthComponent) => {
 
-    return class AuthWrapper extends Component {
-
-        goToLogin = (useRedirect) => {
+    return function AuthWrapper(props){
+        function goToLogin(useRedirect) {
             if (useRedirect) {
-                var redirect = this.props.location.pathname;
-                this.props.history.replace(`/login?redirect=${redirect}`);
+                var redirect = props.location.pathname;
+                props.history.replace(`/login?redirect=${redirect}`);
             }
             else {
-                this.props.history.replace('/');
+                props.history.replace('/');
             }
         };
+        
+        useEffect(() => {
+            if (!props.user.isLoggedIn) {
+                goToLogin(true);
+            }
+        }, []);
 
-        componentWillMount = () => {
-            if (!this.props.user.isLoggedIn) {
-                this.goToLogin(true);
-            }
-        };
-
-        render = () => {
-            if (this.props.user.isLoggedIn) {
-                return (
-                    <AuthComponent history={this.props.history} user={this.props.user} {...this.props} />
-                );
-            }
-            else {
-                return null;
-            }
-        }
+        return props.user.isLoggedIn ?
+            <AuthComponent history={props.history} user={props.user} {...props} /> :
+            null;
     };
 }
 

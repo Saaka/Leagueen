@@ -1,53 +1,32 @@
-import React, { Component } from 'react';
-import Axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { HttpService } from "Services";
 
 
-export class Counter extends Component {
-    state = {
-        currentCount: 0,
-        incrementValue: 1
-    };
-    _axios = null;
-    get axios() {
-        if (!this._axios)
-            this._axios = this.createAxios();
+export function Counter(props) {
+    const [currentValue, setCurrentValue] = useState(0);
+    const [incrementValue, setIncrementValue] = useState(1);
 
-        return this._axios;
-    }
-
-    createAxios = () => {
-        return Axios.create({
-            baseURL: process.env.REACT_APP_API_URL
-        });
-    };
-
-    componentDidMount = () => {
-        this.axios
-            .get('values/2')
-            .then(resp => this.setState({
-                incrementValue: resp.data
-            }))
+    useEffect(() => {
+        var http = new HttpService();
+        http.get('values/2')
+            .then(resp => setIncrementValue(resp.data))
             .catch(err => console.log(err));
-    };
+    }, []);
 
-    incrementCounter = () => {
-        this.setState({
-            currentCount: this.state.currentCount + this.state.incrementValue
-        });
+    function incrementCounter() {
+        setCurrentValue(currentValue + incrementValue);
     }
 
-    render() {
-        return (
-            <div>
-                <h1>Counter</h1>
+    return (
+        <div>
+            <h1>Counter</h1>
 
-                <p>This is a simple example of a React component.</p>
+            <p>This is a simple example of a React component.</p>
 
-                <p>Increment value: <strong>{this.state.incrementValue}</strong></p>
-                <p>Current count: <strong>{this.state.currentCount}</strong></p>
+            <p>Increment value: <strong>{incrementValue}</strong></p>
+            <p>Current count: <strong>{currentValue}</strong></p>
 
-                <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
-            </div>
-        );
-    }
-}
+            <button className="btn btn-primary" onClick={incrementCounter}>Increment</button>
+        </div>
+    );
+};
