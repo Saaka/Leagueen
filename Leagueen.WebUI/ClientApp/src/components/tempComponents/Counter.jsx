@@ -19,14 +19,16 @@ export function Counter(props) {
 
     return (
         <div className="counter-content">
-            <h1>Counter</h1>
+            <div className="jumbotron popup">
+                <h1 className="display-4">Counter</h1>
 
-            <p>This is a simple example of a React component.</p>
+                <p className="lead">This is a simple example of a React component.</p>
 
-            <p>Increment value: <strong>{incrementValue}</strong></p>
-            <p>Current count: <strong>{currentValue}</strong></p>
+                <p>Increment value: <span className="badge badge-accent">{incrementValue}</span></p>
+                <p>Current count: <span className="badge badge-accent">{currentValue}</span></p>
 
-            <button className="btn btn-accent" onClick={incrementCounter}>Increment</button>
+                <button className="btn btn-accent" onClick={incrementCounter}>Increment</button>
+            </div>
         </div>
     );
 };
