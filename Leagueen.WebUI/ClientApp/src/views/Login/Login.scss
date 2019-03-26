@@ -1,10 +1,8 @@
 .login-button {
     min-width: 250px;
 }
-.login-content {
+.login-container {
     color: var(--theme);
     background-color: var(--accent);
-}
-.bottom-offset {
-    margin-bottom: 25em;
+    padding-bottom: 25em;
 }

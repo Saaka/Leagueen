@@ -15,10 +15,8 @@ function Logout(props) {
     return (
         <div className="h-100 d-flex justify-content-center logout-content">
             <div className="center-h">
-                <div className="bottom-offset">
-                    <h1>Logging out</h1>
-                    <h1><Icon icon="spinner" spin /></h1>
-                </div>
+                <h1>Logging out</h1>
+                <h1><Icon icon="spinner" spin /></h1>
             </div>
         </div>
     );

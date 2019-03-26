@@ -29,12 +29,12 @@ function Login(props) {
     };
 
     return (
-        <div className="h-100 d-flex justify-content-center login-content">
+        <div className="h-100 d-flex justify-content-center login-container">
             <div className="center-h">
                 <div className="row justify-content-center">
                     <h1 className="text-center">Leagueen</h1>
                 </div>
-                <div className="row justify-content-center bottom-offset">
+                <div className="row justify-content-center popup">
                     <GoogleLogin onLoggedIn={onLoggedIn} onError={onError} showLoader={() => props.toggleLoader(true)} />
                 </div>
             </div>
