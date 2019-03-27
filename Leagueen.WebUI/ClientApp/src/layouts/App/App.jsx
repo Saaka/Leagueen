@@ -1,17 +1,22 @@
 import "./App.scss";
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import { Switch, Route, Redirect } from "react-router";
 import { NavMenu } from "components/NavMenu/NavMenu";
 import { Sidebar } from "components/Sidebar/Sidebar";
 import { Overlay } from "components/Overlay/Overlay";
 import { useAuth } from "Services";
 import appRoutes from "routes/app";
+import { sidebarReducer } from "reducers/sidebarReducer";
+import { OPEN_SIDEBAR, CLOSE_SIDEBAR } from "reducers/actionTypes";
 
 function App(props) {
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [sidebar, dispatchSidebar] = useReducer(sidebarReducer, { show: false });
 
   function toggleSidebar() {
-    setShowSidebar(!showSidebar);
+    if (sidebar.show)
+      dispatchSidebar({ type: CLOSE_SIDEBAR });
+    if (!sidebar.show)
+      dispatchSidebar({ type: OPEN_SIDEBAR });
   };
 
   function renderAuthComponent(props, component) {
@@ -24,7 +29,7 @@ function App(props) {
   return (
     <div>
       <div className="d-flex" id="wrapper">
-        <Sidebar {...props} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+        <Sidebar {...props} showSidebar={sidebar.show} toggleSidebar={toggleSidebar} />
         <div id="content">
           <NavMenu toggleSidebar={toggleSidebar} user={props.user} />
           <div className="container">
@@ -35,13 +40,13 @@ function App(props) {
                 else if (prop.useAuth)
                   return <Route path={prop.path} name={prop.name} key={key} render={() => renderAuthComponent(props, prop.component)} />
                 else
-                  return <Route path={prop.path} component={prop.component} name={prop.name} key={key} />
+                  return <Route path={prop.path} component={prop.component} name={prop.name} key={key}/>;
               })}
             </Switch>
           </div>
         </div>
       </div>
-      <Overlay showOverlay={showSidebar} toggleSidebar={toggleSidebar} />
+      <Overlay showOverlay={sidebar.show} toggleSidebar={toggleSidebar} />
     </div>
   );
 }

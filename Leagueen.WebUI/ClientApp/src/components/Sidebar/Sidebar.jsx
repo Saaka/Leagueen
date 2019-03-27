@@ -1,8 +1,8 @@
 import React from "react";
 import { RedirectLink } from "components/RedirectLink/RedirectLink";
-import "./Sidebar.scss";
 import { Icon } from "components/Icon/Icon";
 import appRoutes from "routes/app";
+import "./Sidebar.scss";
 
 function Sidebar(props) {
 
@@ -20,7 +20,6 @@ function Sidebar(props) {
     };
 
     function renderLink(prop, key) {
-
         return (
             <li key={key}>
                 <RedirectLink className={linkClass(prop)} name={prop.name} to={prop.path} onRedirect={props.toggleSidebar}></RedirectLink>
@@ -45,5 +44,4 @@ function Sidebar(props) {
         </div>
     );
 };
-
 export { Sidebar };
