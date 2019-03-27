@@ -9,14 +9,9 @@ import appRoutes from "routes/app";
 
 function App(props) {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [wrapperClasses, setWrapperClasses] = useState("d-flex");
 
   function toggleSidebar() {
     setShowSidebar(!showSidebar);
-    if (showSidebar)
-      setWrapperClasses("active");
-    else
-      setWrapperClasses("");
   };
 
   function renderAuthComponent(props, component) {
@@ -28,7 +23,7 @@ function App(props) {
 
   return (
     <div>
-      <div className={wrapperClasses} id="wrapper">
+      <div className="d-flex" id="wrapper">
         <Sidebar {...props} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
         <div id="content">
           <NavMenu toggleSidebar={toggleSidebar} user={props.user} />
