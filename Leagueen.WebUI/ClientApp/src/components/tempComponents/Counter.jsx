@@ -28,6 +28,10 @@ export function Counter(props) {
                 <p>Current count: <span className="badge badge-accent">{currentValue}</span></p>
 
                 <button className="btn btn-accent" onClick={incrementCounter}>Increment</button>
+                
+                <hr />
+                {props.user && props.user.isLoggedIn ? <p>Current user: {props.user.displayName}</p> : <p>Not logged in</p> }
+                
             </div>
         </div>
     );
