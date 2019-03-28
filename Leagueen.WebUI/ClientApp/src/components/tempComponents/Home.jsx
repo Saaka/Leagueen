@@ -2,7 +2,7 @@ import React from 'react';
 
 const Home = (props) => {
     return (
-      <div>
+      <div className="popup">
         <h1>Hello, world!</h1>
         <p>Welcome to your new single-page application, built with:</p>
         <ul>
