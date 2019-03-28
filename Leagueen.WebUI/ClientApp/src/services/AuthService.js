@@ -31,10 +31,7 @@ export class AuthService {
         this.tokenService
             .setToken(resp.data.token);
         return {
-            code: resp.data.code,
-            email: resp.data.email,
-            name: resp.data.name,
-            imageUrl: resp.data.imageUrl,
+            ...resp.data.user,
             token: resp.data.token
         };
     };

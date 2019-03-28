@@ -5,6 +5,13 @@ import "./NavMenu.scss";
 
 function NavMenu(props) {
 
+  function getUserName() {
+    if (props.user.isLoggedIn)
+      return props.user.displayName;
+
+    return "Guest";
+  };
+
   return (
     <nav className="navbar border-bottom box-shadow mb-3 bg-accent text-theme" role="navigation">
       <div className="container-fluid">
@@ -16,7 +23,7 @@ function NavMenu(props) {
         </div>
         <ul className="navbar-nav flex-row float-right">
           <li className="nav-item">
-            <span className="navbar-text">Welcome, <strong>Guest</strong>!</span>
+            <span className="navbar-text">Welcome, <strong>{getUserName()}</strong>!</span>
           </li>
           <li className="nav-item">
             {
