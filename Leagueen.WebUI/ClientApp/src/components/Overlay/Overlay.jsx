@@ -6,7 +6,7 @@ function Overlay(props) {
     function showOverlay() {
         if(props.showOverlay)
             return "overlay active";
-        return "overlay";
+        return "overlay hidden";
     }
 
     return (
