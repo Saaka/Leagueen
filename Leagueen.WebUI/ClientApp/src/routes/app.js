@@ -1,10 +1,10 @@
-import { Home } from "components/tempComponents/Home";
-import { Counter } from "components/tempComponents/Counter";
+import { Matches, Counter, Dashboard } from "views/exports";
+
 
 const appRoutes = [
     {
         path: "/app/home",
-        component: Home,
+        component: Dashboard,
         name: "Home",
     },
     {
@@ -12,6 +12,11 @@ const appRoutes = [
         path: "/app/counter",
         component: Counter,
         name: "Counter"
+    },
+    {
+        path: "/app/mathes",
+        component: Matches,
+        name: "Matches"
     },
     {
         redirect: true,

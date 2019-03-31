@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Home = (props) => {
+const Dashboard = (props) => {
     return (
-      <div className="popup">
+      <div>
         <h1>Hello, world!</h1>
         <p>Welcome to your new single-page application, built with:</p>
         <ul>
@@ -32,4 +32,4 @@ const Home = (props) => {
     );
 };
 
-export { Home };
+export { Dashboard };
