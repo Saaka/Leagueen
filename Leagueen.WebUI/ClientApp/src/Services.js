@@ -4,3 +4,4 @@ export { AuthHttpService } from "./services/AuthHttpService";
 export { UserTokenService } from "./services/UserTokenService";
 export { AuthService } from "./services/AuthService";
 export { Constants } from "./services/Constants";
+export { MatchesService } from "./services/MatchesService";

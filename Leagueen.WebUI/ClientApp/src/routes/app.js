@@ -8,7 +8,7 @@ const appRoutes = [
         name: "Home",
     },
     {
-        path: "/app/mathes",
+        path: "/app/matches",
         component: Matches,
         name: "Matches"
     },

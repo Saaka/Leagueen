@@ -1,4 +1,4 @@
-let Constants = class Constants {}
+let Constants = class Constants {};
 
 Constants.ApiRoutes = class ApiRoutes {
     static get LOGIN() {
@@ -10,6 +10,36 @@ Constants.ApiRoutes = class ApiRoutes {
     static get GETUSER() {
         return "auth/user";
     }
-}
+};
+
+Constants.ApiRoutes.Matches = class MatchesRoutes {
+    static get TODAY() {
+        return "matches/today";
+    }
+};
+
+Constants.MatchStatus = class MatchStatus {
+    static get SCHEDULED() {
+        return 1;
+    }
+    static get IN_PLAY() {
+        return 2;
+    }
+    static get PAUSED() {
+        return 3;
+    }
+    static get FINISHED() {
+        return 4;
+    }
+    static get POSTPONED() {
+        return 5;
+    }
+    static get SUSPENDED() {
+        return 6;
+    }
+    static get CANCELED() {
+        return 7;
+    }
+};
 
 export { Constants };

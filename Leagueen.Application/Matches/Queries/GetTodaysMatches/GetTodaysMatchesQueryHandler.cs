@@ -27,6 +27,7 @@ namespace Leagueen.Application.Matches.Queries.GetTodaysMatches
 
             return new GetMatchesQueryResult
             {
+                Date = date,
                 Competitions = competitions
             };
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Leagueen.Application.Matches.Queries.Models
 {
@@ -8,6 +9,7 @@ namespace Leagueen.Application.Matches.Queries.Models
         {
             Competitions = new List<CompetitionModel>();
         }
+        public DateTime Date { get; set; }
         public ICollection<CompetitionModel> Competitions { get; set; }
     }
 }
