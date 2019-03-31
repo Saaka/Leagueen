@@ -1,5 +1,6 @@
 ﻿using Leagueen.Application.Matches.Queries;
 using Leagueen.Application.Matches.Queries.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -9,12 +10,14 @@ namespace Leagueen.WebAPI.Controllers
     [Route("api/[controller]")]
     public class MatchesController : BaseController
     {
+        [Authorize]
         [HttpGet("today")]
         public async Task<GetMatchesQueryResult> GetTodaysMatches()
         {
             return await Mediator.Send(new GetTodaysMatchesQuery());
         }
 
+        [Authorize]
         [HttpGet("{date}")]
         public async Task<GetMatchesQueryResult> GetTodaysMatches(DateTime date)
         {

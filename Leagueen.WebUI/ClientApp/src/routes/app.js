@@ -8,6 +8,7 @@ const appRoutes = [
         name: "Home",
     },
     {
+        useAuth: true,
         path: "/app/matches",
         component: Matches,
         name: "Matches"
