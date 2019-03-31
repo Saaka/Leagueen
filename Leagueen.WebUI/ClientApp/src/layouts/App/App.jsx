@@ -1,13 +1,11 @@
 import "./App.scss";
 import React, { useReducer } from "react";
 import { Switch, Route, Redirect } from "react-router";
-import { NavMenu } from "components/NavMenu/NavMenu";
-import { Sidebar } from "components/Sidebar/Sidebar";
-import { Overlay } from "components/Overlay/Overlay";
-import { AuthRoute } from "components/AuthRoute/AuthRoute";
-import appRoutes from "routes/app";
+import { NavMenu, Sidebar, Overlay } from "components/common";
+import { AuthRoute } from "components/navigation";
 import { sidebarReducer } from "reducers/sidebarReducer";
 import { OPEN_SIDEBAR, CLOSE_SIDEBAR } from "reducers/actionTypes";
+import appRoutes from "routes/app";
 
 function App(props) {
   const [sidebar, dispatchSidebar] = useReducer(sidebarReducer, { show: false });

@@ -18,7 +18,7 @@ const Dashboard = (props) => {
 
   function renderCompetitions() {
     return competitions.map((c, key) => {
-      return <li>{c}</li>
+      return <li key={key}>{c}</li>
     });
   };
 

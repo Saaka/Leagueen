@@ -8,15 +8,15 @@ const appRoutes = [
         name: "Home",
     },
     {
+        path: "/app/mathes",
+        component: Matches,
+        name: "Matches"
+    },
+    {
         useAuth: true,
         path: "/app/counter",
         component: Counter,
         name: "Counter"
-    },
-    {
-        path: "/app/mathes",
-        component: Matches,
-        name: "Matches"
     },
     {
         redirect: true,

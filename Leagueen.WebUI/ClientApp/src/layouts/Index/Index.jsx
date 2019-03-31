@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import { App } from "layouts/exports";
 import { Logout, Login } from "views/exports";
 import { AuthService } from "Services";
-import { Loader } from "components/Loader/Loader";
+import { Loader } from "components/common";
 import "./Index.scss";
 
 function Index(props) {
