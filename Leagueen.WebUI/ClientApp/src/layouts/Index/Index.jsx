@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { App } from "layouts/exports";
 import { Logout, Login } from "views/exports";
-import { AuthService } from "Services";
+import { AuthService, ToastComponent, ToastService } from "Services";
 import { Loader } from "components/common";
 import "./Index.scss";
 
@@ -22,9 +22,14 @@ function Index(props) {
         authService
             .getUser()
             .then(updateUser)
-            .catch(removeUser)
+            .catch(onError)
             .finally(hideLoader);
     };
+
+    function onError(err) {
+        ToastService.info(err);
+        removeUser();
+    }
 
     function removeUser() {
         setUser({
@@ -56,6 +61,7 @@ function Index(props) {
                 <Route path="/login" render={(props) => <Login {...props} onLogin={onLogin} onLogout={onLogout} user={user} toggleLoader={setIsLoading} />} />
                 <Route path="/logout" render={(props) => <Logout {...props} onLogout={onLogout} />} />
                 <Route path="/app" render={(props) => <App {...props} user={user} />} />
+                <ToastComponent />
             </span>
         );
     };

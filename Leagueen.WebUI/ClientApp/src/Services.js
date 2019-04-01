@@ -5,3 +5,4 @@ export { UserTokenService } from "./services/UserTokenService";
 export { AuthService } from "./services/AuthService";
 export { Constants } from "./services/Constants";
 export { MatchesService } from "./services/MatchesService";
+export { ToastService, ToastComponent } from "./services/Toast";

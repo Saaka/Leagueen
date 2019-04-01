@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HttpService } from "Services";
+import { HttpService, ToastService } from "Services";
 import "./Counter.scss";
 
 export function Counter(props) {
@@ -15,6 +15,7 @@ export function Counter(props) {
 
     function incrementCounter() {
         setCurrentValue(currentValue + incrementValue);
+        ToastService.error(`Current counter value: ${currentValue}`);
     }
 
     return (

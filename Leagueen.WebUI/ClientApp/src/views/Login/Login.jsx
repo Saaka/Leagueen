@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import queryString from "query-string";
 import { GoogleLogin } from "components/GoogleLogin/GoogleLogin";
+import { ToastService } from "Services";
 import "./Login.scss";
 
 function Login(props) {
@@ -25,6 +26,7 @@ function Login(props) {
     };
     function onError(err) {
         console.log(err);
+        ToastService.error(err);
         redirectToMainPage();
     };
 
