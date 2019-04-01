@@ -25,7 +25,7 @@ function Login(props) {
         props.history.push(path);
     };
     function onError(err) {
-        console.log(err);
+        props.toggleLoader(false);
         ToastService.error(err);
         redirectToMainPage();
     };

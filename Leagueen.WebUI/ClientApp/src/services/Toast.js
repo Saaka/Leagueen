@@ -1,6 +1,5 @@
 import React from "react";
 import { toast, Slide, ToastContainer } from 'react-toastify';
-import { func } from 'prop-types';
 
 class ToastService {};
 

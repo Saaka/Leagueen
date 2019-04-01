@@ -9,7 +9,10 @@ export function Counter(props) {
     useEffect(() => {
         var http = new HttpService();
         http.get('values/2')
-            .then(resp => setIncrementValue(resp.data))
+            .then(resp => {
+                setIncrementValue(resp.data);
+                ToastService.success(`Increment value loaded: ${incrementValue}`);
+            })
             .catch(err => console.log(err));
     }, []);
 

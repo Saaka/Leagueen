@@ -12,11 +12,11 @@ const LoginWithGoogle = (props) => {
         authService
             .loginWithGoogle(response.tokenId)
             .then(props.onLoggedIn)
-            .catch(props.onError);
+            .catch(onLoginFail);
     }
 
     function onLoginFail(response) {
-        props.onError(response.error);
+        props.onError(response);
     }
 
     return (
