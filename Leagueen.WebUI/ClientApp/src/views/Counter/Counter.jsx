@@ -11,14 +11,15 @@ export function Counter(props) {
         http.get('values/2')
             .then(resp => {
                 setIncrementValue(resp.data);
-                ToastService.success(`Increment value loaded: ${incrementValue}`);
+                ToastService.success(`Increment value loaded: ${resp.data}`);
             })
-            .catch(err => console.log(err));
+            .catch(ToastService.error);
     }, []);
 
     function incrementCounter() {
-        setCurrentValue(currentValue + incrementValue);
-        ToastService.error(`Current counter value: ${currentValue}`);
+        var value = currentValue + incrementValue;
+        setCurrentValue(value);
+        ToastService.info(`Current counter value: ${value}`);
     }
 
     return (
