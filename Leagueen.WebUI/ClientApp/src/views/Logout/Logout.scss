@@ -1,5 +1,7 @@
+@import "~assets/variables";
+
 .logout-content {
-    color: var(--theme);
-    background-color: var(--accent);
+    color: $theme;
+    background-color: $accent;
     padding-bottom: 25em;
 }

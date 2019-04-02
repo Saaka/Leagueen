@@ -1,3 +1,4 @@
+@import "~assets/variables";
 
 /* Sidebar */
 #wrapper {
@@ -11,7 +12,7 @@
     left: -250px;
     height: 100vh;
     z-index: 999;
-    background: var(--accent);
+    background-color: $accent;
     color: #fff;
     transition: all 0.3s;
 
@@ -22,7 +23,7 @@
 
     & .sidebar-header {
         padding: 20px;
-        background: var(--accent);
+        background-color: $accent;
     }
 
     & ul.components {

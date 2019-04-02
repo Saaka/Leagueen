@@ -1,8 +1,10 @@
+@import "~assets/variables";
+
 .login-button {
     min-width: 250px;
 }
 .login-container {
-    color: var(--theme);
-    background-color: var(--accent);
+    color: $theme;
+    background-color: $accent;
     padding-bottom: 25em;
 }
