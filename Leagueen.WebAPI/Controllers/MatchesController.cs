@@ -18,7 +18,7 @@ namespace Leagueen.WebAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("{date}")]
+        [HttpGet()]
         public async Task<GetMatchesQueryResult> GetTodaysMatches(DateTime date)
         {
             return await Mediator.Send(new GetMatchesByDateQuery { Date = date });

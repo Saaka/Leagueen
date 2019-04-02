@@ -7,6 +7,12 @@ class MatchesService {
         return this.httpAuth
             .get(Constants.ApiRoutes.Matches.TODAY);
     };
+
+    getMatchesByDate = (date) => {
+        var qs = `?date=${date.toISOString()}`;
+        return this.httpAuth
+            .get(`${Constants.ApiRoutes.Matches.ROOT}${qs}`);
+    };
 };
 
 export { MatchesService };

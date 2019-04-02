@@ -16,6 +16,9 @@ Constants.ApiRoutes.Matches = class MatchesRoutes {
     static get TODAY() {
         return "matches/today";
     }
+    static get ROOT() {
+        return "matches";
+    }
 };
 
 Constants.MatchStatus = class MatchStatus {

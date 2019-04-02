@@ -10,8 +10,9 @@ function Matches(props) {
     const [isLoading, toggleLoading] = useState(true);
 
     useEffect(() => {
+        var date = new Date();
         matchesService
-            .getTodaysMatches()
+            .getMatchesByDate(date)
             .then(resp => {
                 setMatchesData(resp.data);
                 toggleLoading(false);
