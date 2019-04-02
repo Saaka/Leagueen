@@ -3,19 +3,20 @@ import { toast, Slide, ToastContainer } from 'react-toastify';
 
 class ToastService {};
 
-ToastService.info = (msg) => toast.info(msg, getDefaultOptions());
-ToastService.success = (msg) => toast.success(msg, getDefaultOptions());
-ToastService.warning = (msg) => toast.warn(msg, getDefaultOptions());
-ToastService.error = (msg) => toast.error(msg, getDefaultOptions());
-ToastService.default = (msg) => toast(msg, getDefaultOptions());
+ToastService.info = (msg) => toast.info(msg, getDefaultOptions("toast-info"));
+ToastService.success = (msg) => toast.success(msg, getDefaultOptions("toast-success"));
+ToastService.warning = (msg) => toast.warn(msg, getDefaultOptions("toast-warn"));
+ToastService.error = (msg) => toast.error(msg, getDefaultOptions("toast-error"));
+ToastService.show = (msg) => toast(msg, getDefaultOptions("toast-default"));
 
-function getDefaultOptions() {
+function getDefaultOptions(className) {
     return {
         position: "bottom-right",
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
-        draggable: false
+        draggable: false,
+        className: className
     };
 }
 

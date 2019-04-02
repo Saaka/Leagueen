@@ -22,6 +22,11 @@ export function Counter(props) {
         ToastService.info(`Current counter value: ${value}`);
     }
 
+    function resetCounter() {
+        setCurrentValue(0);
+        ToastService.show("Counter set to 0");
+    };
+
     return (
         <div className="counter-content">
             <div className="jumbotron popup">
@@ -33,10 +38,11 @@ export function Counter(props) {
                 <p>Current count: <span className="badge badge-accent">{currentValue}</span></p>
 
                 <button className="btn btn-accent" onClick={incrementCounter}>Increment</button>
-                
+                <button className="btn btn-accent-dark ml-2" onClick={resetCounter}>Reset</button>
+
                 <hr />
-                {props.user && props.user.isLoggedIn ? <p>Current user: {props.user.displayName}</p> : <p>Not logged in</p> }
-                
+                {props.user && props.user.isLoggedIn ? <p>Current user: {props.user.displayName}</p> : <p>Not logged in</p>}
+
             </div>
         </div>
     );

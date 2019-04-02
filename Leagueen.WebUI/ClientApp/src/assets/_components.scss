@@ -1,0 +1,29 @@
+.toast-base {
+    border-radius: 10px;
+    background-color: $accent;
+    color: color-yiq($accent);
+}
+
+.toast-info {
+    @extend .toast-base;
+} 
+.toast-success {
+    @extend .toast-base;
+    background-color: $success;
+    color: color-yiq($success);
+}
+.toast-warn {
+    @extend .toast-base;
+    background-color: $warning;
+    color: color-yiq($warning);
+}
+.toast-error {
+    @extend .toast-base;
+    background-color: $danger;
+    color: color-yiq($danger);
+}
+.toast-default {
+    @extend .toast-base;
+    background-color: $info;
+    color: color-yiq($info);
+}
