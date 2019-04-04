@@ -1,7 +1,5 @@
-﻿using Leagueen.Application.Competitions.Jobs;
-using Leagueen.Application.Infrastructure.Jobs;
-using Leagueen.Application.Matches.Commands;
-using MediatR;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,25 +7,18 @@ namespace Leagueen.Application.Competitions.Events.CompetitionInitialized
 {
     public class CompetitionInitializedEventHandler : INotificationHandler<CompetitionInitializedEvent>
     {
-        private readonly IJobsManager jobsManager;
-        private readonly ICompetitionJobsConfiguration jobsConfiguration;
+        private readonly ILogger logger;
 
         public CompetitionInitializedEventHandler(
-            IJobsManager jobsManager,
-            ICompetitionJobsConfiguration jobsConfiguration)
+            ILogger<CompetitionInitializedEventHandler> logger)
         {
-            this.jobsManager = jobsManager;
-            this.jobsConfiguration = jobsConfiguration;
+            this.logger = logger;
         }
 
         public async Task Handle(CompetitionInitializedEvent notification, CancellationToken cancellationToken)
         {
-            var executionTime = await jobsConfiguration.GetExecutionTime(notification.CompetitionType);
-
-            jobsManager.RegisterDailyTask<CompetitionMatchesUpdateJob>(
-                $"{nameof(UpdateAllSeasonMatchesCommand)}_{notification.CompetitionType.ToString()}",
-                j => j.Run(notification.CompetitionType.ToString()),
-                executionTime);
+            //Event triggered after competition is initialized. Can be used for worker initialization etc.
+            logger.LogInformation($"Competition {notification.CompetitionType.ToString()} initialized");
         }
     }
 }
