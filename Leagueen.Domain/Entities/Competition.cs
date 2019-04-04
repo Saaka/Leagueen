@@ -20,6 +20,8 @@ namespace Leagueen.Domain.Entities
 
         public virtual IReadOnlyCollection<Season> Seasons => _seasons.AsReadOnly();
         protected List<Season> _seasons = new List<Season>();
+        public virtual IReadOnlyCollection<CompetitionUpdate> CompetitionUpdates => _competitionUpdates.AsReadOnly();
+        protected List<CompetitionUpdate> _competitionUpdates = new List<CompetitionUpdate>();
         public virtual DataProvider DataProvider { get; private set; }
 
         private Competition() { }
@@ -44,6 +46,12 @@ namespace Leagueen.Domain.Entities
                 throw new DomainException(ExceptionCode.SeasonAlreadyInCompetition);
 
             _seasons.Add(season);
+            return this;
+        }
+
+        public Competition AddUpdate(CompetitionUpdate update)
+        {
+            _competitionUpdates.Add(update);
             return this;
         }
 
