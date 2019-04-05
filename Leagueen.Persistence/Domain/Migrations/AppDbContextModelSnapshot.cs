@@ -55,23 +55,6 @@ namespace Leagueen.Persistence.Domain.Migrations
                     b.ToTable("Competitions");
                 });
 
-            modelBuilder.Entity("Leagueen.Domain.Entities.CompetitionUpdate", b =>
-                {
-                    b.Property<int>("CompetitionUpdateId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CompetitionId");
-
-                    b.Property<DateTime>("Date");
-
-                    b.HasKey("CompetitionUpdateId");
-
-                    b.HasIndex("CompetitionId");
-
-                    b.ToTable("CompetitionUpdates");
-                });
-
             modelBuilder.Entity("Leagueen.Domain.Entities.DataProvider", b =>
                 {
                     b.Property<int>("DataProviderId")
@@ -262,14 +245,6 @@ namespace Leagueen.Persistence.Domain.Migrations
                     b.HasOne("Leagueen.Domain.Entities.DataProvider", "DataProvider")
                         .WithMany("Competitions")
                         .HasForeignKey("DataProviderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Leagueen.Domain.Entities.CompetitionUpdate", b =>
-                {
-                    b.HasOne("Leagueen.Domain.Entities.Competition", "Competition")
-                        .WithMany("CompetitionUpdates")
-                        .HasForeignKey("CompetitionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

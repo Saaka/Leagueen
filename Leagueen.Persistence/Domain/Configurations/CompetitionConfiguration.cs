@@ -35,16 +35,11 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .HasMany(x => x.Seasons)
                 .WithOne(x => x.Competition)
                 .HasForeignKey(x => x.CompetitionId);
-            builder
-                .HasMany(x => x.CompetitionUpdates)
-                .WithOne(x => x.Competition)
-                .HasForeignKey(x => x.CompetitionId);
+
             builder.Metadata
                 .FindNavigation(nameof(Competition.Seasons))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
-            builder.Metadata
-                .FindNavigation(nameof(Competition.CompetitionUpdates))
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
+
             builder
                 .Property(x => x.LastProviderUpdate)
                 .IsRequired(false)
