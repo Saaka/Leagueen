@@ -46,5 +46,7 @@
         UpdateLogTypeRequred,
         UpdateLogDateRequred,
         UpdateLogProviderTypeRequred,
+        UpdateLogCompetitionRequiredForLogType,
+        UpdateLogCompetitionInvalidForLogType,
     }
 }

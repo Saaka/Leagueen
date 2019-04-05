@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Compile Remove="Domain\Migrations\20190310191723_AddProviderUpdateDateColumns.cs" />
+    <Compile Remove="Domain\Migrations\20190405213049_AlterUpdateLogAddCompetitionTypeColumn.cs" />
+    <Compile Remove="Domain\Migrations\20190405213049_AlterUpdateLogAddCompetitionTypeColumn.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,6 +11,7 @@ namespace Leagueen.Domain.Entities
         public DataProviderType ProviderType { get; private set; }
         public DateTime Date { get; private set; }
         public bool IsExecuted { get; private set; }
+        public CompetitionType? CompetitionType { get; private set; }
 
         private UpdateLog() { }
         public UpdateLog(UpdateLogType type, DataProviderType provider, DateTime date, bool isExecuted)
@@ -19,6 +20,17 @@ namespace Leagueen.Domain.Entities
             ProviderType = provider;
             Date = date;
             IsExecuted = isExecuted;
+
+            ValidateCreation();
+        }
+        public UpdateLog(UpdateLogType type, DataProviderType provider, CompetitionType competitionType, DateTime date, bool isExecuted)
+        {
+            LogType = type;
+            ProviderType = provider;
+            Date = date;
+            IsExecuted = isExecuted;
+            CompetitionType = competitionType;
+
             ValidateCreation();
         }
 
@@ -30,6 +42,10 @@ namespace Leagueen.Domain.Entities
                 throw new DomainException(ExceptionCode.UpdateLogProviderTypeRequred);
             if (Date == null || Date == DateTime.MinValue)
                 throw new DomainException(ExceptionCode.UpdateLogDateRequred);
+            if (LogType == UpdateLogType.Competition && CompetitionType == null)
+                throw new DomainException(ExceptionCode.UpdateLogCompetitionRequiredForLogType);
+            if (LogType == UpdateLogType.CurrentMatch && CompetitionType.HasValue)
+                throw new DomainException(ExceptionCode.UpdateLogCompetitionInvalidForLogType);
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     public enum UpdateLogType
     {
-        CurrentMatch = 1
+        CurrentMatch = 1,
+        Competition
     }
 }

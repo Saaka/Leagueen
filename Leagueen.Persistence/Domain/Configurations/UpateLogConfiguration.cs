@@ -27,6 +27,13 @@ namespace Leagueen.Persistence.Domain.Configurations
                     v => (byte)v,
                     v => (DataProviderType)v);
             builder
+                .Property(x => x.CompetitionType)
+                .IsRequired(false)
+                .HasDefaultValueSql(null)
+                .HasConversion(
+                    v => (byte?)v,
+                    v => (CompetitionType?)v);
+            builder
                 .Property(x => x.IsExecuted)
                 .IsRequired();
         }
