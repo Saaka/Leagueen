@@ -23,13 +23,13 @@ namespace Leagueen.Domain.Entities
 
             ValidateCreation();
         }
-        public UpdateLog(UpdateLogType type, DataProviderType provider, CompetitionType competitionType, DateTime date, bool isExecuted)
+        public UpdateLog(UpdateLogType type, DataProviderType provider, CompetitionType competitionType, DateTime date)
         {
             LogType = type;
             ProviderType = provider;
             Date = date;
-            IsExecuted = isExecuted;
             CompetitionType = competitionType;
+            IsExecuted = true;
 
             ValidateCreation();
         }

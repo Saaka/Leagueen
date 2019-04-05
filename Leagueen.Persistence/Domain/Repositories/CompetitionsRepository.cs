@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Leagueen.Domain.Enums;
 
 namespace Leagueen.Persistence.Domain.Repositories
 {
@@ -26,6 +27,16 @@ namespace Leagueen.Persistence.Domain.Repositories
                     .ThenInclude(x => x.Teams)
                         .ThenInclude(x => x.Team)
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<CompetitionType>> GetAllActiveCompetitionTypesForProvider(DataProviderType providerType)
+        {
+            var query = from comp in context.Competitions
+                        join prov in context.DataProviders on comp.DataProviderId equals prov.DataProviderId
+                        where prov.Type == providerType && comp.IsActive
+                        select comp.Type;
+
+            return await query.ToListAsync();
         }
 
         public async Task<Competition> GetCompetitionByCode(string code)
