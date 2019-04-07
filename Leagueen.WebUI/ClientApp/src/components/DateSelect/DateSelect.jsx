@@ -5,14 +5,26 @@ import "./DateSelect.scss";
 
 function DateSelect(props) {
 
+    function getClassName() {
+        return "custom-datepicker";
+    }
+
+    function getCalendarClassName() {
+        if(props.withPortal)
+            return "custom-calendar-datepicker__portal"
+        return "custom-calendar-datepicker"
+    }
+
     return (
         <>
             <DatePicker
-                className="custom-datepicker"
-                calendarClassName="custom-calendar-datepicker"
+                className={getClassName()}
+                calendarClassName={getCalendarClassName()}
                 dateFormat="dd/MM/yyyy"
                 selected={props.date}
-                onChange={props.onChange} />
+                onChange={props.onChange} 
+                onClickOutside={props.close}
+                {...props}/>
         </>
     );
 };

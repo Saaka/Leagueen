@@ -20,28 +20,3 @@
     opacity: 0;
     height: 0;
 };
-
-@keyframes fadein {
-    0% {
-        opacity: 0;
-        height: 100vh;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeout {
-    0% {
-        opacity: 1;
-        height: 100vh;
-    }
-    99% {
-        opacity: 0;
-        height: 100vh;
-    }
-    100% {
-        opacity: 0;
-        height: 0;
-    }
-}

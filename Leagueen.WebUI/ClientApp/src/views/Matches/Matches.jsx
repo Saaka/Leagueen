@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { CompetitionMatches } from "components/matches";
 import { MatchesService } from "Services";
-import { Loader, DateSelect } from "components/common";
+import { Loader, DateSelect, Icon } from "components/common";
 import "./Matches.scss";
 
 function Matches(props) {
     const matchesService = new MatchesService();
     const [competitions, setCompetitions] = useState([]);
     const [date, setDate] = useState(new Date());
+    const [openCalendar, toggleOpenCalendar] = useState(false);
     const [isLoading, toggleLoading] = useState(true);
 
     useEffect(() => loadMatches(date), []);
@@ -33,15 +34,22 @@ function Matches(props) {
     };
 
     function onDateChange(newDate) {
+        toggleOpenCalendar(false);
         setDate(newDate);
         loadMatches(newDate);
+    }
+
+    function renderSelectDate() {
+        return openCalendar ? <DateSelect date={date} onChange={onDateChange} close={() => toggleOpenCalendar(false)} withPortal inline /> : null;
     }
 
     function renderMatches() {
         return (
             <div>
-                <h5 className="display-5 matches-title mr-2">Matches </h5><DateSelect date={date} onChange={onDateChange} />
-                
+                <h5 className="display-5 matches-title">Matches - {date.toLocaleDateString()}
+                    <button className="btn btn-sm btn-accent ml-2" onClick={ () => toggleOpenCalendar(true) }>Select date <Icon icon="calendar-alt" /></button>
+                </h5>
+                {renderSelectDate()}
                 {showCompetitions()}
             </div>
         );
