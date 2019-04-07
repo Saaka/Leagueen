@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Leagueen.Domain.Enums;
 
 namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
 {
@@ -6,8 +7,9 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
     {
         public UpdateAllSeasonMatchesCommandValidator()
         {
-            RuleFor(x => x.CompetitionCode)
-                .NotEmpty();
+            RuleFor(x => x.CompetitionType)
+                .NotEmpty()
+                .IsInEnum();
         }
     }
 }

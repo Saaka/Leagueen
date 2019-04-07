@@ -1,6 +1,7 @@
 ﻿using Leagueen.Application.Competitions.Commands;
 using Leagueen.Application.Matches.Commands;
 using Leagueen.Domain.Constants;
+using Leagueen.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +36,9 @@ namespace Leagueen.WebAPI.Controllers
         [HttpPost("updateAllMatches/{competitionCode}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateAllSeasonMatches(string competitionCode)
+        public async Task<IActionResult> UpdateAllSeasonMatches(CompetitionType competitionCode)
         {
-            await Mediator.Send(new UpdateAllSeasonMatchesCommand { CompetitionCode = competitionCode });
+            await Mediator.Send(new UpdateAllSeasonMatchesCommand { CompetitionType = competitionCode });
 
             return Ok();
         }
@@ -47,7 +48,7 @@ namespace Leagueen.WebAPI.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCurrentMatches()
         {
-            await Mediator.Send(new UpdateCurrentMatchesCommand { ProviderType = Domain.Enums.DataProviderType.FootballData });
+            await Mediator.Send(new UpdateCurrentMatchesCommand { ProviderType = DataProviderType.FootballData });
 
             return Ok();
         }

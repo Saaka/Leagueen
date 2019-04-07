@@ -51,6 +51,16 @@ namespace Leagueen.Persistence.Domain.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<DataProviderType> GetProviderTypeForCompetition(CompetitionType type)
+        {
+            var query = from c in context.Competitions
+                        join p in context.DataProviders on c.DataProviderId equals p.DataProviderId
+                        where c.IsActive == true && c.Type == type
+                        select p.Type;
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task SaveCompetition(Competition competition)
         {
             context.Attach(competition);

@@ -21,6 +21,7 @@ namespace Leagueen.Application
 
                 .AddTransient<IUpdateTrackerFactory, UpdateTrackerFactory>()
                 .AddTransient<IUpdateTracker<UpdateCurrentMatchesCommand, Unit>, CurrentMatchesUpdateTracker>()
+                .AddTransient<IUpdateTracker<UpdateAllSeasonMatchesCommand, Unit>, CompetitionUpdateTracker>()
 
                 .AddTransient<ICompetitionJobsConfiguration, CompetitionJobsConfiguration>()
                 ;

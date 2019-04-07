@@ -1,4 +1,5 @@
 ﻿using Hangfire;
+using Leagueen.Application.Competitions.Jobs;
 using Leagueen.Domain.Enums;
 using Leagueen.WebAPI.Jobs;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +15,10 @@ namespace Leagueen.WebAPI.Configuration.HangfireConfig
             RecurringJob.AddOrUpdate<CurrentMatchesUpdaterJob>(
                 $"CurrentMatchesUpdaterJob_{DataProviderType.FootballData.ToString()}",
                 j => j.Run(DataProviderType.FootballData), Cron.Minutely(), TimeZoneInfo.Utc);
+
+            RecurringJob.AddOrUpdate<CompetitionMatchesUpdateJob>(
+                $"CompetitionMatchesUpdateJob_{DataProviderType.FootballData.ToString()}",
+                j => j.Run(DataProviderType.FootballData), Cron.MinuteInterval(5), TimeZoneInfo.Utc);
 
             return application;
         }

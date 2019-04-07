@@ -36,10 +36,10 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
 
         protected override async Task Handle(UpdateAllSeasonMatchesCommand request, CancellationToken cancellationToken)
         {
-            var season = await seasonsRepository.GetCurrentSeason(request.CompetitionCode);
+            var season = await seasonsRepository.GetCurrentSeason(request.CompetitionType.ToString());
             if (season == null)
-                throw new DomainException(ExceptionCode.ActiveSeasonNotFoundForCompetition, $"CompetitionCode:{request.CompetitionCode}");
-            var matchesInfo = await matchesProvider.GetAllCompetitionMatches(request.CompetitionCode);
+                throw new DomainException(ExceptionCode.ActiveSeasonNotFoundForCompetition, $"CompetitionCode: {request.CompetitionType.ToString()}");
+            var matchesInfo = await matchesProvider.GetAllCompetitionMatches(request.CompetitionType);
 
             int count = 0;
             foreach (var matchInfo in matchesInfo.Matches)

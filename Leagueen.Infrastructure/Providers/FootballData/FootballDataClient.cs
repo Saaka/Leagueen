@@ -62,11 +62,11 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             return mapper.Map<MatchListDto>(response.Data);
         }
 
-        public async Task<MatchListDto> GetAllCompetitionMatches(string competitionCode)
+        public async Task<MatchListDto> GetAllCompetitionMatches(Domain.Enums.CompetitionType type)
         {
             var client = CreateClient();
             var request = clientFactory
-                .CreateRequest($"competitions/{competitionCode}/matches", Method.GET);
+                .CreateRequest($"competitions/{type.ToString()}/matches", Method.GET);
 
             var response = await client.ExecuteTaskAsync<MatchListModel>(request);
             EnsureSuccessfulStatusCode(response);

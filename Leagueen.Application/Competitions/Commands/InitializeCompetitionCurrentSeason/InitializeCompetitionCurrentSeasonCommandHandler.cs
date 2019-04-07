@@ -61,7 +61,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
 
             await competitionsRepository.SaveCompetition(competition);
 
-            await mediator.Send(new UpdateAllSeasonMatchesCommand { CompetitionCode = request.CompetitionCode });
+            await mediator.Send(new UpdateAllSeasonMatchesCommand { CompetitionType = competition.Type });
             await mediator.Publish(new CompetitionInitializedEvent { CompetitionType = competition.Type });
         }
 

@@ -36,8 +36,9 @@ namespace Leagueen.Application.Competitions.Jobs
             {
                 if (updates.Any(x => x.CompetitionType.Value == compType)) continue;
 
-                var command = new UpdateAllSeasonMatchesCommand { CompetitionCode = compType.ToString() };
+                var command = new UpdateAllSeasonMatchesCommand { CompetitionType = compType };
                 await mediator.Send(command);
+                return;
             }
         }
     }

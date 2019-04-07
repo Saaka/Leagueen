@@ -1,10 +1,6 @@
-﻿using Leagueen.Domain.Enums;
-using MediatR;
+﻿using MediatR;
 
 namespace Leagueen.Application.UpdateLogs
 {
-    public interface ITrackable : IRequest
-    {
-        DataProviderType ProviderType { get; }
-    }
+    public interface ITrackable : IRequest { }
 }

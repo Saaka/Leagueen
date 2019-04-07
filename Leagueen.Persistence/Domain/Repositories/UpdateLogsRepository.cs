@@ -29,7 +29,7 @@ namespace Leagueen.Persistence.Domain.Repositories
         public async Task<IEnumerable<UpdateLog>> GetCompetitionUpdatesForProvider(DataProviderType providerType, DateTime date)
         {
             var dateFrom = date.Date;
-            var dateTo = date.Date.AddDays(1);
+            var dateTo = date.Date.AddDays(1).Date;
             return await context.UpdateLogs
                 .Where(x => x.LogType == UpdateLogType.Competition && x.ProviderType == providerType && (x.Date >= dateFrom && x.Date < dateTo))
                 .OrderBy(x=> x.CompetitionType)
