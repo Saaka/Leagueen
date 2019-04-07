@@ -1,5 +1,11 @@
 
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
 //Colors
 $accent: #123456;
+$accent-text: color-yiq($accent);
 $accent-dark: #091b2c;
+$accent-dark-text: color-yiq($accent-dark);
 $theme: #f8f9fa;
+$theme-text: color-yiq($theme);

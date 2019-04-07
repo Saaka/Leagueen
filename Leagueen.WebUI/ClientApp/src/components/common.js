@@ -5,3 +5,4 @@ export { Footer } from "./Footer/Footer";
 export { Icon } from "./Icon/Icon";
 export { Loader } from "./Loader/Loader";
 export { Overlay } from "./Overlay/Overlay";
+export { DateSelect } from "./DateSelect/DateSelect";

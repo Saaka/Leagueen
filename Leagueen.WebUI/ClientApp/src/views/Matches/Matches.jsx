@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { CompetitionMatches } from "components/matches";
 import { MatchesService } from "Services";
-import { Loader } from "components/common";
+import { Loader, DateSelect } from "components/common";
+import "./Matches.scss";
 
 function Matches(props) {
     const matchesService = new MatchesService();
@@ -9,19 +10,20 @@ function Matches(props) {
     const [date, setDate] = useState(new Date());
     const [isLoading, toggleLoading] = useState(true);
 
-    useEffect(() => {
-        var date = new Date();
+    useEffect(() => loadMatches(date), []);
+
+    function loadMatches(matchesDate) {
+        toggleLoading(true);
         matchesService
-            .getMatchesByDate(date)
+            .getMatchesByDate(matchesDate)
             .then(resp => {
                 setMatchesData(resp.data);
                 toggleLoading(false);
             });
-    }, []);
+    }
 
     function setMatchesData(data) {
         setCompetitions(data.competitions);
-        setDate(new Date(data.date));
     };
 
     function showCompetitions() {
@@ -30,10 +32,16 @@ function Matches(props) {
         });
     };
 
+    function onDateChange(newDate) {
+        setDate(newDate);
+        loadMatches(newDate);
+    }
+
     function renderMatches() {
         return (
             <div>
-                <h5 className="display-5">Matches - { date.toLocaleDateString() }</h5>
+                <h5 className="display-5 matches-title mr-2">Matches </h5><DateSelect date={date} onChange={onDateChange} />
+                
                 {showCompetitions()}
             </div>
         );
