@@ -12,6 +12,27 @@ function NavMenu(props) {
     return "Guest";
   };
 
+  function renderLoginButton() {
+    return (
+      <li className="nav-item">
+        <Link className="nav-link text-theme" to="/login"><Icon icon="sign-in-alt"/> Login</Link>
+      </li>
+    );
+  };
+
+  function renderLoggedInState() {
+    return (
+      <>
+        <li className="nav-item">
+          <span className="navbar-text"><strong>{getUserName()}</strong></span>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link text-theme" to="/logout"><Icon icon="sign-out-alt"/> Logout</Link>
+        </li>
+      </>
+    );
+  };
+
   return (
     <nav className="navbar border-bottom box-shadow mb-3 bg-accent text-theme" role="navigation">
       <div className="container-fluid">
@@ -22,16 +43,11 @@ function NavMenu(props) {
           <span className="navbar-brand">Leagueen</span>
         </div>
         <ul className="navbar-nav flex-row float-right">
-          <li className="nav-item">
-            <span className="navbar-text">Welcome, <strong>{getUserName()}</strong>!</span>
-          </li>
-          <li className="nav-item">
-            {
-              props.user.isLoggedIn ?
-                <Link className="nav-link text-theme" to="/logout"> Logout</Link> :
-                <Link className="nav-link text-theme" to="/login"> Login</Link>
-            }
-          </li>
+          {
+            props.user.isLoggedIn ?
+              renderLoggedInState() :
+              renderLoginButton()
+          }
         </ul>
       </div>
     </nav>
