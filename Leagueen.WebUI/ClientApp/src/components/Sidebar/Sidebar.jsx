@@ -13,7 +13,7 @@ function Sidebar(props) {
     };
 
     function linkClass(prop) {
-        if(prop.path === props.location.pathname)
+        if (prop.path === props.location.pathname)
             return "btn btn-accent active"
 
         return "btn btn-accent";
@@ -22,9 +22,16 @@ function Sidebar(props) {
     function renderLink(prop, key) {
         return (
             <li key={key}>
-                <RedirectLink className={linkClass(prop)} name={prop.name} to={prop.path} onRedirect={props.toggleSidebar}></RedirectLink>
+                <RedirectLink className={linkClass(prop)} to={prop.path} onRedirect={props.toggleSidebar}>{prop.name}</RedirectLink>
             </li>
         );
+    };
+
+    function renderLoginButtons() {
+        if (props.user.isLoggedIn)
+            return <RedirectLink className="btn btn-accent" to="/logout" onRedirect={props.toggleSidebar}><Icon icon="sign-out-alt" /> Logout</RedirectLink>;
+        else
+            return <RedirectLink className="btn btn-accent" to="/login" onRedirect={props.toggleSidebar}><Icon icon="sign-in-alt" /> Login</RedirectLink>;
     };
 
     return (
@@ -41,7 +48,10 @@ function Sidebar(props) {
                     return renderLink(prop, key);
                 })}
             </ul>
-        </div>
+            <ul className="list-unstyled components justify-content-center">
+                {renderLoginButtons()}
+            </ul>
+        </div >
     );
 };
 export { Sidebar };

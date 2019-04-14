@@ -20,7 +20,7 @@ function App(props) {
   return (
     <div>
       <div className="d-flex" id="wrapper">
-        <Sidebar {...props} showSidebar={sidebar.show} toggleSidebar={toggleSidebar} />
+        <Sidebar {...props} showSidebar={sidebar.show} toggleSidebar={toggleSidebar} user={props.user}/>
         <div id="content">
           <NavMenu toggleSidebar={toggleSidebar} user={props.user} />
           <div className="container">

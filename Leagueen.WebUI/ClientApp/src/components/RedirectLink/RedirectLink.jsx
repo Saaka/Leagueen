@@ -10,7 +10,7 @@ function RedirectLink(props) {
     };
 
     function render() {
-        return <button className={props.className} type="button" role="navigation" onClick={redirect}>{props.name}</button>
+        return <button className={props.className} type="button" role="navigation" onClick={redirect}>{props.children}</button>
     };
 
     return render();
