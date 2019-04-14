@@ -5,34 +5,6 @@ import "./NavMenu.scss";
 
 function NavMenu(props) {
 
-  function getUserName() {
-    if (props.user.isLoggedIn)
-      return props.user.displayName;
-
-    return "Guest";
-  };
-
-  function renderLoginButton() {
-    return (
-      <li className="nav-item">
-        <Link className="nav-link text-theme" to="/login"><Icon icon="sign-in-alt"/> Login</Link>
-      </li>
-    );
-  };
-
-  function renderLoggedInState() {
-    return (
-      <>
-        <li className="nav-item">
-          <span className="navbar-text"><strong>{getUserName()}</strong></span>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link text-theme" to="/logout"><Icon icon="sign-out-alt"/> Logout</Link>
-        </li>
-      </>
-    );
-  };
-
   return (
     <nav className="navbar border-bottom box-shadow mb-3 bg-accent text-theme" role="navigation">
       <div className="container-fluid">
@@ -43,11 +15,14 @@ function NavMenu(props) {
           <span className="navbar-brand">Leagueen</span>
         </div>
         <ul className="navbar-nav flex-row float-right">
-          {
-            props.user.isLoggedIn ?
-              renderLoggedInState() :
-              renderLoginButton()
-          }
+
+          <li className="nav-item">
+            {
+              props.user.isLoggedIn ?
+                <Link className="nav-link text-theme" to="/logout"><Icon icon="sign-out-alt" /> Logout</Link> :
+                <Link className="nav-link text-theme" to="/login"><Icon icon="sign-in-alt" /> Login</Link>
+            }
+          </li>
         </ul>
       </div>
     </nav>
