@@ -1,6 +1,7 @@
 import React from "react";
 import { RedirectLink } from "components/RedirectLink/RedirectLink";
 import { Icon, Avatar } from "components/common";
+import { RouteNames } from "routes/names";
 import appRoutes from "routes/app";
 import "./Sidebar.scss";
 
@@ -22,16 +23,20 @@ function Sidebar(props) {
     function renderLink(prop, key) {
         return (
             <li key={key}>
-                <RedirectLink className={linkClass(prop)} to={prop.path} onRedirect={props.toggleSidebar}>{prop.name}</RedirectLink>
+                <RedirectLink className={linkClass(prop)} to={prop.path} onRedirect={props.toggleSidebar}>{
+                    !!prop.icon ?
+                        <><Icon icon={prop.icon} /> {prop.name}</> :
+                        prop.name
+                }</RedirectLink>
             </li>
         );
     };
 
     function renderLoginButtons() {
         if (props.user.isLoggedIn)
-            return <RedirectLink className="btn btn-accent" to="/logout" onRedirect={props.toggleSidebar}><Icon icon="sign-out-alt" /> Logout</RedirectLink>;
+            return <RedirectLink className="btn btn-accent" to={RouteNames.Logout} onRedirect={props.toggleSidebar}><Icon icon="sign-out-alt" /> Logout</RedirectLink>;
         else
-            return <RedirectLink className="btn btn-accent" to="/login" onRedirect={props.toggleSidebar}><Icon icon="sign-in-alt" /> Login</RedirectLink>;
+            return <RedirectLink className="btn btn-accent" to={RouteNames.Login} onRedirect={props.toggleSidebar}><Icon icon="sign-in-alt" /> Login</RedirectLink>;
     };
 
     function renderUserData() {

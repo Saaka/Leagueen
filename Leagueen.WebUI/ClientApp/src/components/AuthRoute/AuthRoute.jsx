@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { RouteNames } from "routes/names";
 
 function AuthRoute({
     component: Component,
@@ -13,7 +14,7 @@ function AuthRoute({
                     return <Component {...props} user={user} />
                 else return (
                     <Redirect to={{
-                        pathname: "/login",
+                        pathname: RouteNames.Login,
                         search: `?redirect=${props.location.pathname}`,
                         state : {
                             from: props.location

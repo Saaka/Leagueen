@@ -4,6 +4,7 @@ import { App } from "layouts/exports";
 import { Logout, Login } from "views/exports";
 import { AuthService, ToastComponent, ToastService } from "Services";
 import { Loader } from "components/common";
+import { RouteNames } from "routes/names";
 import "./Index.scss";
 
 function Index(props) {
@@ -57,10 +58,10 @@ function Index(props) {
     function renderApp() {
         return (
             <span>
-                <Route exact path="/" render={(props) => <Redirect to="/app" from={props.path} {...props} user={user} />} />
-                <Route path="/login" render={(props) => <Login {...props} onLogin={onLogin} onLogout={onLogout} user={user} toggleLoader={setIsLoading} />} />
-                <Route path="/logout" render={(props) => <Logout {...props} onLogout={onLogout} />} />
-                <Route path="/app" render={(props) => <App {...props} user={user} />} />
+                <Route exact path={RouteNames.Root} render={(props) => <Redirect to={RouteNames.App} from={props.path} {...props} user={user} />} />
+                <Route path={RouteNames.Login} render={(props) => <Login {...props} onLogin={onLogin} onLogout={onLogout} user={user} toggleLoader={setIsLoading} />} />
+                <Route path={RouteNames.Logout} render={(props) => <Logout {...props} onLogout={onLogout} />} />
+                <Route path={RouteNames.App} render={(props) => <App {...props} user={user} />} />
                 <ToastComponent />
             </span>
         );

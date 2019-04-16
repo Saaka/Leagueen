@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { RouteNames } from "routes/names";
 
 function AdminRoute({
     component: Component,
@@ -14,12 +15,12 @@ function AdminRoute({
                 else if (user && user.isLoggedIn && !user.isAdmin)
                     return (
                         <Redirect to={{
-                            pathname: "/app/unauthorized",
+                            pathname: RouteNames.Unauthorized,
                         }} />
                     );
                 else return (
                     <Redirect to={{
-                        pathname: "/login",
+                        pathname: RouteNames.Login,
                         search: `?redirect=${props.location.pathname}`,
                         state: {
                             from: props.location

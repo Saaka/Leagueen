@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Icon } from "components/Icon/Icon";
+import { Icon } from "components/common";
+import { RouteNames } from "routes/names";
 import "./NavMenu.scss";
 
 function NavMenu(props) {
@@ -19,8 +20,8 @@ function NavMenu(props) {
           <li className="nav-item">
             {
               props.user.isLoggedIn ?
-                <Link className="nav-link text-theme" to="/logout"><Icon icon="sign-out-alt" /> Logout</Link> :
-                <Link className="nav-link text-theme" to="/login"><Icon icon="sign-in-alt" /> Login</Link>
+                <Link className="nav-link text-theme" to={RouteNames.Logout}><Icon icon="sign-out-alt" /> Logout</Link> :
+                <Link className="nav-link text-theme" to={RouteNames.Login}><Icon icon="sign-in-alt" /> Login</Link>
             }
           </li>
         </ul>

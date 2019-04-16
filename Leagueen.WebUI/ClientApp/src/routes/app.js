@@ -1,35 +1,37 @@
 import { Matches, Counter, Dashboard, Unauthorized } from "views/exports";
-
+import { RouteNames } from "./names";
 
 const appRoutes = [
     {
-        path: "/app/home",
+        path: RouteNames.Home,
         component: Dashboard,
         name: "Home",
+        icon: "home"
     },
     {
         hide: true,
-        path: "/app/unauthorized",
+        path: RouteNames.Unauthorized,
         component: Unauthorized,
         name: "Unauthorized"
     },
     {
         useAuth: true,
-        path: "/app/matches",
+        path: RouteNames.Matches,
         component: Matches,
-        name: "Matches"
+        name: "Matches",
+        icon: "futbol"
     },
     {
         useAuth: true,
         requireAdmin: true,
-        path: "/app/counter",
+        path: RouteNames.Counter,
         component: Counter,
         name: "Counter"
     },
     {
         redirect: true,
-        path: "/app",
-        to: "/app/home",
+        path: RouteNames.App,
+        to: RouteNames.Home,
         name: "Home"
     }
 ];
