@@ -35,11 +35,11 @@ function Sidebar(props) {
     };
 
     function renderUserData() {
-        if(!props.user.isLoggedIn) return null;
+        if (!props.user.isLoggedIn) return null;
 
         return (
             <div className="user-data">
-                <Avatar imageUrl={props.user.imageUrl}/>
+                <Avatar imageUrl={props.user.imageUrl} />
                 <p>{props.user.displayName}</p>
             </div>
         );
@@ -55,8 +55,9 @@ function Sidebar(props) {
 
             <ul className="list-unstyled components justify-content-center">
                 {appRoutes.map((prop, key) => {
-                    if (prop.redirect) return null;
+                    if (prop.redirect || prop.hide) return null;
                     if (prop.useAuth && !props.user.isLoggedIn) return null;
+                    if (prop.requireAdmin && !props.user.isAdmin) return null;
 
                     return renderLink(prop, key);
                 })}

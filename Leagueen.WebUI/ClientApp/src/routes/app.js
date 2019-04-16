@@ -1,4 +1,4 @@
-import { Matches, Counter, Dashboard } from "views/exports";
+import { Matches, Counter, Dashboard, Unauthorized } from "views/exports";
 
 
 const appRoutes = [
@@ -8,6 +8,12 @@ const appRoutes = [
         name: "Home",
     },
     {
+        hide: true,
+        path: "/app/unauthorized",
+        component: Unauthorized,
+        name: "Unauthorized"
+    },
+    {
         useAuth: true,
         path: "/app/matches",
         component: Matches,
@@ -15,6 +21,7 @@ const appRoutes = [
     },
     {
         useAuth: true,
+        requireAdmin: true,
         path: "/app/counter",
         component: Counter,
         name: "Counter"
