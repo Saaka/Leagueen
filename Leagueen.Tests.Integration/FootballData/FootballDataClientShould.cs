@@ -25,7 +25,7 @@ namespace Leagueen.Tests.Integration.FootballData
         {
             var client = CreateClient();
 
-            var result = await client.GetAllCompetitionMatches(CompetitionType.PL.ToString());
+            var result = await client.GetAllCompetitionMatches(CompetitionType.PL);
 
             Assert.NotNull(result);
             Assert.NotEqual(0, result.Count);
