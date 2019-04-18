@@ -62,7 +62,7 @@ namespace Leagueen.Persistence.Users
             var result = await userManager.CreateAsync(applicationUser);
             if (!result.Succeeded)
                 throw new RepositoryException("CreateGoogleUser", result.Errors.Select(x => x.Code));
-            
+
             return await GetUserDto(applicationUser);
         }
 
@@ -128,7 +128,7 @@ namespace Leagueen.Persistence.Users
 
             user.GoogleId = externalUserId;
             user.ImageUrl = imageUrl;
-            return await UpdateUser(user);
+            return await UpdateUser(user, nameof(MergeUserWithGoogle));
         }
 
         public async Task<UserDto> UpdateExistingGoogleUser(string email, string imageUrl)
@@ -138,24 +138,38 @@ namespace Leagueen.Persistence.Users
                 throw new DomainException(Leagueen.Domain.Enums.ExceptionCode.UserNotFound);
 
             user.ImageUrl = imageUrl;
-            return await UpdateUser(user);
+            return await UpdateUser(user, nameof(UpdateExistingGoogleUser));
         }
 
-        private async Task<UserDto> UpdateUser(ApplicationUser user)
+        private async Task<UserDto> UpdateUser(ApplicationUser user, string method)
         {
             var result = await userManager.UpdateAsync(user);
             if (result.Succeeded)
                 return await GetUserDto(user);
             else
-                throw new RepositoryException(nameof(MergeUserWithGoogle), result.Errors.Select(x => x.Code));
+                throw new RepositoryException(method, result.Errors.Select(x => x.Code));
         }
-        
+
         private async Task<UserDto> GetUserDto(ApplicationUser user)
         {
             var userDto = mapper.Map<UserDto>(user);
             userDto.IsAdmin = await userManager.IsInRoleAsync(user, UserRoles.Admin);
 
             return userDto;
+        }
+
+        public async Task<bool> IsDisplayNameInUse(int userId, string displayName)
+        {
+            return await context.Users
+                .AnyAsync(x => x.Id != userId && x.DisplayName == displayName);
+        }
+
+        public async Task<UserDto> UpdateUserDisplayName(int userId, string displayName)
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            user.DisplayName = displayName;
+
+            return await UpdateUser(user, nameof(UpdateUserDisplayName));
         }
     }
 }

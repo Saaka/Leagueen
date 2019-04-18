@@ -48,5 +48,6 @@
         UpdateLogProviderTypeRequred,
         UpdateLogCompetitionRequiredForLogType,
         UpdateLogCompetitionInvalidForLogType,
+        UserDisplayNameNotUnique,
     }
 }

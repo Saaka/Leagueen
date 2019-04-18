@@ -15,5 +15,7 @@ namespace Leagueen.Application.Users.Repositories
         Task<UserDto> GetUserById(int userId);
         Task<UserDto> GetUserByMoniker(string moniker);
         Task<int?> GetUserIdByMoniker(string moniker);
+        Task<bool> IsDisplayNameInUse(int userId, string displayName);
+        Task<UserDto> UpdateUserDisplayName(int userId, string displayName);
     }
 }
