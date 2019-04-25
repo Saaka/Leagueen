@@ -49,5 +49,6 @@
         UpdateLogCompetitionRequiredForLogType,
         UpdateLogCompetitionInvalidForLogType,
         UserDisplayNameNotUnique,
+        ProviderMappingAlreadyExists,
     }
 }

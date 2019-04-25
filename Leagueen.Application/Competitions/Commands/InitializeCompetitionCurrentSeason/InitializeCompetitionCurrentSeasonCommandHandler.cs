@@ -4,6 +4,7 @@ using Leagueen.Application.DataProviders;
 using Leagueen.Application.DataProviders.Competitions;
 using Leagueen.Application.Matches.Commands;
 using Leagueen.Domain.Entities;
+using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
 using MediatR;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
 
             foreach (var teamInfo in info.Teams)
             {
-                await AddTeam(teamInfo, season);
+                await AddTeam(teamInfo, season, competition.DataProvider.Type);
             }
             CheckWinner(season, info);
 
@@ -87,14 +88,20 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             }
         }
 
-        private async Task AddTeam(TeamDto teamInfo, Season season)
+        private async Task AddTeam(TeamDto teamInfo, Season season, DataProviderType providerType)
         {
             if (season.Teams.Any(x => x.Team.ExternalId == teamInfo.Id)) return;
 
             if (await teamsRepository.TeamExistsForExternalId(teamInfo.Id))
                 season.AddTeam(await teamsRepository.GetTeamByExternalId(teamInfo.Id));
             else
-                season.AddTeam(new Team(teamInfo.Id, teamInfo.Name, teamInfo.ShortName, teamInfo.Tla, teamInfo.CrestUrl, teamInfo.Website));
+            {
+                var team = new Team(teamInfo.Id, teamInfo.Name, teamInfo.ShortName, teamInfo.Tla, teamInfo.CrestUrl, teamInfo.Website)
+                    .AddExternalMapping(teamInfo.Id.ToString(), providerType);
+                 
+                season
+                    .AddTeam(team);
+            }
         }
 
         private Season CreateSeason(CompetitionSeasonDto seasonInfo, Competition competition)

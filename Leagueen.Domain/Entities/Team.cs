@@ -1,5 +1,7 @@
-﻿using Leagueen.Domain.Exceptions;
+﻿using Leagueen.Domain.Enums;
+using Leagueen.Domain.Exceptions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Leagueen.Domain.Entities
 {
@@ -21,6 +23,8 @@ namespace Leagueen.Domain.Entities
         protected List<Match> _homeMatches = new List<Match>();
         public virtual IReadOnlyCollection<Match> AwayMatches => _awayMatches.AsReadOnly();
         protected List<Match> _awayMatches = new List<Match>();
+        public virtual IReadOnlyCollection<TeamExternalMapping> ExternalMappings => _externalMappings.AsReadOnly();
+        protected List<TeamExternalMapping> _externalMappings = new List<TeamExternalMapping>();
 
         private Team() { }
 
@@ -34,6 +38,15 @@ namespace Leagueen.Domain.Entities
             Website = website;
 
             ValidateCreation();
+        }
+
+        public Team AddExternalMapping(string externalId, DataProviderType providerType)
+        {
+            if (_externalMappings.Any(x => x.ProviderType == providerType))
+                throw new DomainException(ExceptionCode.ProviderMappingAlreadyExists);
+
+            _externalMappings.Add(new TeamExternalMapping(this, externalId, providerType));
+            return this;
         }
 
         private void ValidateCreation()
