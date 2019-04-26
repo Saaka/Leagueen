@@ -23,10 +23,13 @@ namespace Leagueen.Persistence.Domain.Repositories
                         select season;
 
             return await query
+                .Include(x => x.Competition)
+                    .ThenInclude(x => x.DataProvider)
                 .Include(x => x.Matches)
                     .ThenInclude(x => x.MatchScore)
                 .Include(x => x.Teams)
                     .ThenInclude(x => x.Team)
+                        .ThenInclude(x => x.ExternalMappings)
                 .FirstOrDefaultAsync();
         }
 
@@ -34,9 +37,12 @@ namespace Leagueen.Persistence.Domain.Repositories
         {
             var query = context.Seasons
                 .Where(x => x.SeasonId == seasonId)
+                .Include(x => x.Competition)
+                    .ThenInclude(x => x.DataProvider)
                 .Include(x => x.Matches)
                 .Include(x => x.Teams)
-                    .ThenInclude(x=> x.Team);
+                    .ThenInclude(x => x.Team)
+                        .ThenInclude(x=> x.ExternalMappings);
 
             return await query.FirstOrDefaultAsync();
         }
