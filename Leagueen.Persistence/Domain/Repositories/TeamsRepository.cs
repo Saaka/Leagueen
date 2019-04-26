@@ -1,7 +1,9 @@
 ﻿using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Domain.Entities;
+using Leagueen.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Leagueen.Persistence.Domain.Repositories
 {
@@ -14,9 +16,10 @@ namespace Leagueen.Persistence.Domain.Repositories
             this.context = context;
         }
 
-        public async Task<Team> GetTeamByExternalId(int externalId)
+        public async Task<Team> GetTeamByExternalId(string externalId, DataProviderType providerType)
         {
-            return await context.Teams.FirstOrDefaultAsync(x => x.ExternalId == externalId);
+            var query = TeamByExternalIdQuery(externalId, providerType);
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<Team> SaveTeam(Team team)
@@ -26,9 +29,18 @@ namespace Leagueen.Persistence.Domain.Repositories
             return team;
         }
 
-        public async Task<bool> TeamExistsForExternalId(int externalId)
+        public async Task<bool> TeamExistsForExternalId(string externalId, DataProviderType providerType)
         {
-            return await context.Teams.AnyAsync(x => x.ExternalId == externalId);
+            var query = TeamByExternalIdQuery(externalId, providerType);
+            return await query.AnyAsync();
+        }
+
+        private IQueryable<Team> TeamByExternalIdQuery(string externalId, DataProviderType providerType)
+        {
+            return from t in context.Teams
+                   join tm in context.TeamExternalMappings on t.TeamId equals tm.TeamId
+                   where tm.ProviderType == providerType && tm.ExternalId == externalId
+                   select t;
         }
     }
 }

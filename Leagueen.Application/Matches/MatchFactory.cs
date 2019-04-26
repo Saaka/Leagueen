@@ -22,8 +22,13 @@ namespace Leagueen.Application.Matches
 
         public Match CreateMatch(Season season, MatchDto info)
         {
-            var homeTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.HomeTeamId);
-            var awayTeam = season.Teams.FirstOrDefault(x => x.Team?.ExternalId == info.AwayTeamId);
+            var homeTeam = season.Teams
+                .FirstOrDefault(x => x.Team.ExternalMappings
+                                        .Any(m => m.ExternalId == info.HomeTeamId.ToString() && m.ProviderType == season.Competition.DataProvider.Type));
+            var awayTeam = season.Teams
+                .FirstOrDefault(x => x.Team.ExternalMappings
+                                        .Any(m => m.ExternalId == info.AwayTeamId.ToString() && m.ProviderType == season.Competition.DataProvider.Type));
+
             var match = new Match(info.Id, season, homeTeam.Team, awayTeam.Team,
                 info.UtcDate, info.Status, info.Stage, info.LastUpdated, info.Group, info.Matchday);
 

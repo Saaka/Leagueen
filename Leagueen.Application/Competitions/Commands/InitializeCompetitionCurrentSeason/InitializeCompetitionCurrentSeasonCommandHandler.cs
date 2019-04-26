@@ -39,7 +39,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
         {
             var competition = await competitionsRepository.GetCompetitionByCode(request.CompetitionCode);
             if (competition == null)
-                throw new DomainException(Domain.Enums.ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionCode}");
+                throw new DomainException(ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionCode}");
             var info = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
 
             if (competition.LastProviderUpdate == info.Competition.LastUpdated) return;
@@ -83,24 +83,26 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
         {
             if (teamsInfo.Season.SeasonWinnerId.HasValue)
             {
-                var winner = season.Teams.First(x => x.Team.ExternalId == teamsInfo.Season.SeasonWinnerId);
+                var winner = season.Teams
+                    .First(x => x.Team.ExternalMappings
+                                        .Any(m => m.ExternalId == teamsInfo.Season.SeasonWinnerId.ToString() && m.ProviderType == season.Competition.DataProvider.Type));
+
                 season.SetWinner(winner.Team);
             }
         }
 
         private async Task AddTeam(TeamDto teamInfo, Season season, DataProviderType providerType)
         {
-            if (season.Teams.Any(x => x.Team.ExternalId == teamInfo.Id)) return;
+            if (season.Teams.Any(x => x.Team.ExternalMappings.Any(m => m.ExternalId == teamInfo.Id.ToString() && m.ProviderType == providerType))) return;
 
-            if (await teamsRepository.TeamExistsForExternalId(teamInfo.Id))
-                season.AddTeam(await teamsRepository.GetTeamByExternalId(teamInfo.Id));
+            if (await teamsRepository.TeamExistsForExternalId(teamInfo.Id.ToString(), providerType))
+                season.AddTeam(await teamsRepository.GetTeamByExternalId(teamInfo.Id.ToString(), providerType));
             else
             {
-                var team = new Team(teamInfo.Id, teamInfo.Name, teamInfo.ShortName, teamInfo.Tla, teamInfo.CrestUrl, teamInfo.Website)
+                var team = new Team(teamInfo.Name, teamInfo.ShortName, teamInfo.Tla, teamInfo.CrestUrl, teamInfo.Website)
                     .AddExternalMapping(teamInfo.Id.ToString(), providerType);
-                 
-                season
-                    .AddTeam(team);
+
+                season.AddTeam(team);
             }
         }
 

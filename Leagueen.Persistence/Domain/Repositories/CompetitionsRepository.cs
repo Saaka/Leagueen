@@ -26,6 +26,7 @@ namespace Leagueen.Persistence.Domain.Repositories
                 .Include(x => x.Seasons)
                     .ThenInclude(x => x.Teams)
                         .ThenInclude(x => x.Team)
+                            .ThenInclude(x => x.ExternalMappings)
                 .ToListAsync();
         }
 
@@ -48,6 +49,7 @@ namespace Leagueen.Persistence.Domain.Repositories
                 .Include(c => c.Seasons)
                     .ThenInclude(x => x.Teams)
                         .ThenInclude(x => x.Team)
+                            .ThenInclude(x => x.ExternalMappings)
                 .FirstOrDefaultAsync();
         }
 

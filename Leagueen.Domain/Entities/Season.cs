@@ -60,9 +60,6 @@ namespace Leagueen.Domain.Entities
 
         public Season AddTeam(Team team)
         {
-            if (Teams.Any(x => x.Team.ExternalId == team.ExternalId))
-                throw new DomainException(ExceptionCode.TeamAlreadyInSeason);
-
             _teams.Add(new TeamSeason(team, this));
             return this;
         }
