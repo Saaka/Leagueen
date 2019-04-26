@@ -22,11 +22,7 @@ namespace Leagueen.Persistence.Domain.Repositories
             return await context
                 .Competitions
                 .Where(x => x.IsActive)
-                .Include(x => x.DataProvider)
-                .Include(x => x.Seasons)
-                    .ThenInclude(x => x.Teams)
-                        .ThenInclude(x => x.Team)
-                            .ThenInclude(x => x.ExternalMappings)
+                .IncludeCompetitionsData()
                 .ToListAsync();
         }
 
@@ -45,11 +41,7 @@ namespace Leagueen.Persistence.Domain.Repositories
             return await context
                 .Competitions
                 .Where(x => x.Code == code)
-                .Include(x => x.DataProvider)
-                .Include(c => c.Seasons)
-                    .ThenInclude(x => x.Teams)
-                        .ThenInclude(x => x.Team)
-                            .ThenInclude(x => x.ExternalMappings)
+                .IncludeCompetitionsData()
                 .FirstOrDefaultAsync();
         }
 
@@ -73,6 +65,19 @@ namespace Leagueen.Persistence.Domain.Repositories
         {
             competitions.Select(x => context.Attach(x));
             await context.SaveChangesAsync();
+        }
+    }
+
+    internal static class CompetitionIncludes
+    {
+        public static IQueryable<Competition> IncludeCompetitionsData(this IQueryable<Competition> query)
+        {
+            return query
+                .Include(x => x.DataProvider)
+                .Include(c => c.Seasons)
+                    .ThenInclude(x => x.Teams)
+                        .ThenInclude(x => x.Team)
+                            .ThenInclude(x => x.ExternalMappings);
         }
     }
 }

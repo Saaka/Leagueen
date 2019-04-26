@@ -23,13 +23,7 @@ namespace Leagueen.Persistence.Domain.Repositories
                         select season;
 
             return await query
-                .Include(x => x.Competition)
-                    .ThenInclude(x => x.DataProvider)
-                .Include(x => x.Matches)
-                    .ThenInclude(x => x.MatchScore)
-                .Include(x => x.Teams)
-                    .ThenInclude(x => x.Team)
-                        .ThenInclude(x => x.ExternalMappings)
+                .IncludeSeasonData()
                 .FirstOrDefaultAsync();
         }
 
@@ -37,12 +31,7 @@ namespace Leagueen.Persistence.Domain.Repositories
         {
             var query = context.Seasons
                 .Where(x => x.SeasonId == seasonId)
-                .Include(x => x.Competition)
-                    .ThenInclude(x => x.DataProvider)
-                .Include(x => x.Matches)
-                .Include(x => x.Teams)
-                    .ThenInclude(x => x.Team)
-                        .ThenInclude(x=> x.ExternalMappings);
+                .IncludeSeasonData();
 
             return await query.FirstOrDefaultAsync();
         }
@@ -51,6 +40,21 @@ namespace Leagueen.Persistence.Domain.Repositories
         {
             context.Attach(season);
             await context.SaveChangesAsync();
+        }
+    }
+
+    internal static class SeasonIncludes
+    {
+        public static IQueryable<Season> IncludeSeasonData(this IQueryable<Season> query)
+        {
+            return query
+                .Include(x => x.Competition)
+                    .ThenInclude(x => x.DataProvider)
+                .Include(x => x.Matches)
+                    .ThenInclude(x => x.MatchScore)
+                .Include(x => x.Teams)
+                    .ThenInclude(x => x.Team)
+                        .ThenInclude(x => x.ExternalMappings);
         }
     }
 }
