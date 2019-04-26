@@ -52,13 +52,13 @@ namespace Leagueen.Domain.Entities
         private void ValidateCreation()
         {
             if (ExternalId == 0)
-                throw new DomainException(Enums.ExceptionCode.TeamExternalIdRequired);
+                throw new DomainException(ExceptionCode.TeamExternalIdRequired);
             if (string.IsNullOrWhiteSpace(Name))
-                throw new DomainException(Enums.ExceptionCode.TeamNameRequired);
+                throw new DomainException(ExceptionCode.TeamNameRequired);
             if (string.IsNullOrWhiteSpace(ShortName))
-                throw new DomainException(Enums.ExceptionCode.TeamShortNameRequired);
+                throw new DomainException(ExceptionCode.TeamShortNameRequired);
             if (string.IsNullOrWhiteSpace(Tla))
-                throw new DomainException(Enums.ExceptionCode.TeamTlaRequired);
+                throw new DomainException(ExceptionCode.TeamTlaRequired);
         }
     }
 }

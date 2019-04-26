@@ -13,6 +13,7 @@ namespace Leagueen.Persistence.Domain
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamExternalMapping> TeamExternalMappings { get; set; }
         public DbSet<TeamSeason> TeamSeasons { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<MatchScore> MatchScores { get; set; }

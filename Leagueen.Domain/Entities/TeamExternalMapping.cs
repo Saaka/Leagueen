@@ -12,6 +12,7 @@ namespace Leagueen.Domain.Entities
 
         public virtual Team Team { get; private set; }
 
+        private TeamExternalMapping() { }
         public TeamExternalMapping(
             Team team,
             string externalId,

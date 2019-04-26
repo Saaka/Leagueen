@@ -57,6 +57,9 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder.Metadata
                 .FindNavigation(nameof(Team.WonSeasons))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.Metadata
+                .FindNavigation(nameof(Team.ExternalMappings))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }
