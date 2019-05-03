@@ -36,7 +36,7 @@ namespace Leagueen.Persistence.Domain.Repositories
         public async Task<bool> AreMatchesInPlay(DateTime dateTime)
         {
             var dateTimeFrom = dateTime.AddMinutes(-15);
-            var dateTimeTo = dateTime.AddMinutes(15);
+            var dateTimeTo = dateTime.AddMinutes(30);
             var query = from m in context.Matches
                         where ActiveMatchesStatuses.Contains(m.Status)
                             || (m.Date >= dateTimeFrom && m.Date <= dateTimeTo)
