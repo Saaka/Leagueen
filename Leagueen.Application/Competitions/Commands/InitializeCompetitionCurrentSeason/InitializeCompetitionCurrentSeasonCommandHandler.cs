@@ -17,6 +17,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
     {
         private readonly ICompetitionsProvider competitionsProvider;
         private readonly ISeasonsRepository seasonsRepository;
+        private readonly ICompetitionsAggregateRepository competitionsAggregateRepository;
         private readonly ICompetitionsRepository competitionsRepository;
         private readonly ITeamsRepository teamsRepository;
         private readonly IMediator mediator;
@@ -24,12 +25,14 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
         public InitializeCompetitionCurrentSeasonCommandHandler(
             ICompetitionsProvider competitionsProvider,
             ISeasonsRepository seasonsRepository,
+            ICompetitionsAggregateRepository competitionsAggregateRepository,
             ICompetitionsRepository competitionsRepository,
             ITeamsRepository teamsRepository,
             IMediator mediator)
         {
             this.competitionsProvider = competitionsProvider;
             this.seasonsRepository = seasonsRepository;
+            this.competitionsAggregateRepository = competitionsAggregateRepository;
             this.competitionsRepository = competitionsRepository;
             this.teamsRepository = teamsRepository;
             this.mediator = mediator;
@@ -37,7 +40,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
 
         protected override async Task Handle(InitializeCompetitionCurrentSeasonCommand request, CancellationToken cancellationToken)
         {
-            var competition = await competitionsRepository.GetCompetitionByCode(request.CompetitionCode);
+            var competition = await competitionsAggregateRepository.GetCompetitionByCode(request.CompetitionCode);
             if (competition == null)
                 throw new DomainException(ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionCode}");
             var info = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
@@ -60,7 +63,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             }
             CheckWinner(season, info);
 
-            await competitionsRepository.SaveCompetition(competition);
+            await competitionsAggregateRepository.SaveCompetition(competition);
 
             await mediator.Send(new UpdateAllSeasonMatchesCommand { CompetitionType = competition.Type });
             await mediator.Publish(new CompetitionInitializedEvent { CompetitionType = competition.Type });

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Leagueen.Domain.Enums;
+using Leagueen.Application.Competitions.Models;
 
 namespace Leagueen.Persistence.Domain.Repositories
 {
@@ -17,13 +18,18 @@ namespace Leagueen.Persistence.Domain.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<Competition>> GetAllActiveCompetitions()
+        public async Task<IEnumerable<CompetitionUpdateInfo>> GetAllActiveCompetitions()
         {
-            return await context
-                .Competitions
-                .Where(x => x.IsActive)
-                .IncludeCompetitionsData()
-                .ToListAsync();
+            var query = from c in context.Competitions
+                        where c.IsActive == true
+                        select new CompetitionUpdateInfo
+                        {
+                            CompetitionId = c.CompetitionId,
+                            Code = c.Code,
+                            LastProviderUpdate = c.LastProviderUpdate
+                        };
+
+            return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<CompetitionType>> GetAllActiveCompetitionTypesForProvider(DataProviderType providerType)
@@ -36,15 +42,6 @@ namespace Leagueen.Persistence.Domain.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<Competition> GetCompetitionByCode(string code)
-        {
-            return await context
-                .Competitions
-                .Where(x => x.Code == code)
-                .IncludeCompetitionsData()
-                .FirstOrDefaultAsync();
-        }
-
         public async Task<DataProviderType> GetProviderTypeForCompetition(CompetitionType type)
         {
             var query = from c in context.Competitions
@@ -53,31 +50,6 @@ namespace Leagueen.Persistence.Domain.Repositories
                         select p.Type;
 
             return await query.FirstOrDefaultAsync();
-        }
-
-        public async Task SaveCompetition(Competition competition)
-        {
-            context.Attach(competition);
-            await context.SaveChangesAsync();
-        }
-
-        public async Task SaveCompetitions(IEnumerable<Competition> competitions)
-        {
-            competitions.Select(x => context.Attach(x));
-            await context.SaveChangesAsync();
-        }
-    }
-
-    internal static class CompetitionIncludes
-    {
-        public static IQueryable<Competition> IncludeCompetitionsData(this IQueryable<Competition> query)
-        {
-            return query
-                .Include(x => x.DataProvider)
-                .Include(c => c.Seasons)
-                    .ThenInclude(x => x.Teams)
-                        .ThenInclude(x => x.Team)
-                            .ThenInclude(x => x.ExternalMappings);
         }
     }
 }
