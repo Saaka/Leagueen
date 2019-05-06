@@ -26,6 +26,14 @@ export class AuthService {
             .then(this.onLogin);
     };
 
+    loginWithFacebook = (token) => {
+        return this.httpService
+            .post(Constants.ApiRoutes.FACEBOOK, {
+                facebookToken: token
+            })
+            .then(this.onLogin);
+    };
+
     onLogin = (resp) => {
 
         this.tokenService

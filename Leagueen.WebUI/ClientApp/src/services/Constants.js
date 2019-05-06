@@ -7,6 +7,9 @@ Constants.ApiRoutes = class ApiRoutes {
     static get GOOGLE() {
         return "auth/google";
     }
+    static get FACEBOOK() {
+        return "auth/facebook";
+    }
     static get GETUSER() {
         return "auth/user";
     }

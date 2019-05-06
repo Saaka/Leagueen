@@ -1,7 +1,7 @@
-import React from 'react';
-import { AuthService, ConfigService } from 'Services';
-import { GoogleLogin } from 'react-google-login';
-import { Icon } from 'components/Icon/Icon';
+import React from "react";
+import { AuthService, ConfigService } from "Services";
+import { GoogleLogin } from "react-google-login";
+import { Icon } from "components/Icon/Icon";
 
 const LoginWithGoogle = (props) => {
     const configService = new ConfigService();
