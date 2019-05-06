@@ -66,6 +66,25 @@ namespace Leagueen.Persistence.Users
             return await GetUserDto(applicationUser);
         }
 
+        public async Task<UserDto> CreateAsync(CreateFacebookUserDto userData)
+        {
+            var applicationUser = new ApplicationUser
+            {
+                Email = userData.Email,
+                UserName = userData.Email,
+                DisplayName = userData.DisplayName,
+                Moniker = userData.Moniker,
+                ImageUrl = userData.ImageUrl,
+                FacebookId = userData.FacebookId
+            };
+
+            var result = await userManager.CreateAsync(applicationUser);
+            if (!result.Succeeded)
+                throw new RepositoryException("CreateFacebookUser", result.Errors.Select(x => x.Code));
+
+            return await GetUserDto(applicationUser);
+        }
+
         public async Task<UserDto> GetUserByCredentials(string email, string password)
         {
             var user = await userManager.FindByEmailAsync(email);
@@ -113,6 +132,13 @@ namespace Leagueen.Persistence.Users
             return user != null && user.GoogleId == googleId;
         }
 
+        public async Task<bool> FacebookUserExists(string email, string facebookId)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            return user != null && user.FacebookId == facebookId;
+        }
+
         public async Task<bool> IsEmailRegistered(string email)
         {
             var user = await userManager.FindByEmailAsync(email);
@@ -131,7 +157,28 @@ namespace Leagueen.Persistence.Users
             return await UpdateUser(user, nameof(MergeUserWithGoogle));
         }
 
+        public async Task<UserDto> MergeUserWithFacebook(string email, string externalUserId, string imageUrl)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new DomainException(Leagueen.Domain.Enums.ExceptionCode.UserNotFound);
+
+            user.FacebookId = externalUserId;
+            user.ImageUrl = imageUrl;
+            return await UpdateUser(user, nameof(MergeUserWithFacebook));
+        }
+
         public async Task<UserDto> UpdateExistingGoogleUser(string email, string imageUrl)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new DomainException(Leagueen.Domain.Enums.ExceptionCode.UserNotFound);
+
+            user.ImageUrl = imageUrl;
+            return await UpdateUser(user, nameof(UpdateExistingGoogleUser));
+        }
+
+        public async Task<UserDto> UpdateExistingFacebookUser(string email, string imageUrl)
         {
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)

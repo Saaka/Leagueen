@@ -19,6 +19,11 @@ namespace Leagueen.Persistence.Identity.Configurations
                 .HasMaxLength(64);
 
             builder
+                .Property(e => e.FacebookId)
+                .IsRequired(false)
+                .HasMaxLength(64);
+
+            builder
                 .Property(e => e.DisplayName)
                 .IsRequired(true)
                 .HasMaxLength(128);

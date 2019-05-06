@@ -8,6 +8,7 @@ using Leagueen.Infrastructure.Http;
 using Leagueen.Infrastructure.Images;
 using Leagueen.Infrastructure.Providers.FootballData;
 using Leagueen.Infrastructure.Security;
+using Leagueen.Infrastructure.Security.Facebook;
 using Leagueen.Infrastructure.Security.Google;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +24,7 @@ namespace Leagueen.Infrastructure
                 .AddTransient<IGuid, GuidProvider>()
                 .AddTransient<IRestsharpClientFactory, RestsharpClientFactory>()
                 .AddTransient<IGoogleApiClient, GoogleApiClient>()
+                .AddTransient<IFacebookApiClient, FacebookApiClient>()
 
                 .AddTransient<IMatchesProvider, FootballDataClient>()
                 .AddTransient<ICompetitionsProvider, FootballDataClient>()

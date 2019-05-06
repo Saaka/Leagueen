@@ -8,6 +8,7 @@ namespace Leagueen.Persistence.Identity.Entities
         public string DisplayName { get; set; }
         public string Moniker { get; set; }
         public string GoogleId { get; set; }
+        public string FacebookId { get; set; }
         public string ImageUrl { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace Leagueen.WebAPI.Configuration
 
         public string FacebookAppSecret => configuration[FacebookAppSecretProperty];
 
-        public string FacebookTokenUrl => configuration[FacebookValidationEndpointProperty];
+        public string FacebookValidationEndpoint => configuration[FacebookValidationEndpointProperty];
     }
 
     public class FootballDataSettings : IFootballDataConfiguration

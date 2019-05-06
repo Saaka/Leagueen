@@ -9,5 +9,6 @@
         public string ImageUrl { get; set; }
         public string PasswordHash { get; set; }
         public string GoogleId { get; set; }
+        public string FacebookId { get; set; }
     }
 }

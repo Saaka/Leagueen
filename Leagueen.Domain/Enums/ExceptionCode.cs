@@ -50,5 +50,7 @@
         UpdateLogCompetitionInvalidForLogType,
         UserDisplayNameNotUnique,
         ProviderMappingAlreadyExists,
+        InvalidFacebookToken,
+        FacebookTokenEmailPermissionRequired
     }
 }

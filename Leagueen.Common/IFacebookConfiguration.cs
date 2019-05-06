@@ -4,6 +4,6 @@
     {
         string FacebookAppId { get; }
         string FacebookAppSecret { get; }
-        string FacebookTokenUrl { get; }
+        string FacebookValidationEndpoint { get; }
     }
 }
