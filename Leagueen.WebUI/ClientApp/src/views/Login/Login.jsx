@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import queryString from "query-string";
-import { GoogleLogin } from "components/GoogleLogin/GoogleLogin";
+import { GoogleLogin, FacebookLogin } from "components/common";
 import { ToastService } from "Services";
 import "./Login.scss";
 
@@ -36,8 +36,11 @@ function Login(props) {
                 <div className="row justify-content-center">
                     <h1 className="text-center">Leagueen</h1>
                 </div>
-                <div className="row justify-content-center popup">
+                <div className="row justify-content-center popup login-button-container">
                     <GoogleLogin onLoggedIn={onLoggedIn} onError={onError} showLoader={() => props.toggleLoader(true)} />
+                </div>
+                <div className="row justify-content-center popup login-button-container">
+                    <FacebookLogin onLoggedIn={onLoggedIn} onError={onError} showLoader={() => props.toggleLoader(true)} />
                 </div>
             </div>
         </div>

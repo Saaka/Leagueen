@@ -7,3 +7,4 @@ export { Loader } from "./Loader/Loader";
 export { Overlay } from "./Overlay/Overlay";
 export { DateSelect } from "./DateSelect/DateSelect";
 export { Avatar } from "./Avatar/Avatar";
+export { FacebookLogin } from "./FacebookLogin/FacebookLogin";

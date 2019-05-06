@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const Icon = (props) => {
 
-    const brands = ["google"];
+    const brands = ["google", "facebook-f"];
     function getIcon() {
-        if (brands.indexOf(props.icon) === 0)
+        if (brands.indexOf(props.icon) >= 0)
             return ["fab", props.icon];
 
         return props.icon;
