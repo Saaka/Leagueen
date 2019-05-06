@@ -5,7 +5,7 @@ using System;
 
 namespace Leagueen.WebAPI.Configuration
 {
-    public class ApplicationSettings : IAuthConfiguration, IGoogleConfiguration
+    public class ApplicationSettings : IAuthConfiguration, IGoogleConfiguration, IFacebookConfiguration
     {
         public const string AuthSecretProperty = "Auth:Secret";
         public const string AuthIssuerProperty = "Auth:Issuer";
@@ -20,6 +20,10 @@ namespace Leagueen.WebAPI.Configuration
         public const string FootballDataApiToken = "FootballData:ApiToken";
         public const string FootballDataApiUrl = "FootballData:ApiUrl";
         public const string FootballDataApiPlan = "FootballData:ApiPlan";
+
+        public const string FacebookAppIdProperty = "Google:AppId";
+        public const string FacebookAppSecretProperty = "Facebook:AppSecret";
+        public const string FacebookValidationEndpointProperty = "Google:ValidationEndpoint";
 
         private readonly IConfiguration configuration;
 
@@ -39,6 +43,12 @@ namespace Leagueen.WebAPI.Configuration
         public string ClientKey => configuration[GoogleClientKeyProperty];
 
         public string ValidationEndpoint => configuration[GoogleValidationEndpointProperty];
+
+        public string FacebookAppId => configuration[FacebookAppIdProperty];
+
+        public string FacebookAppSecret => configuration[FacebookAppSecretProperty];
+
+        public string FacebookTokenUrl => configuration[FacebookValidationEndpointProperty];
     }
 
     public class FootballDataSettings : IFootballDataConfiguration

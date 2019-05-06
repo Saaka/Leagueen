@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Leagueen.Common
+﻿namespace Leagueen.Common
 {
     public interface IGoogleConfiguration
     {

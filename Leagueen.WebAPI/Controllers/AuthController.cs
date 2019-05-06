@@ -25,6 +25,14 @@ namespace Leagueen.WebAPI.Controllers
             return GetRequestResult(result);
         }
 
+        [HttpPost("facebook")]
+        public async Task<IActionResult> Facebook(AuthenticateUserWithFacebookCommand request)
+        {
+            var result = await Mediator.Send(request);
+
+            return GetRequestResult(result);
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login(AuthenticateUserWithCredentialsCommand request)
         {
