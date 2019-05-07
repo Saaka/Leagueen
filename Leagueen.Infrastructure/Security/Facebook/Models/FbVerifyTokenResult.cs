@@ -15,5 +15,7 @@ namespace Leagueen.Infrastructure.Security.Facebook.Models
         public string[] Scopes { get; set; }
         [JsonProperty("user_id")]
         public string UserId { get; set; }
+        [JsonProperty("app_id")]
+        public string AppId { get; set; }
     }
 }

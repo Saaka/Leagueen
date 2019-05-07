@@ -21,9 +21,9 @@ namespace Leagueen.WebAPI.Configuration
         public const string FootballDataApiUrl = "FootballData:ApiUrl";
         public const string FootballDataApiPlan = "FootballData:ApiPlan";
 
-        public const string FacebookAppIdProperty = "Google:AppId";
+        public const string FacebookAppIdProperty = "Facebook:AppId";
         public const string FacebookAppSecretProperty = "Facebook:AppSecret";
-        public const string FacebookValidationEndpointProperty = "Google:ValidationEndpoint";
+        public const string FacebookValidationEndpointProperty = "Facebook:ValidationEndpoint";
 
         private readonly IConfiguration configuration;
 

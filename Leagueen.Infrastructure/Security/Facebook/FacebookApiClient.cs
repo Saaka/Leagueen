@@ -30,11 +30,34 @@ namespace Leagueen.Infrastructure.Security.Facebook
         {
             var client = clientFactory.CreateClient(facebookConfiguration.FacebookValidationEndpoint);
             var appAccessToken = await GetAppAccessToken(client);
+
             var verifyTokenResult = await VerifyToken(client, token, appAccessToken);
+            if (!verifyTokenResult.Scopes.Contains("email"))
+                throw new DomainException(Domain.Enums.ExceptionCode.FacebookTokenEmailPermissionRequired);
+            var userData = await GetUserData(client, token, verifyTokenResult.UserId);
 
             return new TokenInfo
             {
+                ClientId = verifyTokenResult.AppId,
+                DisplayName = userData.Name,
+                Email = userData.Email,
+                ExternalUserId = userData.Id,
+                ImageUrl = userData.Picture.Data.Url
             };
+        }
+
+        private async Task<FbUserDataResponse> GetUserData(IRestClient client, string token, string userId)
+        {
+            var request = clientFactory.CreateRequest(
+                $"{userId}" +
+                $"?fields=id,name,email,picture" +
+                $"&access_token={token}", Method.GET);
+
+            var response = await client.ExecuteTaskAsync<FbUserDataResponse>(request);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                throw new ProviderCommunicationException(response.ErrorMessage ?? response.StatusCode.ToString());
+
+            return response.Data;
         }
 
         private async Task<FbVerifyTokenResultData> VerifyToken(IRestClient client, string token, string appAccessToken)
@@ -47,8 +70,6 @@ namespace Leagueen.Infrastructure.Security.Facebook
             var response = await client.ExecuteTaskAsync<FbVerifyTokenResult>(request);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 throw new ProviderCommunicationException(response.ErrorMessage ?? response.StatusCode.ToString());
-            if (!response.Data.Data.Scopes.Contains("email"))
-                throw new DomainException(Domain.Enums.ExceptionCode.FacebookTokenEmailPermissionRequired);
 
             return response.Data.Data;
         }
