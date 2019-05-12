@@ -47,14 +47,15 @@ namespace Leagueen.Infrastructure.Providers.FootballData
         {
             switch (model.Status)
             {
+                case "FINISHED":
+                case "AWARDED":
+                    return MatchStatus.Finised;
                 case "SCHEDULED":
                     return MatchStatus.Scheduled;
                 case "IN_PLAY":
                     return MatchStatus.InPlay;
                 case "PAUSED":
                     return MatchStatus.Paused;
-                case "FINISHED":
-                    return MatchStatus.Finised;
                 case "POSTPONED":
                     return MatchStatus.Postponed;
                 case "SUSPENDED":
