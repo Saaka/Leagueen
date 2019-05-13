@@ -14,6 +14,8 @@
         FirstQualifyingRound = 10,
         ThirdPlace = 11,
         PreliminarySemiFinals = 12,
-        PreliminaryFinal = 13
+        PreliminaryFinal = 13,
+        PromotionPlayOffsSemiFinals = 14,
+        PromotionPlayOffsFinal = 15
     }
 }

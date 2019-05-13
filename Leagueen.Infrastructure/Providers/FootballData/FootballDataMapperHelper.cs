@@ -38,6 +38,10 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                     return MatchStage.PreliminarySemiFinals;
                 case "PRELIMINARY_FINAL":
                     return MatchStage.PreliminaryFinal;
+                case "PROMOTION_PLAY_OFFS_SEMI_FINALS":
+                    return MatchStage.PromotionPlayOffsSemiFinals;
+                case "PROMOTION_PLAY_OFFS_FINAL":
+                    return MatchStage.PromotionPlayOffsFinal;
                 default:
                     throw new ProviderCommunicationException($"Invalid MatchStage value: {model.Stage}");
             }
