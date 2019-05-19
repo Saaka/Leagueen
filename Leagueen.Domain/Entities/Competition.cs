@@ -10,12 +10,12 @@ namespace Leagueen.Domain.Entities
     {
         public int CompetitionId { get; private set; }
         public CompetitionType Type { get; private set; }
-        public CompetitionModelType Model { get; set; }
+        public CompetitionModelType Model { get; private set; }
         public string Name { get; private set; }
         public string Code { get; private set; }
         public int ExternalId { get; private set; }
         public bool IsActive { get; private set; }
-        public int DataProviderId { get; set; }
+        public int DataProviderId { get; private set; }
         public DateTime? LastProviderUpdate { get; private set; }
 
         public virtual IReadOnlyCollection<Season> Seasons => _seasons.AsReadOnly();
@@ -34,7 +34,6 @@ namespace Leagueen.Domain.Entities
             IsActive = isActive;
             DataProvider = dataProvider;
 
-            dataProvider.AddCompetition(this);
             ValidateCreation();
         }
 

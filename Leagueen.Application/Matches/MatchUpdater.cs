@@ -31,7 +31,10 @@ namespace Leagueen.Application.Matches
                 if (match.MatchScore != null)
                     scoreUpdater.UpdateScore(match.MatchScore, info.Score);
                 else
-                    scoreFactory.CreateScore(match, info.Score);
+                {
+                    var score = scoreFactory.CreateScore(match, info.Score);
+                    match.AddScore(score);
+                }
             }
             match
             .SetStatus(info.Status)

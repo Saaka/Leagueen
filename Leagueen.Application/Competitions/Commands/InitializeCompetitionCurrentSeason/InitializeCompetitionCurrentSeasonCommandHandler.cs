@@ -53,7 +53,10 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
 
             var season = competition.GetCurrentSeason();
             if (season == null)
+            {
                 season = CreateSeason(info.Season, competition);
+                competition.AddSeason(season);
+            }
             else
                 season = UpdateSeason(season, info);
 
@@ -75,6 +78,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             {
                 season.Deactivate();
                 season = CreateSeason(info.Season, season.Competition);
+                season.Competition.AddSeason(season);
             }
             else
                 season.SetMatchday(info.Season.CurrentMatchday);

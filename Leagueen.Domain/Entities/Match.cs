@@ -43,7 +43,6 @@ namespace Leagueen.Domain.Entities
             LastProviderUpdate = lastProviderUpdate;
             Result = MatchResult.Unknown;
 
-            season.AddMatch(this);
             ValidateCreation();
         }
 

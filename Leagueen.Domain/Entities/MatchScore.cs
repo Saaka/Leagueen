@@ -41,7 +41,6 @@ namespace Leagueen.Domain.Entities
             PentaltiesHome = pentaltiesHome;
             PentaltiesAway = pentaltiesAway;
 
-            Match.AddScore(this);
             ValidateCreation();
         }
 

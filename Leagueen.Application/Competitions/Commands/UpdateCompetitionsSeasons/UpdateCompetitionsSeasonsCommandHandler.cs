@@ -59,8 +59,8 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
             if (currentSeason.ExternalId != info.CurrentSeason.Id)
             {
                 currentSeason.Deactivate();
-                currentSeason = CreateNewSeason(competition, seasonInfo);
-                competition.AddSeason(currentSeason);
+                var season = CreateNewSeason(competition, seasonInfo);
+                competition.AddSeason(season);
             }
             else
             {
@@ -75,10 +75,8 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
 
         private Season CreateNewSeason(Competition competition, CompetitionSeasonDto seasonInfo)
         {
-            var newSeason = new Season(competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
+            return new Season(competition, seasonInfo.Id, seasonInfo.StartDate, seasonInfo.EndDate, seasonInfo.CurrentMatchday)
                 .SetActive();
-
-            return newSeason;
         }
     }
 }

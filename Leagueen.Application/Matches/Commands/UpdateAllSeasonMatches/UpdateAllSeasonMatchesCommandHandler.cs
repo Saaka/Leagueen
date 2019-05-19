@@ -65,6 +65,8 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
             if (match == null)
             {
                 match = matchFactory.CreateMatch(season, matchInfo);
+                season.AddMatch(match);
+
                 return true;
             }
             else

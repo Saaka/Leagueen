@@ -33,7 +33,10 @@ namespace Leagueen.Application.Matches
                 info.UtcDate, info.Status, info.Stage, info.LastUpdated, info.Group, info.Matchday);
 
             if (info.Score.Result != MatchResult.Unknown)
-                scoreFactory.CreateScore(match, info.Score);
+            {
+                var score = scoreFactory.CreateScore(match, info.Score);
+                match.AddScore(score);
+            }
 
             return match;
         }
