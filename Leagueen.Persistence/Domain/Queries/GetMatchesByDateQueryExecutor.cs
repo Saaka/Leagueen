@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Dapper;
 using Leagueen.Application.Matches.Queries.Models;
 using Leagueen.Application.Matches.Repositories;
-using Leagueen.Common;
 using Leagueen.Persistence.Connections;
 
 namespace Leagueen.Persistence.Domain.Queries
@@ -43,18 +42,19 @@ namespace Leagueen.Persistence.Domain.Queries
             }
         }
 
-        private const string GetMatchesQuery = @"
+        static readonly string GetMatchesQuery = GetMatchesQueryPlaceholder.Replace("##leagueen##", PersistenceConstants.DefaultSchema);
+        private const string GetMatchesQueryPlaceholder = @"
         SELECT DISTINCT	C.CompetitionId, C.Code, C.Name, C.Model
-        FROM	leagueen.Competitions C
-		        JOIN leagueen.Seasons S ON C.CompetitionId = S.CompetitionId
-		        JOIN leagueen.Matches M ON S.SeasonId = M.SeasonId
+        FROM	##leagueen##.Competitions C
+		        JOIN ##leagueen##.Seasons S ON C.CompetitionId = S.CompetitionId
+		        JOIN ##leagueen##.Matches M ON S.SeasonId = M.SeasonId
         WHERE	CAST(M.[Date] AS DATE) = CAST(@date AS DATE);
         SELECT	M.MatchId, HT.[Name] AS [HomeTeam], AT.[Name] AS [AwayTeam], ISNULL(MS.FullTimeHome, 0) AS [HomeScore], ISNULL(MS.FullTimeAway, 0) AS [AwayScore], M.Result, M.Status, M.Date, S.CompetitionId
-        FROM	leagueen.Matches M 
-		        JOIN leagueen.Seasons S ON M.SeasonId = S.SeasonId
-		        JOIN leagueen.Teams HT ON M.HomeTeamId = HT.TeamId
-		        JOIN leagueen.Teams AT ON M.AwayTeamId = AT.TeamId
-		        LEFT JOIN leagueen.MatchScores MS ON M.MatchId = MS.MatchId
+        FROM	##leagueen##.Matches M 
+		        JOIN ##leagueen##.Seasons S ON M.SeasonId = S.SeasonId
+		        JOIN ##leagueen##.Teams HT ON M.HomeTeamId = HT.TeamId
+		        JOIN ##leagueen##.Teams AT ON M.AwayTeamId = AT.TeamId
+		        LEFT JOIN ##leagueen##.MatchScores MS ON M.MatchId = MS.MatchId
         WHERE	CAST(M.[Date] AS Date) = CAST(@date AS DATE)
         ORDER BY S.CompetitionId, M.Date;";
     }
