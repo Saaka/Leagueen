@@ -39,11 +39,11 @@ namespace Leagueen.Persistence.Domain.Configurations
                     v => (GroupVisibility)v);
 
             builder
-                .HasOne<Competition>(nameof(GroupSettings.CompetitionId))
+                .HasOne<Competition>()
                 .WithMany()
                 .IsRequired(false);
             builder
-                .HasOne<Season>(nameof(GroupSettings.SeasonId))
+                .HasOne<Season>()
                 .WithMany()
                 .IsRequired(false);
         }

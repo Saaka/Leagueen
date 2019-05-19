@@ -15,8 +15,8 @@ namespace Leagueen.Domain.Entities
         public DateTime? LastUpdate { get; private set; }
         public GroupStatus Status { get; private set; }
 
-        public virtual IReadOnlyCollection<GroupMember> GroupMembers => _members.AsReadOnly();
-        protected List<GroupMember> _members = new List<GroupMember>();
+        public virtual IReadOnlyCollection<GroupMember> GroupMembers => _groupMembers.AsReadOnly();
+        protected List<GroupMember> _groupMembers = new List<GroupMember>();
 
         public virtual GroupSettings GroupSettings { get; private set; }
 
@@ -46,7 +46,7 @@ namespace Leagueen.Domain.Entities
             if (GroupMembers.Any(x => x.UserId == member.UserId && x.IsActive))
                 throw new DomainException(ExceptionCode.GroupMemberAlreadyExists);
 
-            _members.Add(member);
+            _groupMembers.Add(member);
             return this;
         }
 

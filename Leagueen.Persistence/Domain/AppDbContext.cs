@@ -18,6 +18,9 @@ namespace Leagueen.Persistence.Domain
         public DbSet<Match> Matches { get; set; }
         public DbSet<MatchScore> MatchScores { get; set; }
         public DbSet<UpdateLog> UpdateLogs { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupSettings> GroupSettings { get; set; }
+        public DbSet<GroupMember> GroupMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
