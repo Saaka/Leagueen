@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Hangfire;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 using System;
@@ -21,6 +22,7 @@ namespace Leagueen.WebAPI.Jobs
             this.configuration = configuration;
         }
 
+        [AutomaticRetry(Attempts = 0)]
         public void Run()
         {
             logger.LogInformation($"Leagueen - {nameof(KeepAliveJob)} - {DateTime.UtcNow.ToString()}");
