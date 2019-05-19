@@ -51,6 +51,22 @@
         UserDisplayNameNotUnique,
         ProviderMappingAlreadyExists,
         InvalidFacebookToken,
-        FacebookTokenEmailPermissionRequired
+        FacebookTokenEmailPermissionRequired,
+        GroupTypeInvalid,
+        GroupVisibilityInvalid,
+        GroupOwnerRequired,
+        GroupNameRequired,
+        GroupAlreadyHasSettings,
+        GroupMemberAlreadyExists,
+        GroupMemberUserIdRequired,
+        GroupMemberGroupRequired,
+        CantAddNegativePoints,
+        CantArchiveDeactivatedGroup,
+        GroupSettingsGroupRequired,
+        GroupSettingsPointsForExactScoreRequired,
+        GroupSettingsPointsForResultRequired,
+        GroupSettingsMatchResultResolveModeInvalid,
+        CantSetCompetitionForThisTypeOfGroup,
+        InvalidCompetitionData
     }
 }
