@@ -1,4 +1,4 @@
-import { Matches, Counter, Dashboard, Unauthorized } from "views/exports";
+import { Matches, Counter, Dashboard, Unauthorized, UserGroups } from "views/exports";
 import { RouteNames } from "./names";
 
 const appRoutes = [
@@ -20,6 +20,13 @@ const appRoutes = [
         component: Matches,
         name: "Matches",
         icon: "futbol"
+    },
+    {
+        useAuth: true,
+        path: RouteNames.UserGroups,
+        component: UserGroups,
+        name: "Groups",
+        icon: "users"
     },
     {
         useAuth: true,
