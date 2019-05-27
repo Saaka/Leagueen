@@ -1,4 +1,5 @@
 ﻿using Leagueen.Application.Competitions.Repositories;
+using Leagueen.Application.Groups.Repositories;
 using Leagueen.Application.Infrastructure.DbInitializer;
 using Leagueen.Application.Matches.Repositories;
 using Leagueen.Application.UpdateLogs.Repositories;
@@ -55,6 +56,7 @@ namespace Leagueen.Persistence
                 .AddTransient<ITeamsRepository, TeamsRepository>()
                 .AddTransient<IMatchesRepository, MatchesRepository>()
                 .AddTransient<IUpdateLogsRepository, UpdateLogsRepository>()
+                .AddTransient<IUserGroupsRepository, UserGroupsRepository>()
 
                 .AddTransient<IDbConnectionFactory, SqlConnectionFactory>()
                 .AddTransient<IGetMatchesByDateQueryExecutor, GetMatchesByDateQueryExecutor>()

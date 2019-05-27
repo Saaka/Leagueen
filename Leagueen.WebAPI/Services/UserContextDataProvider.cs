@@ -31,15 +31,21 @@ namespace Leagueen.WebAPI.Services
 
         public async Task<int> GetUser(HttpContext context)
         {
+            string userCode = GetUserCodeFromContext(context);
+
+            var userId = await GetUserId(userCode);
+            return userId;
+        }
+
+        private string GetUserCodeFromContext(HttpContext context)
+        {
             if (context.User == null
                 || context.User.Claims == null
                 || !context.User.HasClaim(x => x.Type == SubClaimType))
                 throw new InvalidOperationException("Can't authenticate current user");
 
             var userCode = context.User.FindFirst(x => x.Type == SubClaimType).Value;
-
-            var userId = await GetUserId(userCode);
-            return userId;
+            return userCode;
         }
 
         private async Task<int> GetUserId(string moniker)

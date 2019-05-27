@@ -24,6 +24,12 @@ Constants.ApiRoutes.Matches = class MatchesRoutes {
     }
 };
 
+Constants.ApiRoutes.UserGroups = class UserGroupsRoutes {
+    static get LIST() {
+        return "groups/userGroups";
+    }
+};
+
 Constants.MatchStatus = class MatchStatus {
     static get SCHEDULED() {
         return 1;
