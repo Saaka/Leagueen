@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { UserGroupsService } from "Services";
-import { Loader } from "components/common";
+import { Loader, Icon } from "components/common";
+import { RouteNames } from "routes/names";
 
 export function UserGroups(props) {
 
@@ -26,10 +27,16 @@ export function UserGroups(props) {
         });
     }
 
+    function createGroup() {
+        props.history.push(RouteNames.CreateGroup);
+    }
+
     function renderGroups() {
         return (
             <div>
-                <h5 className="display-5 groups-title">User groups</h5>
+                <h5 className="display-5 groups-title">User groups
+                    <button className="btn btn-sm btn-accent ml-2" onClick={() => createGroup()}>Create group <Icon icon="plus"/></button>
+                </h5>
                 {renderList()}
             </div>
         );

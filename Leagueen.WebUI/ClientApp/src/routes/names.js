@@ -10,6 +10,7 @@ RouteNames.Unauthorized = "/app/unauthorized";
 RouteNames.Home = "/app/home";
 RouteNames.Matches = "/app/matches";
 RouteNames.UserGroups = "/app/userGroups"
+RouteNames.CreateGroup = "/app/createGroup"
 
 RouteNames.Counter = "/app/counter";
 
