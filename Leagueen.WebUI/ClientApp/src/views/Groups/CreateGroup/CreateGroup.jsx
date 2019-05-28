@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { UserGroupsService } from "Services";
-import { Loader } from "components/common";
+import { Loader, Icon } from "components/common";
 
 export function CreateGroup(props) {
 
@@ -12,7 +12,7 @@ export function CreateGroup(props) {
     const [isLoading, toggleLoading] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
 
-    const validations = { 
+    const validations = {
         nameMaxLength: 64,
         nameMinLength: 6
     };
@@ -27,28 +27,23 @@ export function CreateGroup(props) {
         ev.preventDefault();
         setSubmitted(true);
         var formIsValid = ev.target.checkValidity();
-        if(formIsValid) {
+        if (formIsValid) {
             //Create game
-        } 
+        }
     }
 
-    function formClass() {
-        if (isSubmitted)
-            return "was-validated";
-
-        return "";
-    }
+    const getFormClass = () => isSubmitted ? "was-validated" : "";
 
     function handleChange(ev) {
         const { name, value } = ev.target;
-        setGroup(gr => ({ ...gr, [name]: value }))
+        setGroup(groupState => ({ ...groupState, [name]: value }))
     }
 
     function renderGroup() {
         return (
             <div>
-                <h5 className="display-5 group-title">Create user group</h5>
-                <form name="createGroupForm" onSubmit={(ev) => submitGroup(ev)} noValidate className={formClass()}>
+                <h5 className="display-5 group-title">Create user group <Icon icon="users"/></h5>
+                <form name="createGroupForm" onSubmit={(ev) => submitGroup(ev)} noValidate className={getFormClass()}>
                     <div className="form-group">
                         <label htmlFor="groupName">Name</label>
                         <input type="text"
