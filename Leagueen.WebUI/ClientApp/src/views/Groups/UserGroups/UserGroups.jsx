@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { UserGroupsService } from "Services";
 import { Loader, Icon } from "components/common";
 import { RouteNames } from "routes/names";
+import "./UserGroups.scss";
 
 export function UserGroups(props) {
 

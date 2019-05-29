@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { UserGroupsService } from "Services";
 import { Loader, Icon } from "components/common";
+import { RouteNames } from "routes/names";
+import "./CreateGroup.scss";
 
 export function CreateGroup(props) {
 
@@ -9,12 +11,26 @@ export function CreateGroup(props) {
         name: "",
         description: ""
     });
+    const [settings, setSettings] = useState({
+        pointsForExactScore: 5,
+        pointsForResult: 3,
+        type: 1,
+        visibility: 1,
+        resultResolveMode: 1,
+        competitionId: null,
+        seasonId: null
+    });
     const [isLoading, toggleLoading] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
 
     const validations = {
+        descriptionMaxLength: 1024,
         nameMaxLength: 64,
-        nameMinLength: 6
+        nameMinLength: 6,
+        exactMin: 1,
+        exactMax:20,
+        resMin: 1,
+        resMax: 20
     };
 
     useEffect(() => loadData(), []);
@@ -34,40 +50,79 @@ export function CreateGroup(props) {
 
     const getFormClass = () => isSubmitted ? "was-validated" : "";
 
-    function handleChange(ev) {
+    function handleGroupChange(ev) {
         const { name, value } = ev.target;
         setGroup(groupState => ({ ...groupState, [name]: value }))
+    }
+    
+    function handleSettingsChange(ev) {
+        const { name, value } = ev.target;
+        setSettings(s => ({ ...s, [name]: value }))
+    }
+
+    function cancel() {
+        props.history.push(RouteNames.UserGroups);
     }
 
     function renderGroup() {
         return (
             <div>
-                <h5 className="display-5 group-title">Create user group <Icon icon="users"/></h5>
+                <h5 className="display-5 group-title">Create user group <Icon icon="users" /></h5>
                 <form name="createGroupForm" onSubmit={(ev) => submitGroup(ev)} noValidate className={getFormClass()}>
-                    <div className="form-group">
-                        <label htmlFor="groupName">Name</label>
-                        <input type="text"
-                            className="form-control"
-                            id="groupName"
-                            name="name"
-                            maxLength={validations.nameMaxLength}
-                            minLength={validations.nameMinLength}
-                            value={group.name}
-                            onChange={handleChange}
-                            required />
-                        <div className="invalid-feedback">Group name is required (valid name length is between {validations.nameMinLength} and {validations.nameMaxLength} characters)</div>
+                    <div className="form-row">
+                        <div className="col-md-6">
+                            <label htmlFor="groupName">Name</label>
+                            <input type="text"
+                                className="form-control"
+                                id="groupName"
+                                name="name"
+                                maxLength={validations.nameMaxLength}
+                                minLength={validations.nameMinLength}
+                                value={group.name}
+                                onChange={handleGroupChange}
+                                required />
+                            <div className="invalid-feedback">Group name is required (valid name length is between {validations.nameMinLength} and {validations.nameMaxLength} characters)</div>
+                        </div>
+                        <div className="col-md-6">
+                            <label htmlFor="groupDesc">Description</label>
+                            <input className="form-control"
+                                id="groupDesc"
+                                name="description"
+                                maxLength={validations.descriptionMaxLength}
+                                value={group.description}
+                                onChange={handleGroupChange} />
+                            <div className="invalid-feedback">Description can't be longer than {validations.descriptionMaxLength} characters</div>
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="groupDesc">Description</label>
-                        <textarea className="form-control"
-                            id="groupDesc"
-                            name="description"
-                            rows="5"
-                            value={group.description}
-                            onChange={handleChange}>
-                        </textarea>
+                    <div className="form-row">
+                        <div className="col-md-3">
+                            <label htmlFor="pointsForExactScore">Points for exact score</label>
+                            <input type="number"
+                                className="form-control"
+                                id="pointsForExactScore"
+                                name="pointsForExactScore"
+                                min={validations.exactMin}
+                                max={validations.exactMax}
+                                value={settings.pointsForExactScore}
+                                onChange={handleSettingsChange} />
+                            <div className="invalid-feedback">Value must be greater than {validations.exactMin} and less than {validations.exactMax}</div>
+                        </div>
+                        <div className="col-md-3">
+                            <label htmlFor="pointsForResult">Points for result</label>
+                            <input type="number"
+                                className="form-control"
+                                id="pointsForResult"
+                                name="pointsForResult"
+                                min={validations.resMin}
+                                max={settings.pointsForExactScore}
+                                value={settings.pointsForResult}
+                                onChange={handleSettingsChange} />
+                            <div className="invalid-feedback">Value must be greater than {validations.resMin} and less or equal than "Points for exact score"</div>
+                        </div>
                     </div>
-                    <button className="btn btn-accent" type="submit">Save</button>
+                    <br />
+                    <button className="btn btn-accent mr-3" type="submit">Save</button>
+                    <button className="btn btn-secondary" type="button" onClick={(ev) => cancel(ev)}>Cancel</button>
                 </form>
             </div>
         );
