@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { UserGroupsService } from "Services";
-import { Loader, Icon } from "components/common";
+import { Loader, Icon, Select } from "components/common";
 import { RouteNames } from "routes/names";
 import "./CreateGroup.scss";
 
@@ -22,13 +22,14 @@ export function CreateGroup(props) {
     });
     const [isLoading, toggleLoading] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
+    const visibilityDict = [{ id: 1, name: "Public" }, { id: 2, name: "Private" }];
 
     const validations = {
         descriptionMaxLength: 1024,
         nameMaxLength: 64,
         nameMinLength: 6,
         exactMin: 1,
-        exactMax:20,
+        exactMax: 20,
         resMin: 1,
         resMax: 20
     };
@@ -54,7 +55,7 @@ export function CreateGroup(props) {
         const { name, value } = ev.target;
         setGroup(groupState => ({ ...groupState, [name]: value }))
     }
-    
+
     function handleSettingsChange(ev) {
         const { name, value } = ev.target;
         setSettings(s => ({ ...s, [name]: value }))
@@ -104,7 +105,8 @@ export function CreateGroup(props) {
                                 min={validations.exactMin}
                                 max={validations.exactMax}
                                 value={settings.pointsForExactScore}
-                                onChange={handleSettingsChange} />
+                                onChange={handleSettingsChange}
+                                required />
                             <div className="invalid-feedback">Value must be greater than {validations.exactMin} and less than {validations.exactMax}</div>
                         </div>
                         <div className="col-md-3">
@@ -116,8 +118,19 @@ export function CreateGroup(props) {
                                 min={validations.resMin}
                                 max={settings.pointsForExactScore}
                                 value={settings.pointsForResult}
-                                onChange={handleSettingsChange} />
+                                onChange={handleSettingsChange}
+                                required />
                             <div className="invalid-feedback">Value must be greater than {validations.resMin} and less or equal than "Points for exact score"</div>
+                        </div>
+                        <div className="col-md-3">
+                            <label htmlFor="visibility">Access</label>
+                            <Select className="form-control"
+                                id="visibility"
+                                name="visibility"
+                                values={visibilityDict}
+                                onChange={handleSettingsChange}
+                                required>
+                            </Select>
                         </div>
                     </div>
                     <br />
