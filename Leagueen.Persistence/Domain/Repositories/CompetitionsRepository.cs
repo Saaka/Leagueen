@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Leagueen.Domain.Enums;
 using Leagueen.Application.Competitions.Models;
+using Leagueen.Application.Models;
 
 namespace Leagueen.Persistence.Domain.Repositories
 {
@@ -38,6 +39,20 @@ namespace Leagueen.Persistence.Domain.Repositories
                         join prov in context.DataProviders on comp.DataProviderId equals prov.DataProviderId
                         where prov.Type == providerType && comp.IsActive
                         select comp.Type;
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<DictionaryModel>> GetCurrentSeasonsDictionary()
+        {
+            var query = from comp in context.Competitions
+                        join season in context.Seasons on comp.CompetitionId equals season.CompetitionId
+                        where season.IsActive == true && comp.IsActive == true
+                        select new DictionaryModel
+                        {
+                            Id = season.SeasonId,
+                            Name = comp.Name + " " + season.StartDate.Year + "/" + season.EndDate.Year
+                        };
 
             return await query.ToListAsync();
         }

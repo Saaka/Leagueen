@@ -1,5 +1,5 @@
 ﻿using Leagueen.Application.Competitions.Models;
-using Leagueen.Domain.Entities;
+using Leagueen.Application.Models;
 using Leagueen.Domain.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,5 +11,6 @@ namespace Leagueen.Application.Competitions.Repositories
         Task<IEnumerable<CompetitionUpdateInfo>> GetAllActiveCompetitions();
         Task<IEnumerable<CompetitionType>> GetAllActiveCompetitionTypesForProvider(DataProviderType providerType);
         Task<DataProviderType> GetProviderTypeForCompetition(CompetitionType type);
+        Task<IEnumerable<DictionaryModel>> GetCurrentSeasonsDictionary();
     }
 }
