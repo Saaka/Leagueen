@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UserGroupsService } from "Services";
+import { UserGroupsService, CompetitionsService } from "Services";
 import { Loader, Icon, Select } from "components/common";
 import { RouteNames } from "routes/names";
 import "./CreateGroup.scss";
@@ -7,6 +7,7 @@ import "./CreateGroup.scss";
 export function CreateGroup(props) {
 
     const groupsService = new UserGroupsService();
+    const competitionsService = new CompetitionsService();
     const [group, setGroup] = useState({
         name: "",
         description: ""
@@ -22,6 +23,7 @@ export function CreateGroup(props) {
     });
     const [isLoading, toggleLoading] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
+    const [seasons, setSeasons] = useState([]);
     const visibilityDict = [{ id: 1, name: "Public" }, { id: 2, name: "Private" }];
 
     const validations = {
@@ -37,7 +39,12 @@ export function CreateGroup(props) {
     useEffect(() => loadData(), []);
 
     function loadData() {
-        toggleLoading(false);
+        competitionsService
+            .getSeasonsDictionary()
+            .then(dict => {
+                setSeasons(dict);
+                toggleLoading(false);
+            });
     }
 
     function submitGroup(ev) {
@@ -96,6 +103,16 @@ export function CreateGroup(props) {
                         </div>
                     </div>
                     <div className="form-row">
+                        <div className="col-md-3">
+                            <label htmlFor="season">Season</label>
+                            <Select className="form-control"
+                                id="season"
+                                name="seasonId"
+                                values={seasons}
+                                onChange={handleSettingsChange}
+                                required>
+                            </Select>
+                        </div>
                         <div className="col-md-3">
                             <label htmlFor="pointsForExactScore">Points for exact score</label>
                             <input type="number"

@@ -30,6 +30,12 @@ Constants.ApiRoutes.UserGroups = class UserGroupsRoutes {
     }
 };
 
+Constants.ApiRoutes.Competitions = class CompetitionsRoutes {
+    static get SEASONS_DICTIONARY() {
+        return "competitions/seasonsDictionary";
+    }
+};
+
 Constants.MatchStatus = class MatchStatus {
     static get SCHEDULED() {
         return 1;
