@@ -42,7 +42,10 @@ export function CreateGroup(props) {
         competitionsService
             .getSeasonsDictionary()
             .then(dict => {
-                setSeasons(dict);
+                if (!!dict.length) {
+                    setSeasons(dict);
+                    updateSelectedSeason(dict[0].id, dict);
+                }
                 toggleLoading(false);
             });
     }
@@ -60,12 +63,25 @@ export function CreateGroup(props) {
 
     function handleGroupChange(ev) {
         const { name, value } = ev.target;
-        setGroup(groupState => ({ ...groupState, [name]: value }))
+        setGroup(groupState => ({ ...groupState, [name]: value }));
     }
 
     function handleSettingsChange(ev) {
         const { name, value } = ev.target;
-        setSettings(s => ({ ...s, [name]: value }))
+        setSettings(s => ({ ...s, [name]: value }));
+    }
+
+    function handleSeasonChange(ev) {
+        const { value } = ev.target;
+        updateSelectedSeason(Number(value), seasons);
+    }
+
+    function updateSelectedSeason(value, dict) {
+        if (!!!value || dict.length === 0)
+            return;
+
+        const competitionId = dict.filter((v, i) => v.id === value)[0].competitionId;
+        setSettings(s => ({ ...s, seasonId: value, competitionId: competitionId }));
     }
 
     function cancel() {
@@ -109,9 +125,10 @@ export function CreateGroup(props) {
                                 id="season"
                                 name="seasonId"
                                 values={seasons}
-                                onChange={handleSettingsChange}
+                                onChange={handleSeasonChange}
                                 required>
                             </Select>
+                            <div className="invalid-feedback">Season is required</div>
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="pointsForExactScore">Points for exact score</label>
@@ -148,6 +165,9 @@ export function CreateGroup(props) {
                                 onChange={handleSettingsChange}
                                 required>
                             </Select>
+                        </div>
+                        <div>
+                            {JSON.stringify(settings, null, 2)}
                         </div>
                     </div>
                     <br />

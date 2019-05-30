@@ -7,9 +7,9 @@ namespace Leagueen.Application.Competitions.Models
     {
         public GetSeasonsDictionaryQueryResult()
         {
-            Seasons = new List<DictionaryModel>();
+            Seasons = new List<SeasonCompetitionDictionaryModel>();
         }
 
-        public ICollection<DictionaryModel> Seasons { get; set; }
+        public ICollection<SeasonCompetitionDictionaryModel> Seasons { get; set; }
     }
 }

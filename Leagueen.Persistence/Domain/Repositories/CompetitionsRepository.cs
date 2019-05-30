@@ -43,15 +43,16 @@ namespace Leagueen.Persistence.Domain.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<IEnumerable<DictionaryModel>> GetCurrentSeasonsDictionary()
+        public async Task<IEnumerable<SeasonCompetitionDictionaryModel>> GetCurrentSeasonsDictionary()
         {
             var query = from comp in context.Competitions
                         join season in context.Seasons on comp.CompetitionId equals season.CompetitionId
                         where season.IsActive == true && comp.IsActive == true
-                        select new DictionaryModel
+                        select new SeasonCompetitionDictionaryModel
                         {
                             Id = season.SeasonId,
-                            Name = comp.Name + " " + season.StartDate.Year + "/" + season.EndDate.Year
+                            Name = comp.Name + " " + season.StartDate.Year + "/" + season.EndDate.Year,
+                            CompetitionId = comp.CompetitionId
                         };
 
             return await query.ToListAsync();

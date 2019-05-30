@@ -11,6 +11,6 @@ namespace Leagueen.Application.Competitions.Repositories
         Task<IEnumerable<CompetitionUpdateInfo>> GetAllActiveCompetitions();
         Task<IEnumerable<CompetitionType>> GetAllActiveCompetitionTypesForProvider(DataProviderType providerType);
         Task<DataProviderType> GetProviderTypeForCompetition(CompetitionType type);
-        Task<IEnumerable<DictionaryModel>> GetCurrentSeasonsDictionary();
+        Task<IEnumerable<SeasonCompetitionDictionaryModel>> GetCurrentSeasonsDictionary();
     }
 }
