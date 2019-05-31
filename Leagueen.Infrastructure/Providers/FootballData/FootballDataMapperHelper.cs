@@ -46,8 +46,10 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                     return MatchStage.EuropaLeaguePlayoffSemiFinals;
                 case "EUROPA_LEAGUE_PLAYOFF_FINAL":
                     return MatchStage.EuropaLeaguePlayoffFinal;
+                case "RELEGATION_PROMOTION_PLAYOFF":
+                    return MatchStage.RelegationPromotionPlayoff;
                 default:
-                    throw new ProviderCommunicationException($"Invalid MatchStage value: {model.Stage}");
+                    throw new ProviderCommunicationException($"Invalid MatchStage value: {model.Stage}. MatchId: {model.Id} Date: {model.UtcDate} CompetitionId: {model.Competition?.Id}");
             }
         }
 
