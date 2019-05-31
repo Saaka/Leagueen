@@ -18,6 +18,7 @@
         PromotionPlayOffsSemiFinals = 14,
         PromotionPlayOffsFinal = 15,
         EuropaLeaguePlayoffSemiFinals = 16,
-        EuropaLeaguePlayoffFinal = 17
+        EuropaLeaguePlayoffFinal = 17,
+        RelegationPromotionPlayoff = 18
     }
 }
