@@ -14,9 +14,8 @@ namespace Leagueen.Domain.Entities
         public virtual Group Group { get; private set; }
 
         private GroupMember() { }
-        public GroupMember(Group group, int userId)
+        public GroupMember(int userId)
         {
-            Group = group;
             UserId = userId;
             IsActive = true;
             Points = 0;
@@ -48,8 +47,6 @@ namespace Leagueen.Domain.Entities
         {
             if (UserId == 0)
                 throw new DomainException(ExceptionCode.GroupMemberUserIdRequired);
-            if (Group == null)
-                throw new DomainException(ExceptionCode.GroupMemberGroupRequired);
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Leagueen.Application.Groups.Commands.CreateGroup
 
             group
                 .AddSettings(groupSettings)
+                .AddMember(new GroupMember(request.OwnerId))
                 .MarkUpdate(dateTime.GetUtcNow());
 
             await groupAggregateRepository.SaveGroup(group);
