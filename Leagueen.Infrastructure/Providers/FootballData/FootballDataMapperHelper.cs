@@ -49,7 +49,8 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 case "RELEGATION_PROMOTION_PLAYOFF":
                     return MatchStage.RelegationPromotionPlayoff;
                 default:
-                    throw new ProviderCommunicationException($"Invalid MatchStage value: {model.Stage}. MatchId: {model.Id} Date: {model.UtcDate} CompetitionId: {model.Competition?.Id}");
+                    throw new ProviderCommunicationException(
+                        $"Invalid MatchStage value: {model.Stage}. MatchId: {model.Id} Date: {model.UtcDate} CompetitionId: {model.Competition?.Id}");
             }
         }
 
@@ -73,7 +74,8 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 case "CANCELED":
                     return MatchStatus.Canceled;
                 default:
-                    throw new ProviderCommunicationException($"Invalid MatchStatus value: {model.Status}");
+                    throw new ProviderCommunicationException(
+                        $"Invalid MatchStatus value: {model.Status}. MatchId: {model.Id} Date: {model.UtcDate} CompetitionId: {model.Competition?.Id}");
             }
         }
 
@@ -91,7 +93,8 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 case "DRAW":
                     return MatchResult.Draw;
                 default:
-                    throw new ProviderCommunicationException($"Invalid Matchresult value: {model.Winner}");
+                    throw new ProviderCommunicationException(
+                        $"Invalid Matchresult value: {model.Winner}");
             }
         }
 
