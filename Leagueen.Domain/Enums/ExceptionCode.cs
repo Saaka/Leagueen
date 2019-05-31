@@ -67,6 +67,7 @@
         GroupSettingsPointsForResultRequired,
         GroupSettingsMatchResultResolveModeInvalid,
         CantSetCompetitionForThisTypeOfGroup,
-        InvalidCompetitionData
+        InvalidCompetitionData,
+        GroupGuidRequired
     }
 }

@@ -12,6 +12,16 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder.HasKey(x => x.GroupId);
 
             builder
+                .HasIndex(x => x.GroupGuid)
+                .HasName("IX_GroupGuid")
+                .IsUnique();
+
+            builder
+                .Property(x => x.GroupGuid)
+                .IsRequired()
+                .HasMaxLength(64);
+
+            builder
                 .Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(64);

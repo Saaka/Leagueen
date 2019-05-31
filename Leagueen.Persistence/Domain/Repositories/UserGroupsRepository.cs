@@ -25,7 +25,7 @@ namespace Leagueen.Persistence.Domain.Repositories
                                 && ug.Status == Leagueen.Domain.Enums.GroupStatus.Active
                         select new UserGroupInfo
                         {
-                            GroupId = ug.GroupId,
+                            GroupGuid = ug.GroupGuid,
                             Name = ug.Name,
                             IsAdmin = ug.OwnerId == userId
                         };

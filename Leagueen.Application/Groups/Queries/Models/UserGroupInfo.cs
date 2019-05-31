@@ -2,7 +2,7 @@
 {
     public class UserGroupInfo
     {
-        public int GroupId { get; set; }
+        public string GroupGuid { get; set; }
         public bool IsAdmin { get; set; }
         public string Name { get; set; }
     }
