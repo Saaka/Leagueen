@@ -13,9 +13,9 @@ namespace Leagueen.WebAPI.Controllers
         public async Task<IActionResult> UpdateAllSeasonMatches(string displayName)
         {
             var userId = await GetUserId();
-            var result = await Mediator.Send(new UpdateUserDisplayNameCommand { DisplayName = displayName, UserId = userId });
+            await Mediator.Send(new UpdateUserDisplayNameCommand { DisplayName = displayName, UserId = userId });
 
-            return GetRequestResult(result);
+            return Ok();
         }
     }
 }

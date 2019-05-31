@@ -1,5 +1,5 @@
 ﻿using Leagueen.Application.Requests;
-using Leagueen.Application.Users.Models;
+using Leagueen.Common;
 using Leagueen.WebAPI.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +13,15 @@ namespace Leagueen.WebAPI.Controllers
     public class BaseController : ControllerBase
     {
         private IMediator _mediator;
-        private IUserContextDataProvider userContextDataProvider;
+        private IUserContextDataProvider _userContextDataProvider;
+        private IGuid _guid;
 
         protected IMediator Mediator
             => _mediator ?? (_mediator = HttpContext.RequestServices.GetService<IMediator>());
         protected IUserContextDataProvider UserContextDataProvider
-            => userContextDataProvider ?? (userContextDataProvider = HttpContext.RequestServices.GetService<IUserContextDataProvider>());
+            => _userContextDataProvider ?? (_userContextDataProvider = HttpContext.RequestServices.GetService<IUserContextDataProvider>());
+        protected IGuid GuidProvider
+            => _guid ?? (_guid = HttpContext.RequestServices.GetService<IGuid>());
 
         protected async Task<int> GetUserId() => await UserContextDataProvider.GetUser(HttpContext);
 
