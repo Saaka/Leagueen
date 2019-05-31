@@ -23,9 +23,21 @@ export function UserGroups(props) {
     }
 
     function renderList() {
-        return groups.map((g, key) => {
-            return <div>{g.name}</div>
-        });
+        return (
+            <table className="table table-hover">
+                <tbody>
+                    {groups.map((g, k) =>
+                        <tr key={k}>
+                            <td>{g.name}</td>
+                            <td>{g.isAdmin ? <span>Admin <Icon icon="star" /></span> : ""}</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        );
+        // return groups.map((g, key) => {
+        //     return <div>{g.name}</div>
+        // });
     }
 
     function createGroup() {
@@ -36,7 +48,7 @@ export function UserGroups(props) {
         return (
             <div>
                 <h5 className="display-5 groups-title">User groups
-                    <button className="btn btn-sm btn-accent ml-2" onClick={() => createGroup()}>Create group <Icon icon="plus"/></button>
+                    <button className="btn btn-sm btn-accent ml-2" onClick={() => createGroup()}>Create group <Icon icon="plus" /></button>
                 </h5>
                 {renderList()}
             </div>

@@ -1,6 +1,6 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faArrowLeft, faAlignLeft, faSpinner, faCalendarAlt, faSignInAlt, faSignOutAlt, faFutbol, faHome, faUsers, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faAlignLeft, faSpinner, faCalendarAlt, faSignInAlt, faSignOutAlt, faFutbol, faHome, faUsers, faPlus, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle, faFacebookF } from "@fortawesome/free-brands-svg-icons";
 
 
-library.add(faArrowLeft, faAlignLeft, faSpinner, faGoogle, faFacebookF, faCalendarAlt, faSignInAlt, faSignOutAlt, faFutbol, faHome, faUsers, faPlus); 
+library.add(faArrowLeft, faAlignLeft, faSpinner, faGoogle, faFacebookF, faCalendarAlt, faSignInAlt, faSignOutAlt, faFutbol, faHome, faUsers, faPlus, faStar); 
