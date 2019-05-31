@@ -19,11 +19,9 @@ namespace Leagueen.Domain.Entities
         public virtual Group Group { get; private set; }
 
         private GroupSettings() { }
-        public GroupSettings(Group group, 
-            int pointsForExactScore, int pointsForResult,
+        public GroupSettings(int pointsForExactScore, int pointsForResult,
             GroupType type, GroupVisibility visibility, MatchResultResolveMode resultResolveMode)
         {
-            Group = group;
             Type = type;
             Visibility = visibility;
             PointsForExactScore = pointsForExactScore;
@@ -56,8 +54,6 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
-            if (Group == null)
-                throw new DomainException(ExceptionCode.GroupSettingsGroupRequired);
             if (PointsForExactScore == 0)
                 throw new DomainException(ExceptionCode.GroupSettingsPointsForExactScoreRequired);
             if (PointsForResult == 0)

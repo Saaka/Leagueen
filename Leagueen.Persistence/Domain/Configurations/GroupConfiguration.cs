@@ -1,4 +1,5 @@
-﻿using Leagueen.Domain.Entities;
+﻿using Leagueen.Domain.Constants;
+using Leagueen.Domain.Entities;
 using Leagueen.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -19,17 +20,17 @@ namespace Leagueen.Persistence.Domain.Configurations
             builder
                 .Property(x => x.GroupGuid)
                 .IsRequired()
-                .HasMaxLength(64);
+                .HasMaxLength(GroupConstants.GuidMaxLength);
 
             builder
                 .Property(x => x.Name)
                 .IsRequired()
-                .HasMaxLength(64);
+                .HasMaxLength(GroupConstants.NameMaxLength);
 
             builder
                 .Property(x => x.Description)
                 .IsRequired(false)
-                .HasMaxLength(1024);
+                .HasMaxLength(GroupConstants.DescMaxLength);
 
             builder
                 .Property(x => x.OwnerId)
