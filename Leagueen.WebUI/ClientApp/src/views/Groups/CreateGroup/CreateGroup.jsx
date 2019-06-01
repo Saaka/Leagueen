@@ -3,6 +3,7 @@ import { UserGroupsService, CompetitionsService } from "Services";
 import { Loader, Icon, Select } from "components/common";
 import { RouteNames } from "routes/names";
 import "./CreateGroup.scss";
+import { func } from "prop-types";
 
 export function CreateGroup(props) {
 
@@ -55,7 +56,12 @@ export function CreateGroup(props) {
         setSubmitted(true);
         var formIsValid = ev.target.checkValidity();
         if (formIsValid) {
-            //Create game
+            let request = { ...group, ...settings };
+            groupsService
+                .saveGroup(request)
+                .then(resp => {
+                    redirectToList();
+                });
         }
     }
 
@@ -84,7 +90,9 @@ export function CreateGroup(props) {
         setSettings(s => ({ ...s, seasonId: value, competitionId: competitionId }));
     }
 
-    function cancel() {
+    const cancel = () => redirectToList();
+
+    function redirectToList() {
         props.history.push(RouteNames.UserGroups);
     }
 

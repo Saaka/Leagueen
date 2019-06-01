@@ -25,6 +25,9 @@ Constants.ApiRoutes.Matches = class MatchesRoutes {
 };
 
 Constants.ApiRoutes.UserGroups = class UserGroupsRoutes {
+    static get CREATE_GROUP() {
+        return "groups";
+    }
     static get LIST() {
         return "groups/userGroups";
     }
