@@ -25,7 +25,7 @@ const appRoutes = [
         useAuth: true,
         path: RouteNames.UserGroups,
         component: UserGroups,
-        name: "Groups",
+        name: "My Groups",
         icon: "users"
     },
     {

@@ -17,7 +17,7 @@ export function CreateGroup(props) {
         pointsForExactScore: 5,
         pointsForResult: 3,
         type: 1,
-        visibility: 1,
+        visibility: 2,
         resultResolveMode: 1,
         competitionId: null,
         seasonId: null
@@ -25,7 +25,7 @@ export function CreateGroup(props) {
     const [isLoading, toggleLoading] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
     const [seasons, setSeasons] = useState([]);
-    const visibilityDict = [{ id: 1, name: "Public" }, { id: 2, name: "Private" }];
+    const [showResultInfo, setShowResultInfo] = useState(false);
 
     const validations = {
         descriptionMaxLength: 1024,
@@ -96,6 +96,16 @@ export function CreateGroup(props) {
         props.history.push(RouteNames.UserGroups);
     }
 
+    function renderInfo() {
+        return showResultInfo ? (
+            <div className="card mt-2">
+                <div className="card-body">
+                    <Icon icon="info-circle" /> Final result is calculated based on regular time plus extra. Penalties count as draw.
+                </div>
+            </div>
+        ) : null;
+    }
+
     function renderGroup() {
         return (
             <div className="col-md-4 offset-md-4">
@@ -149,7 +159,12 @@ export function CreateGroup(props) {
                         <div className="invalid-feedback">Value must be greater than {validations.exactMin} and less than {validations.exactMax}</div>
                     </div>
                     <div>
-                        <label htmlFor="pointsForResult">Points for result</label>
+                        <label htmlFor="pointsForResult">Points for result <Icon
+                            icon="info-circle"
+                            className="info-click"
+                            onClick={() => setShowResultInfo(!showResultInfo)}
+                        />
+                        </label>
                         <input type="number"
                             className="form-control"
                             id="pointsForResult"
@@ -161,16 +176,7 @@ export function CreateGroup(props) {
                             required />
                         <div className="invalid-feedback">Value must be greater than {validations.resMin} and less or equal than "Points for exact score"</div>
                     </div>
-                    <div>
-                        <label htmlFor="visibility">Access</label>
-                        <Select className="form-control"
-                            id="visibility"
-                            name="visibility"
-                            values={visibilityDict}
-                            onChange={handleSettingsChange}
-                            required>
-                        </Select>
-                    </div>
+                    {renderInfo()}
                     <br />
                     <button className="btn btn-accent mr-3" type="submit">Save</button>
                     <button className="btn btn-secondary" type="button" onClick={(ev) => cancel(ev)}>Cancel</button>
