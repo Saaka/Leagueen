@@ -1,4 +1,4 @@
-import { Matches, Counter, Dashboard, Unauthorized, UserGroups, CreateGroup } from "views/exports";
+import { Matches, Counter, Dashboard, Unauthorized, UserGroups, CreateGroup, Group } from "views/exports";
 import { RouteNames } from "./names";
 
 const appRoutes = [
@@ -34,6 +34,13 @@ const appRoutes = [
         path: RouteNames.CreateGroup,
         component: CreateGroup,
         name: "Group creation",
+    },
+    {
+        hide: true,
+        useAuth: true,
+        path: RouteNames.Group,
+        component: Group,
+        name: "Group"
     },
     {
         useAuth: true,

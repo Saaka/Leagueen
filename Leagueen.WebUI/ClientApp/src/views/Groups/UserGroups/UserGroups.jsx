@@ -22,6 +22,10 @@ export function UserGroups(props) {
             });
     }
 
+    function showGroup(id) {
+        props.history.push(RouteNames.Group_Id + id);
+    }
+
     function renderList() {
         return (
             <table className="table table-hover">
@@ -34,7 +38,7 @@ export function UserGroups(props) {
                 </thead>
                 <tbody>
                     {groups.map((g, k) =>
-                        <tr key={k}>
+                        <tr key={k} onClick={(ev) => showGroup(g.groupGuid)} className="table-row">
                             <td>{g.name}</td>
                             <td>{g.isAdmin ? <span>Admin <Icon icon="star" /></span> : ""}</td>
                             <td>{g.isPrivate ? <span> Private <Icon icon="lock" /></span> : ""}</td>

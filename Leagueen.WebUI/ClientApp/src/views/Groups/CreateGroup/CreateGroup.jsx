@@ -3,7 +3,6 @@ import { UserGroupsService, CompetitionsService } from "Services";
 import { Loader, Icon, Select } from "components/common";
 import { RouteNames } from "routes/names";
 import "./CreateGroup.scss";
-import { func } from "prop-types";
 
 export function CreateGroup(props) {
 

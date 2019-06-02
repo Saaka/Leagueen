@@ -5,6 +5,7 @@ export { Dashboard } from "./Dashboard/Dashboard";
 export { Unauthorized } from "./Unauthorized/Unauthorized";
 export { UserGroups } from "./Groups/UserGroups/UserGroups";
 export { CreateGroup } from "./Groups/CreateGroup/CreateGroup";
+export { Group } from "./Groups/Group/Group";
 
 //Temp
 export { Counter } from "./Counter/Counter";
