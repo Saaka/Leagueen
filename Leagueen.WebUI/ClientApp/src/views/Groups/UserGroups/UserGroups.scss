@@ -1,3 +1,13 @@
 .groups-title {
     display: inline-block;
 }
+
+.table {    
+    th.table-header {
+        border-top: none;
+
+        &-small {
+            width: 25%;
+        }
+    }
+}

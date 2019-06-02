@@ -19,6 +19,7 @@ namespace Leagueen.Persistence.Domain.Repositories
         public async Task<ICollection<UserGroupInfo>> GetUserGroups(int userId)
         {
             var query = from ug in context.Groups
+                        join gs in context.GroupSettings on ug.GroupId equals gs.GroupId
                         join gm in context.GroupMembers on ug.GroupId equals gm.GroupId
 
                         where gm.UserId == userId && gm.IsActive
@@ -27,7 +28,8 @@ namespace Leagueen.Persistence.Domain.Repositories
                         {
                             GroupGuid = ug.GroupGuid,
                             Name = ug.Name,
-                            IsAdmin = ug.OwnerId == userId
+                            IsAdmin = ug.OwnerId == userId,
+                            IsPrivate = gs.Visibility == Leagueen.Domain.Enums.GroupVisibility.Private
                         };
 
             return await query.ToListAsync();

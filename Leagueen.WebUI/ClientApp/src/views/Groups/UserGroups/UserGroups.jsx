@@ -25,11 +25,19 @@ export function UserGroups(props) {
     function renderList() {
         return (
             <table className="table table-hover">
+                <thead>
+                    <tr>
+                        <th className="table-header">Name</th>
+                        <th className="table-header table-header-small"></th>
+                        <th className="table-header table-header-small"></th>
+                    </tr>
+                </thead>
                 <tbody>
                     {groups.map((g, k) =>
                         <tr key={k}>
                             <td>{g.name}</td>
                             <td>{g.isAdmin ? <span>Admin <Icon icon="star" /></span> : ""}</td>
+                            <td>{g.isPrivate ? <span> Private <Icon icon="lock" /></span> : ""}</td>
                         </tr>
                     )}
                 </tbody>
