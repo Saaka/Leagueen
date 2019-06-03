@@ -68,6 +68,12 @@
         GroupSettingsMatchResultResolveModeInvalid,
         CantSetCompetitionForThisTypeOfGroup,
         InvalidCompetitionData,
-        GroupGuidRequired
+        GroupGuidRequired,
+        FriendshipRequestAlreadyRejected,
+        FriendshipRequestAlreadyAccepted,
+        FriendshipRequestGuidRequired,
+        FriendshipRequestRequesterRequired,
+        FriendshipRequestAddresseeRequired,
+        FriendshipRequestCreateDateRequired
     }
 }
