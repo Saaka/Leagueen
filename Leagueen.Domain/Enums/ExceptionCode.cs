@@ -74,6 +74,9 @@
         FriendshipRequestGuidRequired,
         FriendshipRequestRequesterRequired,
         FriendshipRequestAddresseeRequired,
-        FriendshipRequestCreateDateRequired
+        FriendshipRequestCreateDateRequired,
+        FriendshipUserIdRequired,
+        FriendshipFriendIdRequired,
+        FriendshipCreateDateRequired
     }
 }

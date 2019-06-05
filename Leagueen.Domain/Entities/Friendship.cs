@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leagueen.Domain.Exceptions;
+using System;
 
 namespace Leagueen.Domain.Entities
 {
@@ -17,6 +18,18 @@ namespace Leagueen.Domain.Entities
             FriendId = friendId;
             CreateDate = date;
             IsActive = true;
+
+            ValidateCreation();
+        }
+
+        private void ValidateCreation()
+        {
+            if (UserId == 0)
+                throw new DomainException(Enums.ExceptionCode.FriendshipUserIdRequired);
+            if (FriendId == 0)
+                throw new DomainException(Enums.ExceptionCode.FriendshipFriendIdRequired);
+            if (CreateDate == null || CreateDate == DateTime.MinValue)
+                throw new DomainException(Enums.ExceptionCode.FriendshipCreateDateRequired);
         }
 
         public Friendship RemoveFriend()
