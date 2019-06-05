@@ -10,3 +10,4 @@ cache:
     - node_modules
 script:
 - dotnet build
+- dotnet test Leagueen.Tests.Unit/Leagueen.Tests.Unit.csproj
