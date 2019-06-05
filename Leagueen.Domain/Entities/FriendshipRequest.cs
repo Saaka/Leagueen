@@ -6,12 +6,12 @@ namespace Leagueen.Domain.Entities
 {
     public class FriendshipRequest
     {
-        public int FriendshipRequestId { get; set; }
-        public string Guid { get; set; }
-        public int RequesterId { get; set; }
-        public int AddresseeId { get; set; }
-        public DateTime CreateDate { get; set; }
-        public FriendshipRequestStatus Status { get; set; }
+        public int FriendshipRequestId { get; private set; }
+        public string Guid { get; private set; }
+        public int RequesterId { get; private set; }
+        public int AddresseeId { get; private set; }
+        public DateTime CreateDate { get; private set; }
+        public FriendshipRequestStatus Status { get; private set; }
 
         private FriendshipRequest() { }
         public FriendshipRequest(string guid, int requesterId, int addresseeId, DateTime createDate)
