@@ -3,6 +3,8 @@ using Leagueen.Domain.Enums;
 using System;
 using Xunit;
 using FluentAssertions;
+using Leagueen.Domain.Exceptions;
+using System.Collections.Generic;
 
 namespace Leagueen.Tests.Unit.Domain.Entities
 {
@@ -24,6 +26,86 @@ namespace Leagueen.Tests.Unit.Domain.Entities
             request.RequesterId.Should().Be(requesterId);
             request.AddresseeId.Should().Be(addresseeId);
             request.CreateDate.Should().Be(createDate);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void ThrowExceptionForInvalidGuid(string guid)
+        {
+            var requesterId = 1;
+            var addresseeId = 2;
+            var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
+
+            Action creation = () =>
+            {
+                var request = new FriendshipRequest(guid, requesterId, addresseeId, createDate);
+            };
+
+            creation.Should().Throw<DomainException>()
+                .Which
+                .ExceptionCode.Should().Be(ExceptionCode.FriendshipRequestGuidRequired);
+        }
+
+        public static IEnumerable<object[]> CreateDateTestData = new List<object[]>
+        {
+            new object[] { DateTime.MinValue },
+            new object[] { null },
+        };
+
+        [Theory]
+        [MemberData(nameof(CreateDateTestData))]
+        public void ThrowExceptionForInvalidCreateDate(DateTime createDate)
+        {
+            var guid = "12345";
+            var requesterId = 1;
+            var addresseeId = 2;
+
+            Action creation = () =>
+            {
+                var request = new FriendshipRequest(guid, requesterId, addresseeId, createDate);
+            };
+
+            creation.Should().Throw<DomainException>()
+                .Which
+                .ExceptionCode.Should().Be(ExceptionCode.FriendshipRequestCreateDateRequired);
+        }
+
+        [Fact]
+        public void ThrowExceptionForInvalidRequesterId()
+        {
+            var guid = "12345";
+            var requesterId = 0;
+            var addresseeId = 2;
+            var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
+
+            Action creation = () =>
+            {
+                var request = new FriendshipRequest(guid, requesterId, addresseeId, createDate);
+            };
+
+            creation.Should().Throw<DomainException>()
+                .Which
+                .ExceptionCode.Should().Be(ExceptionCode.FriendshipRequestRequesterRequired);
+        }
+
+        [Fact]
+        public void ThrowExceptionForInvalidAddresseeId()
+        {
+            var guid = "12345";
+            var requesterId = 1;
+            var addresseeId = 0;
+            var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
+
+            Action creation = () =>
+            {
+                var request = new FriendshipRequest(guid, requesterId, addresseeId, createDate);
+            };
+
+            creation.Should().Throw<DomainException>()
+                .Which
+                .ExceptionCode.Should().Be(ExceptionCode.FriendshipRequestAddresseeRequired);
         }
 
         [Fact]
