@@ -28,7 +28,7 @@ namespace Leagueen.Domain.Entities
                 throw new DomainException(Enums.ExceptionCode.FriendshipUserIdRequired);
             if (FriendId == 0)
                 throw new DomainException(Enums.ExceptionCode.FriendshipFriendIdRequired);
-            if (CreateDate == null || CreateDate == DateTime.MinValue)
+            if (CreateDate == DateTime.MinValue)
                 throw new DomainException(Enums.ExceptionCode.FriendshipCreateDateRequired);
         }
 

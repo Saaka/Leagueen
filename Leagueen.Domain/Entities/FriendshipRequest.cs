@@ -33,7 +33,7 @@ namespace Leagueen.Domain.Entities
                 throw new DomainException(ExceptionCode.FriendshipRequestRequesterRequired);
             if (AddresseeId == 0)
                 throw new DomainException(ExceptionCode.FriendshipRequestAddresseeRequired);
-            if (CreateDate == null || CreateDate == DateTime.MinValue)
+            if (CreateDate == DateTime.MinValue)
                 throw new DomainException(ExceptionCode.FriendshipRequestCreateDateRequired);
         }
 
