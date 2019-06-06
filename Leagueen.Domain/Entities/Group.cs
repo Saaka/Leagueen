@@ -22,10 +22,10 @@ namespace Leagueen.Domain.Entities
         public virtual GroupSettings GroupSettings { get; private set; }
 
         private Group() { }
-        public Group(string moniker, int ownerId, 
+        public Group(string groupGuid, int ownerId, 
             string name, string description)
         {
-            GroupGuid = moniker;
+            GroupGuid = groupGuid;
             OwnerId = ownerId;
             Name = name;
             Description = description;
@@ -63,7 +63,7 @@ namespace Leagueen.Domain.Entities
             if (Status == GroupStatus.Deactivated)
                 throw new DomainException(ExceptionCode.CantArchiveDeactivatedGroup);
 
-            Status = GroupStatus.Active;
+            Status = GroupStatus.Archived;
             return this;
         }
 
