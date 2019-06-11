@@ -21,6 +21,8 @@ namespace Leagueen.Persistence.Domain
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupSettings> GroupSettings { get; set; }
         public DbSet<GroupMember> GroupMembers { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
+        public DbSet<FriendshipRequest> FriendshipRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
