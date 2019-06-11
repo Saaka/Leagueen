@@ -21,7 +21,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
             var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
 
             var request = new FriendshipRequest(guid, requesterId, addresseeId, createDate);
-            request.Guid.Should().Be(guid);
+            request.FriendshipRequestGuid.Should().Be(guid);
             request.Status.Should().Be(FriendshipRequestStatus.Pending);
             request.RequesterId.Should().Be(requesterId);
             request.AddresseeId.Should().Be(addresseeId);

@@ -3,9 +3,9 @@ using Leagueen.Domain.Constants;
 
 namespace Leagueen.Application.Groups.Commands.CreateGroup
 {
-    public class CreateGroupCommandHandlerValidator : AbstractValidator<CreateGroupCommand>
+    public class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>
     {
-        public CreateGroupCommandHandlerValidator()
+        public CreateGroupCommandValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
