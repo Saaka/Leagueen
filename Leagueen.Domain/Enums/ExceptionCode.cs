@@ -77,6 +77,7 @@
         FriendshipRequestCreateDateRequired,
         FriendshipUserIdRequired,
         FriendshipFriendIdRequired,
-        FriendshipCreateDateRequired
+        FriendshipCreateDateRequired,
+        FriendshipRequestIsPending
     }
 }

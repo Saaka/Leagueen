@@ -1,4 +1,5 @@
-﻿using Leagueen.Domain.Entities;
+﻿using Leagueen.Domain.Constants;
+using Leagueen.Domain.Entities;
 using Leagueen.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,6 +16,11 @@ namespace Leagueen.Persistence.Domain.Configurations
                 .HasIndex(x => x.FriendshipRequestGuid)
                 .HasName("IX_FriendshipRequestGuid")
                 .IsUnique();
+
+            builder
+                .Property(x => x.FriendshipRequestGuid)
+                .IsRequired()
+                .HasMaxLength(CommonConstants.GuidMaxLength);
 
             builder
                 .Property(x => x.RequesterId)

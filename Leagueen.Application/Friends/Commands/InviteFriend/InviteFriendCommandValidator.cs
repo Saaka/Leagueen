@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Leagueen.Domain.Constants;
 
 namespace Leagueen.Application.Friends.Commands.InviteFriend
 {
@@ -8,10 +9,13 @@ namespace Leagueen.Application.Friends.Commands.InviteFriend
         {
             RuleFor(x => x.UserId)
                 .NotEmpty();
+
             RuleFor(x => x.AddresseeGuid)
                 .NotEmpty();
+
             RuleFor(x => x.Guid)
-                .NotEmpty();
+                .NotEmpty()
+                .MaximumLength(CommonConstants.GuidMaxLength);
         }
     }
 }
