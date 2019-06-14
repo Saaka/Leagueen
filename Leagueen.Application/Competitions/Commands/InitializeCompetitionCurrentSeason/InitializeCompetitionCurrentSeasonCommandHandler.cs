@@ -44,9 +44,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             if (competition == null)
                 throw new DomainException(ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionCode}");
             var info = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
-
-            if (competition.LastProviderUpdate == info.Competition.LastUpdated) return;
-
+            
             competition
                 .SetActiveState(true)
                 .SetLastProviderUpdate(info.Competition.LastUpdated);
