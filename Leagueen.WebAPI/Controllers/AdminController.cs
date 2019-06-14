@@ -28,7 +28,7 @@ namespace Leagueen.WebAPI.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> InitializeSeason(string competitionCode)
         {
-            await Mediator.Send(new InitializeCompetitionCurrentSeasonCommand { CompetitionCode = competitionCode });
+            await Mediator.Send(new InitializeCompetitionCurrentSeasonCommand { CompetitionCode = competitionCode, InitializeMatches = true });
 
             return Ok();
         }

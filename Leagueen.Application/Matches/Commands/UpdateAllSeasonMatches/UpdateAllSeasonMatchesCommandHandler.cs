@@ -1,4 +1,5 @@
-﻿using Leagueen.Application.Competitions.Repositories;
+﻿using Leagueen.Application.Competitions.Commands;
+using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Application.DataProviders;
 using Leagueen.Application.DataProviders.Matches;
 using Leagueen.Domain.Entities;
@@ -20,30 +21,35 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
         private readonly IMatchesProvider matchesProvider;
         private readonly IMatchFactory matchFactory;
         private readonly IMatchUpdater matchUpdater;
+        private readonly IMediator mediator;
 
         public UpdateAllSeasonMatchesCommandHandler(
             ILogger<UpdateAllSeasonMatchesCommandHandler> logger,
             ISeasonsRepository seasonsRepository,
             IMatchesProvider matchesProvider,
             IMatchFactory matchFactory,
-            IMatchUpdater matchUpdater)
+            IMatchUpdater matchUpdater,
+            IMediator mediator)
         {
             this.logger = logger;
             this.seasonsRepository = seasonsRepository;
             this.matchesProvider = matchesProvider;
             this.matchFactory = matchFactory;
             this.matchUpdater = matchUpdater;
+            this.mediator = mediator;
         }
 
         protected override async Task Handle(UpdateAllSeasonMatchesCommand request, CancellationToken cancellationToken)
         {
             var season = await seasonsRepository.GetCurrentSeason(request.CompetitionType.ToString());
-            if (season == null)
+            if (season == null) 
                 throw new DomainException(ExceptionCode.ActiveSeasonNotFoundForCompetition, $"CompetitionCode: {request.CompetitionType.ToString()}");
             var matchesInfo = await matchesProvider.GetAllCompetitionMatches(request.CompetitionType);
             if (NewSeasonStarted(season, matchesInfo.Matches.First().SeasonId))
             {
-                logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: New season started, please update current season");
+                logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: New season started. Initializing current season");
+                await mediator.Send(new InitializeCompetitionCurrentSeasonCommand { CompetitionCode = request.CompetitionType.ToString(), InitializeMatches = false });
+                season = await seasonsRepository.GetCurrentSeason(request.CompetitionType.ToString());
             }
 
             int count = 0;
