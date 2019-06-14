@@ -6,6 +6,7 @@ using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,6 +41,10 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
             if (season == null)
                 throw new DomainException(ExceptionCode.ActiveSeasonNotFoundForCompetition, $"CompetitionCode: {request.CompetitionType.ToString()}");
             var matchesInfo = await matchesProvider.GetAllCompetitionMatches(request.CompetitionType);
+            if (NewSeasonStarted(season, matchesInfo.Matches.First().SeasonId))
+            {
+                logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: New season started, please update current season");
+            }
 
             int count = 0;
             foreach (var matchInfo in matchesInfo.Matches)
@@ -57,6 +62,11 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
 
             await seasonsRepository.SaveSeason(season);
             logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Updated {count} matches");
+        }
+
+        private bool NewSeasonStarted(Season season, int seasonId)
+        {
+            return season.ExternalId != seasonId;
         }
 
         private bool AddOrCreateMatch(Season season, MatchDto matchInfo)

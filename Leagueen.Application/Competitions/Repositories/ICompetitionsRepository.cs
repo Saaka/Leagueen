@@ -8,7 +8,7 @@ namespace Leagueen.Application.Competitions.Repositories
 {
     public interface ICompetitionsRepository
     {
-        Task<IEnumerable<CompetitionUpdateInfo>> GetAllActiveCompetitions();
+        Task<IEnumerable<CompetitionUpdateInfo>> GetAllActiveCompetitions(DataProviderType providerType);
         Task<IEnumerable<CompetitionType>> GetAllActiveCompetitionTypesForProvider(DataProviderType providerType);
         Task<DataProviderType> GetProviderTypeForCompetition(CompetitionType type);
         Task<IEnumerable<SeasonCompetitionDictionaryModel>> GetCurrentSeasonsDictionary();

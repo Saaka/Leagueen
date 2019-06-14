@@ -19,10 +19,11 @@ namespace Leagueen.Persistence.Domain.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<CompetitionUpdateInfo>> GetAllActiveCompetitions()
+        public async Task<IEnumerable<CompetitionUpdateInfo>> GetAllActiveCompetitions(DataProviderType providerType)
         {
             var query = from c in context.Competitions
-                        where c.IsActive == true
+                        join prov in context.DataProviders on c.DataProviderId equals prov.DataProviderId
+                        where prov.Type == providerType && c.IsActive == true
                         select new CompetitionUpdateInfo
                         {
                             CompetitionId = c.CompetitionId,

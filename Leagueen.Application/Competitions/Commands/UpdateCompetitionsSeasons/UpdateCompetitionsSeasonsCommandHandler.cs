@@ -15,20 +15,23 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
         private readonly ICompetitionsProvider competitionsProvider;
         private readonly ICompetitionsRepository competitionsRepository;
         private readonly ICompetitionsAggregateRepository competitionsAggregateRepository;
+        private readonly ITeamsRepository teamsRepository;
 
         public UpdateCompetitionsSeasonsCommandHandler(
             ICompetitionsProvider competitionsProvider,
             ICompetitionsRepository competitionsRepository,
-            ICompetitionsAggregateRepository competitionsAggregateRepository)
+            ICompetitionsAggregateRepository competitionsAggregateRepository,
+            ITeamsRepository teamsRepository)
         {
             this.competitionsProvider = competitionsProvider;
             this.competitionsRepository = competitionsRepository;
             this.competitionsAggregateRepository = competitionsAggregateRepository;
+            this.teamsRepository = teamsRepository;
         }
 
         protected override async Task Handle(UpdateCompetitionsSeasonsCommand request, CancellationToken cancellationToken)
         {
-            var activeCompetitionsList = await competitionsRepository.GetAllActiveCompetitions();
+            var activeCompetitionsList = await competitionsRepository.GetAllActiveCompetitions(request.ProviderType);
             var competitionsInfo = await competitionsProvider.GetCompetitionsList();
             var toUpdate = new List<Competition>();
 
@@ -40,7 +43,7 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
                     continue;
 
                 var competition = await competitionsAggregateRepository.GetCompetitionByCode(competitionUpdateData.Code);
-                if (UpdateCompetition(competition, info))
+                if (await UpdateCompetition(competition, info))
                     toUpdate.Add(competition);
             }
 
@@ -48,7 +51,7 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
                 await competitionsAggregateRepository.SaveCompetitions(toUpdate);
         }
 
-        private bool UpdateCompetition(Competition competition, CompetitionDto info)
+        private async Task<bool> UpdateCompetition(Competition competition, CompetitionDto info)
         {
             var currentSeason = competition.GetCurrentSeason();
             var seasonInfo = info.CurrentSeason;
@@ -66,11 +69,21 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionsSeasons
             {
                 currentSeason
                     .SetMatchday(seasonInfo.CurrentMatchday);
+                await CheckWinner(currentSeason, info.CurrentSeason);
             }
             competition
                 .SetLastProviderUpdate(info.LastUpdated);
 
             return true;
+        }
+
+        private async Task CheckWinner(Season season, CompetitionSeasonDto seasonInfo)
+        {
+            if (seasonInfo.SeasonWinnerId.HasValue)
+            {
+                var winner = await teamsRepository.GetTeamByExternalId(seasonInfo.SeasonWinnerId.Value.ToString(), season.Competition.DataProvider.Type);
+                season.SetWinner(winner);
+            }
         }
 
         private Season CreateNewSeason(Competition competition, CompetitionSeasonDto seasonInfo)

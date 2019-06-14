@@ -18,7 +18,7 @@ namespace Leagueen.WebAPI.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateCompetitionSeasons()
         {
-            await Mediator.Send(new UpdateCompetitionsSeasonsCommand());
+            await Mediator.Send(new UpdateCompetitionsSeasonsCommand { ProviderType = DataProviderType.FootballData });
 
             return Ok();
         }
