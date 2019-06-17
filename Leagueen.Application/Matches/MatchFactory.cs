@@ -29,6 +29,9 @@ namespace Leagueen.Application.Matches
                 .FirstOrDefault(x => x.Team.ExternalMappings
                                         .Any(m => m.ExternalId == info.AwayTeamId.ToString() && m.ProviderType == season.Competition.DataProvider.Type));
 
+            if (homeTeam == null || awayTeam == null)
+                return null;
+
             var match = new Match(info.Id, season, homeTeam.Team, awayTeam.Team,
                 info.UtcDate, info.Status, info.Stage, info.LastUpdated, info.Group, info.Matchday);
 

@@ -81,9 +81,13 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
             if (match == null)
             {
                 match = matchFactory.CreateMatch(season, matchInfo);
-                season.AddMatch(match);
+                if (match != null)
+                {
+                    season.AddMatch(match);
+                    return true;
+                }
 
-                return true;
+                return false;
             }
             else
                 return matchUpdater.UpdateMatch(match, matchInfo);
