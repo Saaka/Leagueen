@@ -42,9 +42,15 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
         protected override async Task Handle(UpdateAllSeasonMatchesCommand request, CancellationToken cancellationToken)
         {
             var season = await seasonsRepository.GetCurrentSeason(request.CompetitionType.ToString());
-            if (season == null) 
+            if (season == null)
                 throw new DomainException(ExceptionCode.ActiveSeasonNotFoundForCompetition, $"CompetitionCode: {request.CompetitionType.ToString()}");
             var matchesInfo = await matchesProvider.GetAllCompetitionMatches(request.CompetitionType);
+            if (!matchesInfo.Matches.Any())
+            {
+                logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Season has no matches, update stopped");
+                return;
+            }
+
             if (NewSeasonStarted(season, matchesInfo.Matches.First().SeasonId))
             {
                 logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: New season started. Initializing current season");

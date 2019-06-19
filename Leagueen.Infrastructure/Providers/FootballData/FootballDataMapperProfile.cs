@@ -2,6 +2,7 @@
 using Leagueen.Application.DataProviders.Competitions;
 using Leagueen.Application.DataProviders.Matches;
 using Leagueen.Infrastructure.Providers.FootballData.ProviderModels;
+using System.Collections.Generic;
 
 namespace Leagueen.Infrastructure.Providers.FootballData
 {
@@ -21,7 +22,8 @@ namespace Leagueen.Infrastructure.Providers.FootballData
             CreateMap<TeamModel, TeamDto>()
                 .ForMember(d => d.ClubColors, c => c.MapFrom(m => FootballDataMapperHelper.ConvertClubColors(m)));
 
-            CreateMap<MatchListModel, MatchListDto>();
+            CreateMap<MatchListModel, MatchListDto>()
+                .ForMember(d => d.Matches, cfg => cfg.NullSubstitute(new List<MatchDto>()));
             CreateMap<MatchModel, MatchDto>()
                 .ForMember(d => d.Status, c => c.MapFrom(m => FootballDataMapperHelper.ConvertStatus(m)))
                 .ForMember(d => d.Stage, c => c.MapFrom(m => FootballDataMapperHelper.ConvertStage(m)))
