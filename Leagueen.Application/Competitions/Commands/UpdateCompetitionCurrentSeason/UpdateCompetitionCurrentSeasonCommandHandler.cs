@@ -14,35 +14,29 @@ using System.Threading.Tasks;
 
 namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurrentSeason
 {
-    public class InitializeCompetitionCurrentSeasonCommandHandler : AsyncRequestHandler<InitializeCompetitionCurrentSeasonCommand>
+    public class UpdateCompetitionCurrentSeasonCommandHandler : AsyncRequestHandler<UpdateCompetitionCurrentSeasonCommand>
     {
         private readonly ICompetitionsProvider competitionsProvider;
-        private readonly ISeasonsRepository seasonsRepository;
         private readonly ICompetitionsAggregateRepository competitionsAggregateRepository;
-        private readonly ICompetitionsRepository competitionsRepository;
         private readonly ITeamsRepository teamsRepository;
         private readonly IMediator mediator;
         private readonly ITeamFactory teamFactory;
 
-        public InitializeCompetitionCurrentSeasonCommandHandler(
+        public UpdateCompetitionCurrentSeasonCommandHandler(
             ICompetitionsProvider competitionsProvider,
-            ISeasonsRepository seasonsRepository,
             ICompetitionsAggregateRepository competitionsAggregateRepository,
-            ICompetitionsRepository competitionsRepository,
             ITeamsRepository teamsRepository,
             ITeamFactory teamFactory,
             IMediator mediator)
         {
             this.competitionsProvider = competitionsProvider;
-            this.seasonsRepository = seasonsRepository;
             this.competitionsAggregateRepository = competitionsAggregateRepository;
-            this.competitionsRepository = competitionsRepository;
             this.teamsRepository = teamsRepository;
             this.teamFactory = teamFactory;
             this.mediator = mediator;
         }
 
-        protected override async Task Handle(InitializeCompetitionCurrentSeasonCommand request, CancellationToken cancellationToken)
+        protected override async Task Handle(UpdateCompetitionCurrentSeasonCommand request, CancellationToken cancellationToken)
         {
             var competition = await competitionsAggregateRepository.GetCompetitionByCode(request.CompetitionCode);
             if (competition == null)
@@ -70,7 +64,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
 
             await competitionsAggregateRepository.SaveCompetition(competition);
 
-            if (request.InitializeMatches)
+            if (request.UpdateMatches)
                 await mediator.Send(new UpdateAllSeasonMatchesCommand { CompetitionType = competition.Type });
 
             await mediator.Publish(new CompetitionInitializedEvent { CompetitionType = competition.Type });

@@ -2,9 +2,9 @@
 
 namespace Leagueen.Application.Competitions.Commands
 {
-    public class InitializeCompetitionCurrentSeasonCommand : IRequest
+    public class UpdateCompetitionCurrentSeasonCommand : IRequest
     {
         public string CompetitionCode { get; set; }
-        public bool InitializeMatches { get; set; }
+        public bool UpdateMatches { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
             if (NewSeasonStarted(season, matchesInfo.Matches.First().SeasonId))
             {
                 logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: New season started. Initializing current season");
-                await mediator.Send(new InitializeCompetitionCurrentSeasonCommand { CompetitionCode = request.CompetitionType.ToString(), InitializeMatches = false });
+                await mediator.Send(new UpdateCompetitionCurrentSeasonCommand { CompetitionCode = request.CompetitionType.ToString(), UpdateMatches = false });
                 season = await seasonsRepository.GetCurrentSeason(request.CompetitionType.ToString());
             }
 

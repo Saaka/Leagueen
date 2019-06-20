@@ -23,12 +23,12 @@ namespace Leagueen.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpPost("initializeSeason/{competitionCode}")]
+        [HttpPost("updateSeason/{competitionCode}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> InitializeSeason(string competitionCode)
+        public async Task<IActionResult> UpdateSeason(string competitionCode)
         {
-            await Mediator.Send(new InitializeCompetitionCurrentSeasonCommand { CompetitionCode = competitionCode, InitializeMatches = true });
+            await Mediator.Send(new UpdateCompetitionCurrentSeasonCommand { CompetitionCode = competitionCode, UpdateMatches = true });
 
             return Ok();
         }
