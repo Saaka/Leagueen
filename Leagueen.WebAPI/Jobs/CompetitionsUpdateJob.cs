@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Leagueen.WebAPI.Jobs
 {
-    public class CompetitionMatchesUpdateJob
+    public class CompetitionsUpdateJob
     {
         private readonly IMediator mediator;
 
-        public CompetitionMatchesUpdateJob(IMediator mediator)
+        public CompetitionsUpdateJob(IMediator mediator)
         {
             this.mediator = mediator;
         }
@@ -18,7 +18,7 @@ namespace Leagueen.WebAPI.Jobs
         [AutomaticRetry(Attempts = 0)]
         public async Task Run(DataProviderType providerType)
         {
-            await mediator.Send(new UpdateCompetitionMatchesCommand { ProviderType = providerType });
+            await mediator.Send(new UpdateCompetitionsCommand { ProviderType = providerType });
         }
     }
 }

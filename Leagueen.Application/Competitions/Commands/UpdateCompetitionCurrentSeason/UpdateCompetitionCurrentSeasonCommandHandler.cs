@@ -38,10 +38,10 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
 
         protected override async Task Handle(UpdateCompetitionCurrentSeasonCommand request, CancellationToken cancellationToken)
         {
-            var competition = await competitionsAggregateRepository.GetCompetitionByCode(request.CompetitionCode);
+            var competition = await competitionsAggregateRepository.GetCompetitionByCode(request.CompetitionType.ToString());
             if (competition == null)
-                throw new DomainException(ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionCode}");
-            var info = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
+                throw new DomainException(ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionType.ToString()}");
+            var info = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionType.ToString());
 
             competition
                 .SetActiveState(true)

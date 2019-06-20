@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using Leagueen.Application.UpdateLogs;
+using Leagueen.Domain.Enums;
+using MediatR;
 
 namespace Leagueen.Application.Competitions.Commands
 {
-    public class UpdateCompetitionCurrentSeasonCommand : IRequest
+    public class UpdateCompetitionCurrentSeasonCommand : IRequest, ITrackable
     {
-        public string CompetitionCode { get; set; }
+        public CompetitionType CompetitionType { get; set; }
     }
 }

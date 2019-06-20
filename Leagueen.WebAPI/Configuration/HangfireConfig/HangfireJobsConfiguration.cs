@@ -15,8 +15,8 @@ namespace Leagueen.WebAPI.Configuration.HangfireConfig
                 $"CurrentMatchesUpdaterJob_{DataProviderType.FootballData.ToString()}",
                 j => j.Run(DataProviderType.FootballData), Cron.Minutely(), TimeZoneInfo.Utc);
 
-            RecurringJob.AddOrUpdate<CompetitionMatchesUpdateJob>(
-                $"CompetitionMatchesUpdateJob_{DataProviderType.FootballData.ToString()}",
+            RecurringJob.AddOrUpdate<CompetitionsUpdateJob>(
+                $"CompetitionsUpdateJob_{DataProviderType.FootballData.ToString()}",
                 j => j.Run(DataProviderType.FootballData), Cron.MinuteInterval(5), TimeZoneInfo.Utc);
 
             return application;

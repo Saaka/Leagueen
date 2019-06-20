@@ -2,9 +2,9 @@
 
 namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionMatches
 {
-    public class UpdateCompetitionMatchesCommandValidator : AbstractValidator<UpdateCompetitionMatchesCommand>
+    public class UpdateCompetitionsCommandValidator : AbstractValidator<UpdateCompetitionsCommand>
     {
-        public UpdateCompetitionMatchesCommandValidator()
+        public UpdateCompetitionsCommandValidator()
         {
             RuleFor(x => x.ProviderType)
                 .NotEmpty()

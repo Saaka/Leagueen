@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Leagueen.Application.Competitions.Commands
 {
-    public class UpdateCompetitionsSeasonsCommand : IRequest
+    public class UpdateCompetitionsCommand : IRequest
     {
         public DataProviderType ProviderType { get; set; }
     }

@@ -13,22 +13,12 @@ namespace Leagueen.WebAPI.Controllers
     [Authorize(Roles = UserRoles.Admin)]
     public class AdminController : BaseController
     {
-        [HttpPost("updateCompetitionSeasons")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateCompetitionSeasons()
-        {
-            await Mediator.Send(new UpdateCompetitionsSeasonsCommand { ProviderType = DataProviderType.FootballData });
-
-            return Ok();
-        }
-
         [HttpPost("updateSeason/{competitionCode}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateSeason(string competitionCode)
+        public async Task<IActionResult> UpdateSeason(CompetitionType competitionCode)
         {
-            await Mediator.Send(new UpdateCompetitionCurrentSeasonCommand { CompetitionCode = competitionCode });
+            await Mediator.Send(new UpdateCompetitionCurrentSeasonCommand { CompetitionType = competitionCode });
 
             return Ok();
         }

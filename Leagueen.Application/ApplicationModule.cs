@@ -1,4 +1,5 @@
-﻿using Leagueen.Application.Infrastructure;
+﻿using Leagueen.Application.Competitions.Commands;
+using Leagueen.Application.Infrastructure;
 using Leagueen.Application.Infrastructure.Jobs;
 using Leagueen.Application.Matches;
 using Leagueen.Application.Matches.Commands;
@@ -23,7 +24,7 @@ namespace Leagueen.Application
 
                 .AddTransient<IUpdateTrackerFactory, UpdateTrackerFactory>()
                 .AddTransient<IUpdateTracker<UpdateCurrentMatchesCommand, Unit>, CurrentMatchesUpdateTracker>()
-                .AddTransient<IUpdateTracker<UpdateAllSeasonMatchesCommand, Unit>, CompetitionUpdateTracker>()
+                .AddTransient<IUpdateTracker<UpdateCompetitionCurrentSeasonCommand, Unit>, CompetitionUpdateTracker>()
 
                 .AddTransient<ICompetitionJobsConfiguration, CompetitionJobsConfiguration>()
                 ;

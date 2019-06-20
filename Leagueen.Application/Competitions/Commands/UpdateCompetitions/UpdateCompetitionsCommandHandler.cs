@@ -2,21 +2,20 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Leagueen.Application.Competitions.Repositories;
-using Leagueen.Application.Matches.Commands;
 using Leagueen.Application.UpdateLogs.Repositories;
 using Leagueen.Common;
 using MediatR;
 
 namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionMatches
 {
-    public class UpdateCompetitionMatchesCommandHandler : AsyncRequestHandler<UpdateCompetitionMatchesCommand>
+    public class UpdateCompetitionsCommandHandler : AsyncRequestHandler<UpdateCompetitionsCommand>
     {
         private readonly IMediator mediator;
         private readonly IUpdateLogsRepository updateLogsRepository;
         private readonly ICompetitionsRepository competitionsRepository;
         private readonly IDateTime dateTime;
 
-        public UpdateCompetitionMatchesCommandHandler(
+        public UpdateCompetitionsCommandHandler(
             IMediator mediator,
             IUpdateLogsRepository updateLogsRepository,
             ICompetitionsRepository competitionsRepository,
@@ -28,7 +27,7 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionMatches
             this.dateTime = dateTime;
         }
 
-        protected override async Task Handle(UpdateCompetitionMatchesCommand request, CancellationToken cancellationToken)
+        protected override async Task Handle(UpdateCompetitionsCommand request, CancellationToken cancellationToken)
         {
             var updates = await updateLogsRepository.GetCompetitionUpdatesForProvider(request.ProviderType, dateTime.GetUtcNow());
             var competitionTypes = await competitionsRepository.GetAllActiveCompetitionTypesForProvider(request.ProviderType);
@@ -36,7 +35,7 @@ namespace Leagueen.Application.Competitions.Commands.UpdateCompetitionMatches
             {
                 if (updates.Any(x => x.CompetitionType.Value == compType)) continue;
 
-                var command = new UpdateAllSeasonMatchesCommand { CompetitionType = compType };
+                var command = new UpdateCompetitionCurrentSeasonCommand { CompetitionType = compType };
                 await mediator.Send(command);
                 return;
             }

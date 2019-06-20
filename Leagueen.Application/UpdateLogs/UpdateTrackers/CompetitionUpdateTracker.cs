@@ -1,16 +1,15 @@
-﻿using Leagueen.Application.Competitions.Repositories;
-using Leagueen.Application.Matches.Commands;
+﻿using Leagueen.Application.Competitions.Commands;
+using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Application.UpdateLogs.Repositories;
 using Leagueen.Common;
 using Leagueen.Domain.Entities;
 using Leagueen.Domain.Enums;
 using MediatR;
-using System;
 using System.Threading.Tasks;
 
 namespace Leagueen.Application.UpdateLogs.UpdateTrackers
 {
-    public class CompetitionUpdateTracker : IUpdateTracker<UpdateAllSeasonMatchesCommand, Unit>
+    public class CompetitionUpdateTracker : IUpdateTracker<UpdateCompetitionCurrentSeasonCommand, Unit>
     {
         private readonly ICompetitionsRepository competitionsRepository;
         private readonly IUpdateLogsRepository updateLogsRepository;
@@ -25,12 +24,12 @@ namespace Leagueen.Application.UpdateLogs.UpdateTrackers
             this.updateLogsRepository = updateLogsRepository;
             this.dateTime = dateTime;
         }
-        public Task<bool> ShouldPerformUpdate(UpdateAllSeasonMatchesCommand request)
+        public Task<bool> ShouldPerformUpdate(UpdateCompetitionCurrentSeasonCommand request)
         {
             return Task.FromResult(true);
         }
 
-        public async Task TrackUpdate(UpdateAllSeasonMatchesCommand request, bool isExecuted)
+        public async Task TrackUpdate(UpdateCompetitionCurrentSeasonCommand request, bool isExecuted)
         {
             var provider = await competitionsRepository.GetProviderTypeForCompetition(request.CompetitionType);
             await updateLogsRepository
