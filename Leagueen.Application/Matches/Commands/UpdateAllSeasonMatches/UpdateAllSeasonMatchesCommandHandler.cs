@@ -51,11 +51,11 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
                 return;
             }
 
-            if (NewSeasonStarted(season, matchesInfo.Matches.First().SeasonId))
+            var matchesSeasonId = matchesInfo.Matches.First().SeasonId;
+            if (season.ExternalId != matchesSeasonId)
             {
-                logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: New season started. Initializing current season");
-                await mediator.Send(new UpdateCompetitionCurrentSeasonCommand { CompetitionCode = request.CompetitionType.ToString(), UpdateMatches = false });
-                season = await seasonsRepository.GetCurrentSeason(request.CompetitionType.ToString());
+                logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: New season started. Please initiate season with external id: {matchesSeasonId}");
+                return;
             }
 
             int count = 0;
@@ -74,11 +74,6 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
 
             await seasonsRepository.SaveSeason(season);
             logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Updated {count} matches");
-        }
-
-        private bool NewSeasonStarted(Season season, int seasonId)
-        {
-            return season.ExternalId != seasonId;
         }
 
         private bool AddOrCreateMatch(Season season, MatchDto matchInfo)
