@@ -3,6 +3,7 @@ using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Application.DataProviders;
 using Leagueen.Application.DataProviders.Competitions;
 using Leagueen.Application.Matches.Commands;
+using Leagueen.Application.Teams;
 using Leagueen.Domain.Entities;
 using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
@@ -21,6 +22,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
         private readonly ICompetitionsRepository competitionsRepository;
         private readonly ITeamsRepository teamsRepository;
         private readonly IMediator mediator;
+        private readonly ITeamFactory teamFactory;
 
         public InitializeCompetitionCurrentSeasonCommandHandler(
             ICompetitionsProvider competitionsProvider,
@@ -28,6 +30,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             ICompetitionsAggregateRepository competitionsAggregateRepository,
             ICompetitionsRepository competitionsRepository,
             ITeamsRepository teamsRepository,
+            ITeamFactory teamFactory,
             IMediator mediator)
         {
             this.competitionsProvider = competitionsProvider;
@@ -35,6 +38,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             this.competitionsAggregateRepository = competitionsAggregateRepository;
             this.competitionsRepository = competitionsRepository;
             this.teamsRepository = teamsRepository;
+            this.teamFactory = teamFactory;
             this.mediator = mediator;
         }
 
@@ -44,7 +48,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
             if (competition == null)
                 throw new DomainException(ExceptionCode.ActiveCompetitionNotFound, $"CompetitionCode: {request.CompetitionCode}");
             var info = await competitionsProvider.GetCompetitionTeamsList(request.CompetitionCode);
-            
+
             competition
                 .SetActiveState(true)
                 .SetLastProviderUpdate(info.Competition.LastUpdated);
@@ -106,7 +110,7 @@ namespace Leagueen.Application.Competitions.Commands.InitializeCompetitionCurren
                 season.AddTeam(await teamsRepository.GetTeamByExternalId(teamInfo.Id.ToString(), providerType));
             else
             {
-                var team = new Team(teamInfo.Name, teamInfo.ShortName, teamInfo.Tla, teamInfo.CrestUrl, teamInfo.Website)
+                var team = teamFactory.CreateTeam(teamInfo)
                     .AddExternalMapping(teamInfo.Id.ToString(), providerType);
 
                 season.AddTeam(team);
