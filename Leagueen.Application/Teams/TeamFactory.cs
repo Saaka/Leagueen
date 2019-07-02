@@ -1,4 +1,5 @@
-﻿using Leagueen.Application.DataProviders.Competitions;
+﻿using System;
+using Leagueen.Application.DataProviders.Competitions;
 using Leagueen.Domain.Entities;
 
 namespace Leagueen.Application.Teams
@@ -29,6 +30,9 @@ namespace Leagueen.Application.Teams
             if (string.IsNullOrWhiteSpace(tla))
                 tla = ConvertToTla(ti.Name);
 
+            if (string.IsNullOrWhiteSpace(tla))
+                tla = CreateTlaWithFiller(ti.Name);
+
             return tla;
         }
 
@@ -44,6 +48,11 @@ namespace Leagueen.Application.Teams
             return trimmed
                 .Substring(0, 3)
                 .ToUpper();
+        }
+
+        private string CreateTlaWithFiller(string name)
+        {
+            return name.Replace(" ", "").PadRight(3, '_');
         }
     }
 }
