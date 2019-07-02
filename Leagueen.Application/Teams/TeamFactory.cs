@@ -22,8 +22,26 @@ namespace Leagueen.Application.Teams
 
         private string GetTla(TeamDto ti)
         {
-            return ti.Tla ?? GetShortname(ti)
-                .Replace(" ", "")
+            if (!string.IsNullOrWhiteSpace(ti.Tla))
+                return ti.Tla;
+
+            var tla = ConvertToTla(ti.ShortName);
+            if (string.IsNullOrWhiteSpace(tla))
+                tla = ConvertToTla(ti.Name);
+
+            return tla;
+        }
+
+        private string ConvertToTla(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            var trimmed = name.Replace(" ", "");
+            if (trimmed.Length < 3)
+                return null;
+
+            return trimmed
                 .Substring(0, 3)
                 .ToUpper();
         }
