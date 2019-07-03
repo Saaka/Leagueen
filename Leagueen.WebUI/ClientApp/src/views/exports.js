@@ -6,6 +6,7 @@ export { Unauthorized } from "./Unauthorized/Unauthorized";
 export { UserGroups } from "./Groups/UserGroups/UserGroups";
 export { CreateGroup } from "./Groups/CreateGroup/CreateGroup";
 export { Group } from "./Groups/Group/Group";
+export { FriendsList } from "./Friends/FriendsList/FriendsList";
 
 //Temp
 export { Counter } from "./Counter/Counter";

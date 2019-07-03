@@ -13,6 +13,7 @@ RouteNames.UserGroups = "/app/userGroups";
 RouteNames.CreateGroup = "/app/createGroup";
 RouteNames.Group = "/app/group/:id";
 RouteNames.Group_Id = "/app/group/";
+RouteNames.FriendsList = "/app/friendsList"
 
 RouteNames.Counter = "/app/counter";
 

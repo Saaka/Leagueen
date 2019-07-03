@@ -1,5 +1,4 @@
-﻿using Leagueen.Application.Competitions.Commands;
-using Leagueen.Application.Competitions.Repositories;
+﻿using Leagueen.Application.Competitions.Repositories;
 using Leagueen.Application.DataProviders;
 using Leagueen.Application.DataProviders.Matches;
 using Leagueen.Domain.Entities;
@@ -7,7 +6,6 @@ using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,22 +19,19 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
         private readonly IMatchesProvider matchesProvider;
         private readonly IMatchFactory matchFactory;
         private readonly IMatchUpdater matchUpdater;
-        private readonly IMediator mediator;
 
         public UpdateAllSeasonMatchesCommandHandler(
             ILogger<UpdateAllSeasonMatchesCommandHandler> logger,
             ISeasonsRepository seasonsRepository,
             IMatchesProvider matchesProvider,
             IMatchFactory matchFactory,
-            IMatchUpdater matchUpdater,
-            IMediator mediator)
+            IMatchUpdater matchUpdater)
         {
             this.logger = logger;
             this.seasonsRepository = seasonsRepository;
             this.matchesProvider = matchesProvider;
             this.matchFactory = matchFactory;
             this.matchUpdater = matchUpdater;
-            this.mediator = mediator;
         }
 
         protected override async Task Handle(UpdateAllSeasonMatchesCommand request, CancellationToken cancellationToken)

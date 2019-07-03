@@ -5,11 +5,10 @@ import "./Group.scss";
 
 export function Group(props) {
 
-    const [id, setId] = useState(props.match.params.id);
+    const [id] = useState(props.match.params.id);
     useEffect(() => load(), []);
 
     function load() {
-
     };
 
     function close() {
