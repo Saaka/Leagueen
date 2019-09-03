@@ -72,6 +72,15 @@ namespace Leagueen.Domain.Entities
             return this;
         }
 
+        public Season RemoveMatch(Match match)
+        {
+            if (!Matches.Contains(match))
+                throw new DomainException(ExceptionCode.MatchNotFound);
+
+            _matches.Remove(match);
+            return this;
+        }
+
         public Season SetWinner(Team team)
         {
             Winner = team;

@@ -53,13 +53,13 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
                 return;
             }
 
-            int count = 0;
+            int updateCount = 0;
             foreach (var matchInfo in matchesInfo.Matches)
             {
                 try
                 {
                     if (AddOrCreateMatch(season, matchInfo))
-                        count++;
+                        updateCount++;
                 }
                 catch (DomainException ex)
                 {
@@ -67,8 +67,34 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
                 }
             }
 
+            int deleteCount = 0;
+            foreach (var seasonMatch in season.Matches)
+            {
+                try
+                {
+                    if (RemoveIfNotExists(seasonMatch, season, matchesInfo))
+                        deleteCount++;
+                }
+                catch (DomainException ex)
+                {
+                    logger.LogError(ex, $"Error while checking season match with id {seasonMatch.MatchId}");
+                }
+            }
+
             await seasonsRepository.SaveSeason(season);
-            logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Updated {count} matches");
+            logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Updated {updateCount} matches");
+        }
+
+        private bool RemoveIfNotExists(Match seasonMatch, Season season, MatchListDto matchList)
+        {
+            var matchDto = matchList.Matches.FirstOrDefault(x => x.Id == seasonMatch.ExternalId);
+            if(matchDto == null)
+            {
+                season.RemoveMatch(seasonMatch);
+                return true;
+            }
+
+            return false;
         }
 
         private bool AddOrCreateMatch(Season season, MatchDto matchInfo)
