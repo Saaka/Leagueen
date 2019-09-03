@@ -6,6 +6,7 @@ using Leagueen.Domain.Enums;
 using Leagueen.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,6 +54,38 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
                 return;
             }
 
+            int updateCount = UpdateMatches(season, matchesInfo);
+
+            int deleteCount = DeleteMatches(season, matchesInfo);
+
+            await seasonsRepository.SaveSeason(season);
+            logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Updated {updateCount} matches");
+            logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Deleted {deleteCount} matches");
+        }
+
+        private int DeleteMatches(Season season, MatchListDto matchesInfo)
+        {
+            var toDelete = new List<Match>();
+            foreach (var seasonMatch in season.Matches)
+            {
+                try
+                {
+                    if (RemoveIfNotExists(seasonMatch, season, matchesInfo))
+                        toDelete.Add(seasonMatch);
+                }
+                catch (DomainException ex)
+                {
+                    logger.LogError(ex, $"Error while checking season match with id {seasonMatch.MatchId}");
+                }
+            }
+            foreach (var match in toDelete)
+                season.RemoveMatch(match);
+
+            return toDelete.Count;
+        }
+
+        private int UpdateMatches(Season season, MatchListDto matchesInfo)
+        {
             int updateCount = 0;
             foreach (var matchInfo in matchesInfo.Matches)
             {
@@ -67,34 +100,14 @@ namespace Leagueen.Application.Matches.Commands.UpdateAllSeasonMatches
                 }
             }
 
-            int deleteCount = 0;
-            foreach (var seasonMatch in season.Matches)
-            {
-                try
-                {
-                    if (RemoveIfNotExists(seasonMatch, season, matchesInfo))
-                        deleteCount++;
-                }
-                catch (DomainException ex)
-                {
-                    logger.LogError(ex, $"Error while checking season match with id {seasonMatch.MatchId}");
-                }
-            }
-
-            await seasonsRepository.SaveSeason(season);
-            logger.LogInformation($"{nameof(UpdateAllSeasonMatchesCommandHandler)}: Updated {updateCount} matches");
+            return updateCount;
         }
 
         private bool RemoveIfNotExists(Match seasonMatch, Season season, MatchListDto matchList)
         {
             var matchDto = matchList.Matches.FirstOrDefault(x => x.Id == seasonMatch.ExternalId);
-            if(matchDto == null)
-            {
-                season.RemoveMatch(seasonMatch);
-                return true;
-            }
 
-            return false;
+            return matchDto == null;
         }
 
         private bool AddOrCreateMatch(Season season, MatchDto matchInfo)
