@@ -1,4 +1,5 @@
-﻿using Leagueen.Application.Competitions.Models;
+﻿using Leagueen.Application.Competitions.Commands;
+using Leagueen.Application.Competitions.Models;
 using Leagueen.Application.Competitions.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,17 @@ namespace Leagueen.WebAPI.Controllers
         {
             var result = await Mediator.Send(new GetSeasonsDictionaryQuery());
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateCompetition()
+        {
+            await Mediator.Send(new CreateCompetitionCommand
+            {
+
+            });
+            return Ok();
         }
     }
 }
