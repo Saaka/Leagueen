@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Leagueen.Application.Users.Models;
-using Leagueen.Persistence.Identity.Entities;
+using Leagueen.Domain.Entities;
 
 namespace Leagueen.Persistence
 {
@@ -8,7 +8,7 @@ namespace Leagueen.Persistence
     {
         public PersistenceAutoMapperProfile()
         {
-            CreateMap<ApplicationUser, UserDto>();
+            CreateMap<User, UserDto>();
         }
     }
 }

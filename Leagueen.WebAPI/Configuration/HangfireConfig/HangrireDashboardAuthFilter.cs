@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using Leagueen.Application.Users.Commands;
+using Leagueen.Infrastructure.Providers.IdentityIssuer;
 
 namespace Leagueen.WebAPI.Configuration.HangfireConfig
 {
@@ -61,16 +61,12 @@ namespace Leagueen.WebAPI.Configuration.HangfireConfig
 
         private bool ValidateUser(string email, string password, HttpContext httpContext)
         {
-            var mediator = httpContext.RequestServices.GetService<IMediator>();
+            var identityIssuer = httpContext.RequestServices.GetService<IIdentityIssuer>();
 
             try
             {
-                var auth = mediator.Send(new AuthenticateUserWithCredentialsCommand
-                {
-                    Email = email,
-                    Password = password
-                }).Result;
-                return auth.IsSuccessful && auth.User.IsAdmin;
+                var user = identityIssuer.AuthUserByCredentials(email, password).Result;
+                return user != null && user.IsAdmin;
             }
             catch
             {

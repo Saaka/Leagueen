@@ -10,9 +10,6 @@ using Leagueen.Persistence.Domain;
 using Leagueen.Persistence.Domain.Initializer;
 using Leagueen.Persistence.Domain.Queries;
 using Leagueen.Persistence.Domain.Repositories;
-using Leagueen.Persistence.Identity;
-using Leagueen.Persistence.Identity.Initializer;
-using Leagueen.Persistence.Initializer;
 using Leagueen.Persistence.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +23,6 @@ namespace Leagueen.Persistence
         {
             var connectionString = configuration.GetConnectionString(PersistenceConstants.AppConnectionString);
             RegisterContext<AppDbContext>(services, connectionString, PersistenceConstants.DefaultMigrationsTable);
-            RegisterContext<AppIdentityDbContext>(services, connectionString, PersistenceConstants.DefaultIdentityMigrationsTable);
 
             return services;
         }
@@ -48,7 +44,7 @@ namespace Leagueen.Persistence
         {
             services
                 .AddTransient<IUsersRepository, UsersRepository>()
-                .AddTransient<IDbInitializer, DbInitializer>()
+                .AddTransient<IDbInitializer, AppDbInitializer>()
 
                 .AddTransient<ICompetitionsAggregateRepository, CompetitionsAggregateRepository>()
                 .AddTransient<IGroupAggregateRepository, GroupAggregateRepository>()
@@ -65,11 +61,6 @@ namespace Leagueen.Persistence
                 .AddTransient<IDbConnectionFactory, SqlConnectionFactory>()
                 .AddTransient<IGetMatchesByDateQueryExecutor, GetMatchesByDateQueryExecutor>()
 
-                .AddTransient<IdentityDbInitializer>()
-                .AddTransient<UserSeedConfiguration>()
-                .AddTransient<UserSeeder>()
-
-                .AddTransient<AppDbInitializer>()
                 .AddTransient<CompetitionsSeeder>();
 
             return services;

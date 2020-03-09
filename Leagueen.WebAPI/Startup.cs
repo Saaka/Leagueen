@@ -22,7 +22,6 @@ namespace Leagueen.WebAPI
             services
                 .AddApplicationDependencies()
                 .AddDbContext(Configuration)
-                .AddIdentityStore(Configuration)
                 .AddExternalAppServices(Configuration)
                 .AddCors()
                 .AddMvcWithFilters()

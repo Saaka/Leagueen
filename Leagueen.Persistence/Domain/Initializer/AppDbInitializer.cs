@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Leagueen.Application.Infrastructure.DbInitializer;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Leagueen.Persistence.Domain.Initializer
 {
-    public class AppDbInitializer 
+    public class AppDbInitializer : IDbInitializer
     {
         private readonly AppDbContext context;
         private readonly CompetitionsSeeder competitionsSeeder;

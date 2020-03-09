@@ -30,7 +30,7 @@ namespace Leagueen.Application.Friends.Commands.InviteFriend
 
         protected override async Task Handle(InviteFriendCommand command, CancellationToken cancellationToken)
         {
-            var addresseeId = await usersRepository.GetUserIdByMoniker(command.AddresseeGuid);
+            var addresseeId = await usersRepository.GetUserIdByGuid(command.AddresseeGuid);
             if (!addresseeId.HasValue)
                 throw new DomainException(Domain.Enums.ExceptionCode.UserNotFound);
 

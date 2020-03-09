@@ -1,9 +1,4 @@
-﻿using Leagueen.Domain.Constants;
-using Leagueen.Persistence.Identity;
-using Leagueen.Persistence.Identity.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -39,30 +34,6 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
                     ValidateAudience = false
                 };
             });
-
-            return services;
-        }
-
-        public static IServiceCollection AddIdentityStore(this IServiceCollection services, IConfiguration configuration)
-        {
-            services
-                .AddIdentity<ApplicationUser, IdentityRole<int>>(opt =>
-                {
-                    opt.User = new UserOptions
-                    {
-                        AllowedUserNameCharacters = UserConstants.AllowedUserNameCharacters,
-                        RequireUniqueEmail = true
-                    };
-                    opt.Password = new PasswordOptions
-                    {
-                        RequireDigit = false,
-                        RequireUppercase = false,
-                        RequireNonAlphanumeric = false,
-                    };
-                })
-                .AddRoles<IdentityRole<int>>()
-                .AddUserStore<UserStore<ApplicationUser, IdentityRole<int>, AppIdentityDbContext, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityUserToken<int>, IdentityRoleClaim<int>>>()
-                .AddRoleStore<RoleStore<IdentityRole<int>, AppIdentityDbContext, int, IdentityUserRole<int>, IdentityRoleClaim<int>>>();
 
             return services;
         }

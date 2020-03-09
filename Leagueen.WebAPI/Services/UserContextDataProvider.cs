@@ -57,7 +57,7 @@ namespace Leagueen.WebAPI.Services
                 ce.SlidingExpiration = TimeSpan.FromMinutes(5);
                 ce.AbsoluteExpiration = DateTime.Now.AddHours(1);
 
-                var user = await usersRepository.GetUserIdByMoniker(moniker);
+                var user = await usersRepository.GetUserIdByGuid(moniker);
                 if (user == null)
                     throw new DomainException(Domain.Enums.ExceptionCode.UserNotFound);
 

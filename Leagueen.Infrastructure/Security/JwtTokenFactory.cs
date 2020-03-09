@@ -27,7 +27,7 @@ namespace Leagueen.Infrastructure.Security
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = new List<Claim>
             {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Moniker),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.UserGuid),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
             if (user.IsAdmin)
