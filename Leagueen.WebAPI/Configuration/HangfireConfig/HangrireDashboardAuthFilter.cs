@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using Leagueen.Infrastructure.Providers.IdentityIssuer;
+using Leagueen.Infrastructure.Providers.IdentityProvider;
 
 namespace Leagueen.WebAPI.Configuration.HangfireConfig
 {
@@ -61,7 +61,7 @@ namespace Leagueen.WebAPI.Configuration.HangfireConfig
 
         private bool ValidateUser(string email, string password, HttpContext httpContext)
         {
-            var identityIssuer = httpContext.RequestServices.GetService<IIdentityIssuer>();
+            var identityIssuer = httpContext.RequestServices.GetService<IIdentityProvider>();
 
             try
             {
