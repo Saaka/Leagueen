@@ -14,8 +14,7 @@ namespace Leagueen.WebAPI.Configuration.DependencyInjection
         {
             services
                 .AddTransient<IAuthConfiguration, ApplicationSettings>()
-                .AddTransient<IGoogleConfiguration, ApplicationSettings>()
-                .AddTransient<IFacebookConfiguration, ApplicationSettings>()
+                .AddTransient<IIdentityIssuerConfiguration, ApplicationSettings>()
                 .AddTransient<IFootballDataConfiguration, FootballDataSettings>()
 
                 .AddTransient<IUserContextDataProvider, UserContextDataProvider>();

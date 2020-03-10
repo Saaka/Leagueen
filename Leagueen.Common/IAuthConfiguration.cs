@@ -4,6 +4,5 @@
     {
         string Secret { get; }
         string Issuer { get; }
-        int TokenExpirationDurationInMinutes { get; }
     }
 }

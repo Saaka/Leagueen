@@ -1,29 +1,22 @@
 ﻿using Leagueen.Common;
 using Leagueen.Infrastructure.Providers.FootballData;
 using Microsoft.Extensions.Configuration;
-using System;
 
 namespace Leagueen.WebAPI.Configuration
 {
-    public class ApplicationSettings : IAuthConfiguration, IGoogleConfiguration, IFacebookConfiguration
+    public class ApplicationSettings : IAuthConfiguration, IIdentityIssuerConfiguration
     {
         public const string AuthSecretProperty = "Auth:Secret";
         public const string AuthIssuerProperty = "Auth:Issuer";
-        public const string TokenExpirationProperty = "Auth:ExpirationInMinutes";
 
         public const string AppConnectionString = "ConnectionStrings:AppConnectionString";
-
-        public const string GoogleClientIdProperty = "Google:ClientId";
-        public const string GoogleClientKeyProperty = "Google:ClientKey";
-        public const string GoogleValidationEndpointProperty = "Google:ValidationEndpoint";
 
         public const string FootballDataApiToken = "FootballData:ApiToken";
         public const string FootballDataApiUrl = "FootballData:ApiUrl";
         public const string FootballDataApiPlan = "FootballData:ApiPlan";
 
-        public const string FacebookAppIdProperty = "Facebook:AppId";
-        public const string FacebookAppSecretProperty = "Facebook:AppSecret";
-        public const string FacebookValidationEndpointProperty = "Facebook:ValidationEndpoint";
+        public const string IdentityIssuerAppCode = "IdentityIssuer:AppCode";
+        public const string IdentityIssuerApiUrl = "IdentityIssuer:ApiUrl";
 
         private readonly IConfiguration configuration;
 
@@ -36,19 +29,8 @@ namespace Leagueen.WebAPI.Configuration
 
         public string Issuer => configuration[AuthIssuerProperty];
 
-        public int TokenExpirationDurationInMinutes => Convert.ToInt32(configuration[TokenExpirationProperty]);
-
-        public string ClientId => configuration[GoogleClientIdProperty];
-
-        public string ClientKey => configuration[GoogleClientKeyProperty];
-
-        public string ValidationEndpoint => configuration[GoogleValidationEndpointProperty];
-
-        public string FacebookAppId => configuration[FacebookAppIdProperty];
-
-        public string FacebookAppSecret => configuration[FacebookAppSecretProperty];
-
-        public string FacebookValidationEndpoint => configuration[FacebookValidationEndpointProperty];
+        public string AppCode => configuration[IdentityIssuerAppCode];
+        public string ApiUrl => configuration[IdentityIssuerApiUrl];
     }
 
     public class FootballDataSettings : IFootballDataConfiguration
