@@ -23,6 +23,7 @@ namespace Leagueen.Persistence.Domain
         public DbSet<GroupMember> GroupMembers { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
         public DbSet<FriendshipRequest> FriendshipRequests { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
