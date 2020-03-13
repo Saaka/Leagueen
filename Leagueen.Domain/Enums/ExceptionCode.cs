@@ -82,6 +82,7 @@
         MatchNotFound,
         UserGuidRequired,
         UserEmailRequired,
-        UserDisplayNameRequired
+        UserDisplayNameRequired,
+        UserAlreadyExists
     }
 }

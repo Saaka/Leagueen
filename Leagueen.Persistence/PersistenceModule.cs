@@ -10,7 +10,6 @@ using Leagueen.Persistence.Domain;
 using Leagueen.Persistence.Domain.Initializer;
 using Leagueen.Persistence.Domain.Queries;
 using Leagueen.Persistence.Domain.Repositories;
-using Leagueen.Persistence.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,6 +48,7 @@ namespace Leagueen.Persistence
                 .AddTransient<ICompetitionsAggregateRepository, CompetitionsAggregateRepository>()
                 .AddTransient<IGroupAggregateRepository, GroupAggregateRepository>()
                 .AddTransient<IFriendshipAggregateRepository, FriendshipAggregateRepository>()
+                .AddTransient<IUserAggregateRepository, UserAggregateRepository>()
 
                 .AddTransient<ICompetitionsRepository, CompetitionsRepository>()
                 .AddTransient<ISeasonsRepository, SeasonsRepository>()
@@ -57,6 +57,7 @@ namespace Leagueen.Persistence
                 .AddTransient<IUpdateLogsRepository, UpdateLogsRepository>()
                 .AddTransient<IUserGroupsRepository, UserGroupsRepository>()
                 .AddTransient<IFriendshipRequestsRepository, FriendshipRequestsRepository>()
+                .AddTransient<IUsersRepository, UsersRepository>()
 
                 .AddTransient<IDbConnectionFactory, SqlConnectionFactory>()
                 .AddTransient<IGetMatchesByDateQueryExecutor, GetMatchesByDateQueryExecutor>()

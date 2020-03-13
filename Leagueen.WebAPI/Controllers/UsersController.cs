@@ -11,7 +11,7 @@ namespace Leagueen.WebAPI.Controllers
     {
         [Authorize]
         [HttpPost("create")]
-        public async Task<IActionResult> GetTodaysMatches(CreateUserViewModel model)
+        public async Task<IActionResult> CreateUser(CreateUserViewModel model)
         {
             await Mediator.Send(new CreateUserCommand(
                 userGuid: model.UserGuid,
