@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leagueen.Persistence.Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200314161544_AlterTablesAddGuidsInsteadOfStrings")]
-    partial class AlterTablesAddGuidsInsteadOfStrings
+    [Migration("20200314163910_AddGuidInsteadOfVarcharValues")]
+    partial class AddGuidInsteadOfVarcharValues
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -413,10 +413,6 @@ namespace Leagueen.Persistence.Domain.Migrations
                         .HasMaxLength(32);
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("UserGuid")
-                        .IsUnique()
-                        .HasName("IX_Users_UserGuid");
 
                     b.ToTable("Users");
                 });

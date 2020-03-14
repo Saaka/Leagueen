@@ -1,5 +1,4 @@
-﻿using Leagueen.Domain.Constants;
-using Leagueen.Domain.Entities;
+﻿using Leagueen.Domain.Entities;
 using Leagueen.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

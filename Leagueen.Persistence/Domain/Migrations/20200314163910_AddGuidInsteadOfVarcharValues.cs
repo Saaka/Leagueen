@@ -3,10 +3,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Leagueen.Persistence.Domain.Migrations
 {
-    public partial class AlterTablesAddGuidsInsteadOfStrings : Migration
+    public partial class AddGuidInsteadOfVarcharValues : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropIndex(
+                name: "IX_Users_UserGuid",
+                schema: "leagueen",
+                table: "Users");
+
             migrationBuilder.AlterColumn<Guid>(
                 name: "UserGuid",
                 schema: "leagueen",
@@ -59,6 +64,13 @@ namespace Leagueen.Persistence.Domain.Migrations
                 maxLength: 64,
                 nullable: false,
                 oldClrType: typeof(Guid));
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserGuid",
+                schema: "leagueen",
+                table: "Users",
+                column: "UserGuid",
+                unique: true);
         }
     }
 }

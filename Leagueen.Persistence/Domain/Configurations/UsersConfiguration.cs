@@ -13,6 +13,7 @@ namespace Leagueen.Persistence.Domain.Configurations
 
             builder
                 .HasIndex(x => x.UserGuid)
+                .ForSqlServerInclude(nameof(User.UserId))
                 .HasName("IX_Users_UserGuid")
                 .IsUnique();
 
