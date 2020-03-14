@@ -1,7 +1,9 @@
 ﻿using Leagueen.Application.Users.Commands;
+using Leagueen.Application.Users.Queries;
 using Leagueen.WebAPI.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Leagueen.WebAPI.Controllers
@@ -21,6 +23,14 @@ namespace Leagueen.WebAPI.Controllers
                 ));
 
             return Ok();
+        }
+
+        [HttpGet("{userGuid}")]
+        public async Task<IActionResult> GetUser(Guid userGuid)
+        {
+            var result = await Mediator.Send(new GetUserByGuidQuery(userGuid));
+
+            return Ok(result);
         }
     }
 }
