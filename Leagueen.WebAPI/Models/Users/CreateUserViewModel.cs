@@ -4,9 +4,9 @@ namespace Leagueen.WebAPI.Models.Users
 {
     public class CreateUserViewModel
     {
-        public Guid UserGuid { get; private set; }
-        public string Email { get; private set; }
-        public string DisplayName { get; private set; }
-        public string ImageUrl { get; private set; }
+        public Guid UserGuid { get; set; }
+        public string Email { get; set; }
+        public string DisplayName { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

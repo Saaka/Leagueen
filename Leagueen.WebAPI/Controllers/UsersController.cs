@@ -11,13 +11,13 @@ namespace Leagueen.WebAPI.Controllers
     {
         [Authorize]
         [HttpPost("create")]
-        public async Task<IActionResult> CreateUser(CreateUserViewModel model)
+        public async Task<IActionResult> CreateUser(CreateUserViewModel request)
         {
             await Mediator.Send(new CreateUserCommand(
-                userGuid: model.UserGuid,
-                email: model.Email,
-                displayName: model.DisplayName,
-                imageUrl: model.ImageUrl
+                userGuid: request.UserGuid,
+                email: request.Email,
+                displayName: request.DisplayName,
+                imageUrl: request.ImageUrl
                 ));
 
             return Ok();
