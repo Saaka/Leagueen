@@ -14,10 +14,7 @@ namespace Leagueen.Application.Users.Commands.CreateUser
         public CreateUserCommandValidator(IUsersRepository usersRepository)
         {
             _usersRepository = usersRepository;
-        }
 
-        public CreateUserCommandValidator()
-        {
             RuleFor(x => x.UserGuid)
                 .NotEmpty();
 
