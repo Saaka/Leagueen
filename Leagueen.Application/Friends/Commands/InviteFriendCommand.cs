@@ -5,8 +5,8 @@ namespace Leagueen.Application.Friends.Commands
 {
     public class InviteFriendCommand : IRequest
     {
-        public string Guid { get; set; }
+        public Guid Guid { get; set; }
         public int UserId { get; set; }
-        public string AddresseeGuid { get; set; }
+        public Guid AddresseeGuid { get; set; }
     }
 }

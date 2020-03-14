@@ -1,6 +1,7 @@
 ﻿using Leagueen.Application.Users.Models;
 using Leagueen.Application.Users.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,9 +16,8 @@ namespace Leagueen.Persistence.Domain.Repositories
             _context = context;
         }
 
-        public async Task<UserDto> GetUserByGuid(string guid)
+        public async Task<UserDto> GetUserByGuid(Guid guid)
         {
-            guid = guid.ToUpper();
             var query = from user in _context.Users
                         where user.UserGuid == guid
                         select new UserDto
@@ -46,11 +46,11 @@ namespace Leagueen.Persistence.Domain.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<int?> GetUserIdByGuid(string guid)
+        public async Task<int?> GetUserIdByGuid(Guid guid)
         {
             var query = from user in _context.Users
                         where user.UserGuid == guid
-                        select user.UserId
+                        select user.UserId;
 
             return await query.FirstOrDefaultAsync();
         }

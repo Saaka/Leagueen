@@ -1,11 +1,13 @@
-﻿namespace Leagueen.Application.Requests
+﻿using System;
+
+namespace Leagueen.Application.Requests
 {
     public class GuidResult
     {
-        public GuidResult(string guid)
+        public GuidResult(Guid guid)
         {
             Guid = guid;
         }
-        public string Guid { get; private set; }
+        public Guid Guid { get; private set; }
     }
 }

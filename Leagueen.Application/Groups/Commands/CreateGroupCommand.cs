@@ -1,5 +1,6 @@
 ﻿using Leagueen.Domain.Enums;
 using MediatR;
+using System;
 
 namespace Leagueen.Application.Groups.Commands
 {
@@ -12,7 +13,7 @@ namespace Leagueen.Application.Groups.Commands
         public GroupType Type { get; set; }
         public MatchResultResolveMode ResultResolveMode { get; set; }
         public GroupVisibility Visibility { get; set; }
-        public string GroupGuid { get; set; }
+        public Guid GroupGuid { get; set; }
         public int OwnerId { get; set; }
         public int? SeasonId { get; set; }
         public int? CompetitionId { get; set; }

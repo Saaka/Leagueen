@@ -14,7 +14,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveValidStateAfterCreation()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";
@@ -32,7 +32,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveOneMemberAfterOwnerIsAdded()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";
@@ -47,7 +47,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveSettingsAfterAddingSettings()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";
@@ -62,7 +62,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveValidUpdateDateAfterUpdateMarking()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";
@@ -77,7 +77,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveValidStatusAfterArchivization()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";
@@ -91,7 +91,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveValidStatusAfterDeactivation()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";
@@ -105,7 +105,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void ThrowWhenAddingSecondSettings()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";
@@ -127,7 +127,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void ThrowWhenAddingSameUserTwice()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";
@@ -151,7 +151,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void ThrowWhenArchivingDeactivatedGroup()
         {
-            var guid = "E12136F3-F33E-4671-93FA-FD65AF7A5511";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var ownerId = 1;
             var name = "Test12";
             var desc = "";

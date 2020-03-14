@@ -9,7 +9,7 @@ namespace Leagueen.Domain.Entities
     public class Group
     {
         public int GroupId { get; private set; }
-        public string GroupGuid { get; private set; }
+        public Guid GroupGuid { get; private set; }
         public int OwnerId { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
@@ -22,7 +22,7 @@ namespace Leagueen.Domain.Entities
         public virtual GroupSettings GroupSettings { get; private set; }
 
         private Group() { }
-        public Group(string groupGuid, int ownerId, 
+        public Group(Guid groupGuid, int ownerId, 
             string name, string description)
         {
             GroupGuid = groupGuid;
@@ -75,7 +75,7 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
-            if (string.IsNullOrWhiteSpace(GroupGuid))
+            if (GroupGuid.Equals(Guid.Empty))
                 throw new DomainException(ExceptionCode.GroupGuidRequired);
             if (OwnerId == 0)
                 throw new DomainException(ExceptionCode.GroupOwnerRequired);

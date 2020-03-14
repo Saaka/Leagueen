@@ -14,8 +14,7 @@ namespace Leagueen.Application.Friends.Commands.InviteFriend
                 .NotEmpty();
 
             RuleFor(x => x.Guid)
-                .NotEmpty()
-                .MaximumLength(CommonConstants.GuidMaxLength);
+                .NotEmpty();
         }
     }
 }

@@ -19,8 +19,7 @@ namespace Leagueen.Persistence.Domain.Configurations
 
             builder
                 .Property(x => x.GroupGuid)
-                .IsRequired()
-                .HasMaxLength(CommonConstants.GuidMaxLength);
+                .IsRequired();
 
             builder
                 .Property(x => x.Name)

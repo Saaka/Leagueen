@@ -16,8 +16,7 @@ namespace Leagueen.Application.Groups.Commands.CreateGroup
                 .NotEmpty();
 
             RuleFor(x => x.GroupGuid)
-                .NotEmpty()
-                .MaximumLength(CommonConstants.GuidMaxLength);
+                .NotEmpty();
 
             RuleFor(x => x.Visibility)
                 .NotEmpty()

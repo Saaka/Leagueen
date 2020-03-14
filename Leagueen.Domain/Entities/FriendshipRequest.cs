@@ -7,14 +7,14 @@ namespace Leagueen.Domain.Entities
     public class FriendshipRequest
     {
         public int FriendshipRequestId { get; private set; }
-        public string FriendshipRequestGuid { get; private set; }
+        public Guid FriendshipRequestGuid { get; private set; }
         public int RequesterId { get; private set; }
         public int AddresseeId { get; private set; }
         public DateTime CreateDate { get; private set; }
         public FriendshipRequestStatus Status { get; private set; }
 
         private FriendshipRequest() { }
-        public FriendshipRequest(string guid, int requesterId, int addresseeId, DateTime createDate)
+        public FriendshipRequest(Guid guid, int requesterId, int addresseeId, DateTime createDate)
         {
             FriendshipRequestGuid = guid;
             RequesterId = requesterId;
@@ -27,7 +27,7 @@ namespace Leagueen.Domain.Entities
 
         private void ValidateCreation()
         {
-            if (string.IsNullOrWhiteSpace(FriendshipRequestGuid))
+            if (FriendshipRequestGuid.Equals(Guid.Empty))
                 throw new DomainException(ExceptionCode.FriendshipRequestGuidRequired);
             if (RequesterId == 0)
                 throw new DomainException(ExceptionCode.FriendshipRequestRequesterRequired);

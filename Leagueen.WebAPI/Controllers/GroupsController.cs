@@ -24,7 +24,7 @@ namespace Leagueen.WebAPI.Controllers
         public async Task<GuidResult> Create(CreateGroupCommand request)
         {
             var userId = await GetUserId();
-            var guid = GuidProvider.GetNormalizedGuid();
+            var guid = GuidProvider.GetGuid();
 
             request.GroupGuid = guid;
             request.OwnerId = userId;

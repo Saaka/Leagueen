@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Leagueen.Application.Users.Repositories;
 using Leagueen.Domain.Enums;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace Leagueen.Application.Users.Commands.CreateUser
                 .NotEmpty();
         }
 
-        private async Task<bool> NotExist(string userGuid, CancellationToken cancellationToken)
+        private async Task<bool> NotExist(Guid userGuid, CancellationToken cancellationToken)
             => !(await _usersRepository.GetUserIdByGuid(userGuid)).HasValue;
     }
 }

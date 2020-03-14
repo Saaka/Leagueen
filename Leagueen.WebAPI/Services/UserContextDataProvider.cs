@@ -1,10 +1,8 @@
-﻿using Leagueen.Application.Users.Models;
-using Leagueen.Application.Users.Repositories;
+﻿using Leagueen.Application.Users.Repositories;
 using Leagueen.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Leagueen.WebAPI.Services
@@ -31,13 +29,13 @@ namespace Leagueen.WebAPI.Services
 
         public async Task<int> GetUser(HttpContext context)
         {
-            string userCode = GetUserCodeFromContext(context);
+            Guid userCode = GetUserCodeFromContext(context);
 
             var userId = await GetUserId(userCode);
             return userId;
         }
 
-        private string GetUserCodeFromContext(HttpContext context)
+        private Guid GetUserCodeFromContext(HttpContext context)
         {
             if (context.User == null
                 || context.User.Claims == null
@@ -45,19 +43,19 @@ namespace Leagueen.WebAPI.Services
                 throw new InvalidOperationException("Can't authenticate current user");
 
             var userCode = context.User.FindFirst(x => x.Type == SubClaimType).Value;
-            return userCode;
+            return new Guid(userCode);
         }
 
-        private async Task<int> GetUserId(string moniker)
+        private async Task<int> GetUserId(Guid guid)
         {
-            var cacheKey = $"{ContextUserCachePrefix}{moniker}";
+            var cacheKey = $"{ContextUserCachePrefix}{guid}";
 
             var userId = await memoryCache.GetOrCreateAsync(cacheKey, async (ce) =>
             {
                 ce.SlidingExpiration = TimeSpan.FromMinutes(5);
                 ce.AbsoluteExpiration = DateTime.Now.AddHours(1);
 
-                var user = await usersRepository.GetUserIdByGuid(moniker);
+                var user = await usersRepository.GetUserIdByGuid(guid);
                 if (user == null)
                     throw new DomainException(Domain.Enums.ExceptionCode.UserNotFound);
 

@@ -1,6 +1,7 @@
 ﻿using Leagueen.Application.Friends.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Leagueen.WebAPI.Controllers
@@ -10,9 +11,9 @@ namespace Leagueen.WebAPI.Controllers
     {
         [Authorize]
         [HttpPost("invite/{addresseeGuid}")]
-        public async Task<IActionResult> Invite(string addresseeGuid)
+        public async Task<IActionResult> Invite(Guid addresseeGuid)
         {
-            var guid = GuidProvider.GetNormalizedGuid();
+            var guid = GuidProvider.GetGuid();
             var userId = await GetUserId();
 
             await Mediator.Send(new InviteFriendCommand

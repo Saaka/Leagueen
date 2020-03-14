@@ -15,7 +15,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveValidStateOnCreation()
         {
-            var guid = "12345";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var requesterId = 1;
             var addresseeId = 2;
             var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
@@ -31,7 +31,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveAcceptedStatusAfterAccepting()
         {
-            var guid = "12345";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var requesterId = 1;
             var addresseeId = 2;
             var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
@@ -46,7 +46,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void HaveRejectedStatusAfterRejecting()
         {
-            var guid = "12345";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var requesterId = 1;
             var addresseeId = 2;
             var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
@@ -62,7 +62,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void ThrowExceptionForInvalidGuid(string guid)
+        public void ThrowExceptionForInvalidGuid(Guid guid)
         {
             var requesterId = 1;
             var addresseeId = 2;
@@ -88,7 +88,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [MemberData(nameof(CreateDateTestData))]
         public void ThrowExceptionForInvalidCreateDate(DateTime createDate)
         {
-            var guid = "12345";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var requesterId = 1;
             var addresseeId = 2;
 
@@ -105,7 +105,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void ThrowExceptionForInvalidRequesterId()
         {
-            var guid = "12345";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var requesterId = 0;
             var addresseeId = 2;
             var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
@@ -123,7 +123,7 @@ namespace Leagueen.Tests.Unit.Domain.Entities
         [Fact]
         public void ThrowExceptionForInvalidAddresseeId()
         {
-            var guid = "12345";
+            var guid = new Guid("E12136F3-F33E-4671-93FA-FD65AF7A5511");
             var requesterId = 1;
             var addresseeId = 0;
             var createDate = new DateTime(2019, 05, 06, 15, 00, 00);
