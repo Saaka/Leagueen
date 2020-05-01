@@ -72,6 +72,7 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                 case "SUSPENDED":
                     return MatchStatus.Suspended;
                 case "CANCELED":
+                case "CANCELLED":
                     return MatchStatus.Canceled;
                 default:
                     throw new ProviderCommunicationException(
@@ -113,7 +114,6 @@ namespace Leagueen.Infrastructure.Providers.FootballData
                     return MatchDuration.PenaltyShootout;
                 default:
                     throw new ProviderCommunicationException($"Invalid MatchDuration value: {model.Duration}");
-
             }
         }
 
